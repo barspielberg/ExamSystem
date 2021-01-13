@@ -1,5 +1,5 @@
 import { Language } from "../enums";
-import { Email } from "./Email";
+import { EmailMessage } from "./EmailMessage";
 
 export interface Test {
   id: string;
@@ -11,7 +11,7 @@ export interface Test {
   reviewAnswers: boolean;
   successMessage: string;
   failMessage: string;
-  successEmail?: Email;
-  failEmail?: Email;
+  successEmail?: EmailMessage;
+  failEmail?: EmailMessage;
   questionIds: string[];
 }
