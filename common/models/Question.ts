@@ -5,7 +5,7 @@ export interface Question {
   id: string;
   type: QuestionType;
   mainTitle: string;
-  secondaryTitle: string;
+  secondaryTitle?: string;
   possibleAnswers: Answer[];
   alignment: Alignment;
   tags: string[];
