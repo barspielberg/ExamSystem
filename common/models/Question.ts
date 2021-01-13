@@ -1,4 +1,12 @@
+import { QuestionType, Alignment } from "../enums";
+import { Answer } from "./Answer";
+
 export interface Question {
-  id: number;
-  title: string;
+  id: string;
+  type: QuestionType;
+  mainTitle: string;
+  secondaryTitle: string;
+  possibleAnswers: Answer[];
+  alignment: Alignment;
+  tags: string[];
 }
