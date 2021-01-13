@@ -5,3 +5,4 @@ export * from "./EmailMessage";
 export * from "./FieldOfStudy";
 export * from "./Organization";
 export * from "./User";
+export * from "./TakenTest";
