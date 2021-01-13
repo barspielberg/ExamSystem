@@ -11,6 +11,8 @@ import ManageTestsPage from "./pages/manageTestsPage/ManageTestsPage";
 import StudentReportPage from "./pages/studentReportPage/StudentReportPage";
 import TestReportPage from "./pages/testReportPage/TestReportPage";
 
+//TODO add gurd when user is null
+
 function App() {
   return (
     <BrowserRouter>
