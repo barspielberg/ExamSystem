@@ -1,9 +1,12 @@
 import React from "react";
+import { match } from "react-router";
 
-interface IActiveTestPageProps {}
+interface IActiveTestPageProps {
+  match: match<{ testId: string }>;
+}
 
-const ActiveTestPage: React.FC<IActiveTestPageProps> = ({}) => {
-  return <div>ActiveTestPage Worked!</div>;
+const ActiveTestPage: React.FC<IActiveTestPageProps> = ({ match }) => {
+  return <div>ActiveTestPage Worked! id: {match.params.testId} </div>;
 };
 
 export default ActiveTestPage;
