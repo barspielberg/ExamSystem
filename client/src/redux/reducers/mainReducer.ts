@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import questionsReducer from "./questionsReducer";
+import organizationReducer from "./organizationReducer";
 
 export const rootReducer = combineReducers({
-  questions: questionsReducer,
+  organization: organizationReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

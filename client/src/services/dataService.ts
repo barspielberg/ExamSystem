@@ -1,12 +1,14 @@
 import axios from "axios";
-import { Question } from "../../../common/models";
+import { Admin, Organization } from "../../../common/models";
 
 const server = axios.create({ baseURL: "http://localhost:3000/" });
 
-export class DataService {
-  async getQuestions() {
+class DataService {
+  async getOrganization(admin: Admin) {
     try {
-      const res = await server.get<Question[]>("questions");
+      const res = await server.get<Organization>("organization", {
+        data: admin,
+      });
       return res.data;
     } catch (error) {
       console.log(error);
@@ -14,3 +16,5 @@ export class DataService {
     }
   }
 }
+
+export default new DataService();
