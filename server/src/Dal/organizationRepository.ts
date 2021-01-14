@@ -8,7 +8,7 @@ import adminDb from "../data/admins.json";
 
 class OrganizationRepository {
   //why string | any ?
-  async checkAdminExists(email: string | any, password: string | any) {
+  async checkAdminExists(email: string, password: string) {
     const admins: Admin[] = adminDb.admins;
     const admin = admins.find((adm: Admin) => {
       return adm.email === email && adm.password === password;
