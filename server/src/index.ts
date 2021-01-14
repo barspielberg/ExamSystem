@@ -14,5 +14,5 @@ app.use("/tests", testsRouter);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });
