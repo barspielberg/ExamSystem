@@ -1,0 +1,25 @@
+@import "styles/colors";
+
+.main {
+  max-width: 800px;
+  margin: auto;
+
+  b {
+    display: inline-block;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+    font-size: larger;
+  }
+
+  section {
+    background-color: $dark_row;
+    padding: 1rem 2rem;
+    & :first-child {
+      font-weight: bold;
+    }
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+}
