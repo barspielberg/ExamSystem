@@ -1,0 +1,20 @@
+{
+  "organizations": [
+    {
+      "id": "0",
+      "name": "BlaBla",
+      "adminIds": [
+        "0"
+      ],
+      "questions": [],
+      "fields": [
+        {
+          "id": "1",
+          "title": "Development",
+          "questionIds": [],
+          "tests": []
+        }
+      ]
+    }
+  ]
+}
