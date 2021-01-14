@@ -18,12 +18,15 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path="/ActiveTest/:testId" component={ActiveTestPage} />
-        <Route path="/TestReport" component={TestReportPage} />
-        <Route path="/StudentReport" component={StudentReportPage} />
+        <Route path="/TestReport/:fieldId" component={TestReportPage} />
+        <Route path="/StudentReport/:fieldId" component={StudentReportPage} />
         <Route path="/EditTest/:testId" component={EditTestPage} />
         <Route path="/EditQuestion/:questionId" component={EditQuestionPage} />
-        <Route path="/ManageTests" component={ManageTestsPage} />
-        <Route path="/ManageQuestions" component={ManageQuestionsPage} />
+        <Route path="/ManageTests/:fieldId" component={ManageTestsPage} />
+        <Route
+          path="/ManageQuestions/:fieldId"
+          component={ManageQuestionsPage}
+        />
         <Route path="/MainMenu" component={MainMenuPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
