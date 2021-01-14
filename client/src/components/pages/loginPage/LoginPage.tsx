@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Admin, Organization } from "../../../../../common/models";
 import { getOrganization } from "../../../redux/actions/organizationActions";
 import { RootState } from "../../../redux/reducers/mainReducer";
+import Header from "../../uiElements/Header/Header";
 
 interface ILoginPageProps {
   organization: Organization | null;
@@ -11,7 +12,12 @@ interface ILoginPageProps {
 }
 //TODO by Michael (at the end when all is done?)
 const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organization }) => {
-  return <div>LoginPage Worked!</div>;
+  return (
+    <div>
+      <Header>Title</Header>
+      LoginPage Worked!
+    </div>
+  );
 };
 
 const mapState2Props = (state: RootState) => ({

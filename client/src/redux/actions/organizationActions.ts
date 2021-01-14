@@ -24,6 +24,7 @@ export type organizationActionTypes =
 export const getOrganization = (admin: Admin): AppThunk => async (dispatch) => {
   const org = await DataService.getOrganization(admin);
   if (org) dispatch(setOrganization(org));
+  else dispatch(setError("error title"));
 };
 
 const setOrganization = (org: Organization): organizationActionTypes => ({
