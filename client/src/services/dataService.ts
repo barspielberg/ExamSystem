@@ -1,13 +1,16 @@
 import axios from "axios";
 import { Admin, Organization } from "../../../common/models";
 
-const server = axios.create({ baseURL: "http://localhost:3000/" });
+const server = axios.create({ baseURL: "http://localhost:4000/" });
 
 class DataService {
-  async getOrganization(admin: Admin) {
+  async getOrganization(email: string,password: string) {
     try {
-      const res = await server.get<Organization>("organization", {
-        data: admin,
+      const res = await server.get<Organization>("organization?", {
+        params: {
+          email: email,
+          password: password
+        },
       });
       return res.data;
     } catch (error) {
