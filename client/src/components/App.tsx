@@ -20,8 +20,8 @@ function App() {
         <Route path="/ActiveTest/:testId" component={ActiveTestPage} />
         <Route path="/TestReport" component={TestReportPage} />
         <Route path="/StudentReport" component={StudentReportPage} />
-        <Route path="/EditTest" component={EditTestPage} />
-        <Route path="/EditQuestion" component={EditQuestionPage} />
+        <Route path="/EditTest/:testId" component={EditTestPage} />
+        <Route path="/EditQuestion/:questionId" component={EditQuestionPage} />
         <Route path="/ManageTests" component={ManageTestsPage} />
         <Route path="/ManageQuestions" component={ManageQuestionsPage} />
         <Route path="/MainMenu" component={MainMenuPage} />
