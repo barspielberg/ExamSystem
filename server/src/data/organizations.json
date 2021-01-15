@@ -3,7 +3,7 @@
     {
       "id": "0",
       "name": "BlaBla",
-      "adminIds": ["1", "2"],
+      "adminIds": ["0", "1"],
       "questions": [],
       "fields": [
         {

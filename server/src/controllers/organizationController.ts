@@ -14,16 +14,16 @@ class OrganozationController {
         emailSt,
         passwordSt
       );
-      if (!admin) return res.status(401).send("one or more is not correct");
+       if (!admin) return res.status(401).send("one or more is not correct");
 
       const organization = await organizationRepository.getOrganization(admin);
 
       if (!organization)
         return res.status(401).send("there are no organization for that admin");
 
-      return res.status(200).json(organization);
+      return res.status(200).json({ "message": "Organization fetched successfully", organization });
     } catch (error) {
-      res.status(500).json("OOPS something went wrong");
+      res.status(500).send("OOPS something went wrong");
     }
 
   }

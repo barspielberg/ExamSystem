@@ -24,7 +24,7 @@ export type organizationActionTypes =
 export const getOrganization = (email: string, password: string): AppThunk => async (dispatch) => {
   const org = await DataService.getOrganization(email,password);
   if (org) dispatch(setOrganization(org));
-  else dispatch(setError("error title"));
+  else dispatch(setError("Error occured"));
 };
 
 const setOrganization = (org: Organization): organizationActionTypes => ({
