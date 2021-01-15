@@ -34,6 +34,7 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({
             value={fieldId}
             onChange={(e) => setFieldId(e.target.value)}
           >
+            <option value="">please choose field of study</option>
             {fields?.map((f) => (
               <option key={f.id} value={f.id}>
                 {f.title}
