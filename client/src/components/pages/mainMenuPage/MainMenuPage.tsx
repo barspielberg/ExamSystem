@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { FieldOfStudy } from "../../../../../common/models";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import Header from "../../uiElements/Header/Header";
+import PopupMessage from "../../uiElements/PopupMessage/PopupMessage";
 import classes from "./MainMenuPage.module.scss";
 
 interface IMainMenuPageProps {
@@ -16,10 +17,12 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({
   fields,
 }) => {
   const [fieldId, setFieldId] = useState("");
+  const [errMsg, setErrMsg] = useState(false);
   const history = useHistory();
 
   const navigationHandler = (path: string) => {
-    history.push(`${path}/${fieldId}`);
+    if (fieldId) history.push(`${path}/${fieldId}`);
+    else setErrMsg(true);
   };
 
   return (
@@ -61,6 +64,12 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({
           Reports »{" "}
         </p>
       </section>
+      <PopupMessage
+        title="Please choose field of study"
+        text="Before you continue you need to choose field of study"
+        show={errMsg}
+        clear={() => setErrMsg(false)}
+      />
     </div>
   );
 };
