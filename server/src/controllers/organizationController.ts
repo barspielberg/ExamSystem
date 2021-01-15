@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import organozationRepository from '../Dal/organizationRepository';
+import organizationRepository from "../Dal/organizationRepository";
 
+<<<<<<< HEAD
 class QuestionsController {
   getOrganization(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.query;
@@ -29,7 +30,32 @@ class QuestionsController {
         message: 'OOPS something went wrong'
       });
     }
+=======
+class OrganozationController {
+  async getOrganization(req: Request, res: Response, next: NextFunction) {
+    //TODO check credentials and return org or error
+    const { email, password } = req.query;
+    const emailSt = email?.toString();
+    const passwordSt = password?.toString();
+    if (!emailSt || !passwordSt)
+      return res.status(401).send("not valid parametrs");
+
+    try {
+      const admin = await organizationRepository.checkAdminExists(
+        emailSt,
+        passwordSt
+      );
+      if (!admin) return res.status(401).send("one or more is not correct");
+
+      const organization = await organizationRepository.getOrganization(admin);
+
+      if (!organization)
+        return res.status(401).send("there are no organization for that admin");
+
+      return res.status(200).json(organization);
+    } catch (error) {}
+>>>>>>> c29a44c1330945d014d63361e90a482f5ba32034
   }
 }
 
-export default new QuestionsController();
+export default new OrganozationController();

@@ -4,12 +4,12 @@ import { Organization } from "../../../common/models";
 const server = axios.create({ baseURL: "http://localhost:4000/" });
 
 class DataService {
-  async getOrganization(email: string,password: string) {
+  async getOrganization(email: string, password: string) {
     try {
       const res = await server.get<Organization>("organization?", {
         params: {
           email: email,
-          password: password
+          password: password,
         },
       });
       return res.data;
