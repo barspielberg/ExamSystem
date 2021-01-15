@@ -1,5 +1,5 @@
 import React from "react";
-import { match } from "react-router";
+import { match, useHistory } from "react-router";
 
 interface IManageQuestionsPageProps {
   match: match<{ fieldId: string }>;
@@ -8,7 +8,13 @@ interface IManageQuestionsPageProps {
 const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
   match,
 }) => {
-  return <div>ManageQuestionsPage Worked! id: {match.params.fieldId}</div>;
+  const history = useHistory();
+  return <div>ManageQuestionsPage Worked!  id: {match.params.fieldId}
+    <div>table of questions for this filed</div>
+    <div>
+      <button onClick={() => history.push('/EditQuestion/addNew')}>Add Question</button>
+    </div>
+  </div>;
 };
 
 export default ManageQuestionsPage;
