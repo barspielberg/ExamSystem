@@ -10,25 +10,32 @@ import ManageQuestionsPage from "./pages/manageQuestionsPage/ManageQuestionsPage
 import ManageTestsPage from "./pages/manageTestsPage/ManageTestsPage";
 import StudentReportPage from "./pages/studentReportPage/StudentReportPage";
 import TestReportPage from "./pages/testReportPage/TestReportPage";
-
-//TODO add guard when user is null
+import PrivateRoute from "./utilComponents/PrivateRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        
         <Route path="/ActiveTest/:testId" component={ActiveTestPage} />
-        <Route path="/TestReport/:fieldId" component={TestReportPage} />
-        <Route path="/StudentReport/:fieldId" component={StudentReportPage} />
-        <Route path="/EditTest/:testId" component={EditTestPage} />
-        <Route path="/EditQuestion/:questionId" component={EditQuestionPage} />
-        <Route path="/ManageTests/:fieldId" component={ManageTestsPage} />
-        <Route
-          path="/ManageQuestions/:fieldId"
-          component={ManageQuestionsPage}
+        <PrivateRoute path="/TestReport/:fieldId" Component={TestReportPage} />
+        <PrivateRoute
+          path="/StudentReport/:fieldId"
+          Component={StudentReportPage}
         />
-        <Route path="/MainMenu" component={MainMenuPage} />
+        <PrivateRoute path="/EditTest/:testId" Component={EditTestPage} />
+        <PrivateRoute
+          path="/EditQuestion/:questionId"
+          Component={EditQuestionPage}
+        />
+        <PrivateRoute
+          path="/ManageTests/:fieldId"
+          Component={ManageTestsPage}
+        />
+        <PrivateRoute
+          path="/ManageQuestions/:fieldId"
+          Component={ManageQuestionsPage}
+        />
+        <PrivateRoute path="/MainMenu" Component={MainMenuPage} />
         <Route path="/" component={LoginPage} />
       </Switch>
     </BrowserRouter>
