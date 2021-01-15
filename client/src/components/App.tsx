@@ -17,8 +17,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" component={LoginPage} />
-        <Route path="/MainMenu" component={MainMenuPage} />
+        
         <Route path="/ActiveTest/:testId" component={ActiveTestPage} />
         <Route path="/TestReport/:fieldId" component={TestReportPage} />
         <Route path="/StudentReport/:fieldId" component={StudentReportPage} />
@@ -29,6 +28,8 @@ function App() {
           path="/ManageQuestions/:fieldId"
           component={ManageQuestionsPage}
         />
+        <Route path="/MainMenu" component={MainMenuPage} />
+        <Route path="/" component={LoginPage} />
       </Switch>
     </BrowserRouter>
   );
