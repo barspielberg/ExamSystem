@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import {  Organization } from "../../../../../common/models";
+import { Organization } from "../../../../../common/models";
 import { getOrganization } from "../../../redux/actions/organizationActions";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import Header from "../../uiElements/Header/Header";
@@ -22,8 +22,7 @@ const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organization }) => {
     if (organization) {
       history.replace("/MainMenu");
     }
-    
-  }, [organization,history]);
+  }, [organization, history]);
 
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -38,6 +37,7 @@ const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organization }) => {
           <div>
             <label>Email: </label>
             <input
+              name="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -46,6 +46,7 @@ const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organization }) => {
           <div>
             <label>Password: </label>
             <input
+              name="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
