@@ -6,7 +6,7 @@ const server = axios.create({ baseURL: "http://localhost:4000/" });
 class DataService {
   async getOrganization(email: string, password: string) {
     try {
-      const res = await server.get<Organization>("organization?", {
+      const res = await server.get<Organization>("organization", {
         params: {
           email: email,
           password: password,
