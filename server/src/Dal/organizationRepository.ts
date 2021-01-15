@@ -3,22 +3,27 @@ const util = require("util");
 const writeFile = util.promisify(fs.writeFile);
 const readFile = util.promisify(fs.readFile);
 import { Admin } from '../../../common/index';
-//TODO import admindb file, fix file system bug first.
 import adminDb from '../data/admins.json';
+import organizationsDb from '../data/organizations.json';
 
 class OrganizationRepository {
-  async checkAdminExists(email: string | any, password: string | any) {
-    console.log(adminDb);
-    // const data = JSON.parse(await readFile(adminDb));
-    //console.log(adminDb);
-    // const admin = data.find((adm: Admin) => {
-    //   return adm.email === email && adm.password === password;
-    // });
+  checkAdminExists(email: any, password: any) {
+    const {admins } = adminDb;
+    
+    const admin = admins.find((adm: Admin) => {
+      return adm.email === email && adm.password === password;
+    });
 
-    // return admin;
-    console.log('nanana');
+    if(admin) return admin;
+    else return null;
   }
 
+
+  getOraganization(admin:Admin) {
+    const org = organizationsDb.organizations.find(org => org.adminIds.includes(admin.id));
+    if (org) return org;
+    else return null;
+  }
 
 }
 

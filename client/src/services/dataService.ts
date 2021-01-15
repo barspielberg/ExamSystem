@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Admin, Organization } from "../../../common/models";
+import { Organization } from "../../../common/models";
 
 const server = axios.create({ baseURL: "http://localhost:4000/" });
 

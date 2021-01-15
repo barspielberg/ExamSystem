@@ -1,12 +1,12 @@
 {
   "admins":[
     {
-      "id": "1",
+      "id": "0",
       "email": "test@test.com",
       "password": "tester"
     },
     {
-      "id": "2",
+      "id": "1",
       "email": "bar@bar.com",
       "password": "barbar"
     }

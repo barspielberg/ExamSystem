@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { Admin, Organization } from "../../../../common/models";
+import { Organization } from "../../../../common/models";
 import DataService from "../../services/dataService";
 import { RootState } from "../reducers/mainReducer";
 
