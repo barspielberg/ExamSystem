@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { Organization } from "../../../../common/models";
+import { Organization } from "@examsystem/common";
 import DataService from "../../services/dataService";
 import { RootState } from "../reducers/mainReducer";
 
@@ -21,8 +21,11 @@ export type organizationActionTypes =
       err: string;
     };
 
-export const getOrganization = (email: string, password: string): AppThunk => async (dispatch) => {
-  const org = await DataService.getOrganization(email,password);
+export const getOrganization = (
+  email: string,
+  password: string
+): AppThunk => async (dispatch) => {
+  const org = await DataService.getOrganization(email, password);
   if (org) dispatch(setOrganization(org));
   else dispatch(setError("Error occured"));
 };

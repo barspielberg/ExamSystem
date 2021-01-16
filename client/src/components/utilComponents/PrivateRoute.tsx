@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, RouteProps } from "react-router";
-import { Organization } from "../../../../common/models";
+import { Organization } from "@examsystem/common";
 import { RootState } from "../../redux/reducers/mainReducer";
 
 interface IPrivateRouteProps extends RouteProps {

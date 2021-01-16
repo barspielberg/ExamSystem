@@ -1,4 +1,4 @@
-import { Organization } from "../../../../common/models";
+import { Organization } from "@examsystem/common";
 import { organizationActionTypes } from "../actions/organizationActions";
 
 type stateType = {
