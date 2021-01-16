@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import { match } from "react-router";
 import { QuestionType } from "@examsystem/common";
 
-// import { QuestionType } from "@examsystem/common";
-// export enum QuestionType {
-//   singleChoiceQuestion,
-//   multipleSelectionQuestion,
-// }
-const t = QuestionType.multipleSelectionQuestion;
-
 interface IEditQuestionPageProps {
   match: match<{ questionId: string }>;
 }
