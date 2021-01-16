@@ -1,4 +1,4 @@
-import { Admin, Organization } from "../../../common/index";
+import { Admin, Organization } from "@examsystem/common";
 import adminDb from "../data/admins.json";
 import organizationDb from "../data/organizations.json";
 

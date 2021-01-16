@@ -7,7 +7,7 @@ import { QuestionType } from "@examsystem/common";
 //   singleChoiceQuestion,
 //   multipleSelectionQuestion,
 // }
-const t: QuestionType = QuestionType.map;
+const t = QuestionType.multipleSelectionQuestion;
 
 interface IEditQuestionPageProps {
   match: match<{ questionId: string }>;

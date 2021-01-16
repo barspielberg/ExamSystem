@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "@examsystem/client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,7 +24,7 @@
     "redux-thunk": "^2.3.0",
     "typescript": "^4.1.3",
     "web-vitals": "^0.2.4",
-    "@examsystem/common": "file:../common"
+    "@examsystem/common": "1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
