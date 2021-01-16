@@ -5,7 +5,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "build:watch": "tsc --watch"
+    "build:watch": "tsc --watch",
+    "start:dev": "yarn run build:watch"
   },
   "dependencies": {
     "typescript": "^4.1.3"

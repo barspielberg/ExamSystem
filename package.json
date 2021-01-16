@@ -6,5 +6,12 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "scripts": {
+    "start:dev": "lerna run start:dev --parallel",
+    "build": "lerna run build"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
   }
 }
