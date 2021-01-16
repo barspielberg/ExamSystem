@@ -4,7 +4,6 @@ import { match } from "react-router";
 export enum QuestionType {
   singleChoiceQuestion,
   multipleSelectionQuestion,
-  map,
 }
 
 interface IEditQuestionPageProps {
@@ -24,14 +23,11 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
         </div>
         <div>
           <label>Question Type:</label>
-          <select
-            value={selectedType}
-            onChange={(e) => setSelectedType(Number(e.target.value))}
-          >
+          {/* #TODO make select more reactive,this is temporary solution */}
+          <select>
             <option value={-1}>please choose question type</option>
-            {Object.values(QuestionType).map((qt) => (
-              <option value={qt}>{QuestionType[qt as any]}</option>
-            ))}
+            <option value={0}>{QuestionType[0]}</option>
+            <option value={1}>{QuestionType[1]}</option>
           </select>
         </div>
         <div>
