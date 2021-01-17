@@ -1,8 +1,7 @@
 import React from "react";
 import { Test } from "@examsystem/common";
 import Button from "../../Button/Button";
-import { useHistory, useLocation } from "react-router";
-import { useRef } from "react";
+import { useHistory } from "react-router";
 
 interface ITableRowsTestsProps {
   tests?: Test[];
@@ -12,7 +11,6 @@ const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
   const notEmpty = !!tests && tests.length > 0;
   const history = useHistory();
   const hostname = `${window.location.hostname}:${window.location.port}`;
-  const txtRef = useRef<HTMLTextAreaElement>(null);
 
   const copyHandler = (id: string) => {
     const selBox = document.createElement("textarea");
@@ -51,7 +49,6 @@ const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
             </td>
           </tr>
         ))}
-      <textarea ref={txtRef} hidden />
     </React.Fragment>
   );
 };

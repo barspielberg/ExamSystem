@@ -1,0 +1,35 @@
+.container {
+  $text_color: #2196f3;
+  color: $text_color;
+  $padding_top: 0.1rem;
+
+  display: inline-flex;
+
+  .rapper {
+    position: relative;
+
+    .search {
+      font: inherit;
+      padding: $padding_top 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      color: inherit;
+
+      &:focus {
+        outline-color: $text_color;
+      }
+    }
+    .delete {
+      font-weight: bold;
+      position: absolute;
+      right: 0.3rem;
+      top: $padding_top;
+      cursor: pointer;
+    }
+  }
+
+  b {
+    margin-inline-start: 1rem;
+    padding-top: $padding_top;
+  }
+}

@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { FieldOfStudy } from "@examsystem/common";
 import TableRowsTests from "../../uiElements/Table/TableRowsTests/TableRowsTests";
+import SearchFilter from "../../uiElements/SearchFilter/SearchFilter";
+import { useState } from "react";
 
 interface IManageTestsPageProps {
   match: match<{ fieldId: string }>;
@@ -29,6 +31,7 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
   fields,
 }) => {
   const field = fields?.find((f) => f.id === match.params.fieldId);
+  const [tests, setTests] = useState(field?.tests);
 
   return (
     <div className={classes.Page}>
@@ -36,13 +39,17 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
         Available Tests for:{" "}
         <span className={classes.fieldTitle}>{field?.title}</span>
       </header>
-      <p className={classes.filterRow}>
+      <div className={classes.filterRow}>
         Filter names by keywords:{" "}
-        <input type="text" placeholder="not working yet..." />
-      </p>
+        <SearchFilter
+          tests={field?.tests}
+          onTestsChange={setTests}
+          placeholder="Search..."
+        />
+      </div>
 
       <Table titles={titles}>
-        <TableRowsTests tests={field?.tests} />
+        <TableRowsTests tests={tests} />
       </Table>
     </div>
   );
