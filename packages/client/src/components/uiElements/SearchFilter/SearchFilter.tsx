@@ -5,42 +5,48 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 interface ISearchFilterProps {
-  tests?: Test[];
+  originalTests?: Test[];
   onTestsChange?: (items: Test[]) => void;
 
-  questions?: Question[];
+  originalQuestions?: Question[];
   onQuestionsChange?: (items: Question[]) => void;
 
   placeholder?: string;
 }
 
 const SearchFilter: React.FC<ISearchFilterProps> = ({
-  tests,
+  originalTests,
   onTestsChange,
-  questions,
+  originalQuestions,
   onQuestionsChange,
   placeholder,
 }) => {
   const [text, setText] = useState("");
   useEffect(() => {
-    if (tests && onTestsChange)
+    if (originalTests && onTestsChange)
       if (text)
         onTestsChange(
-          tests.filter((i) => i.title.toLowerCase().includes(text))
+          originalTests.filter((i) => i.title.toLowerCase().includes(text))
         );
-      else onTestsChange(tests);
-    else if (questions && onQuestionsChange)
+      else onTestsChange(originalTests);
+    else if (originalQuestions && onQuestionsChange)
       if (text)
         onQuestionsChange(
-          questions.filter(
+          originalQuestions.filter(
             (q) =>
               q.mainTitle.toLowerCase().includes(text) ||
               q.secondaryTitle?.toLowerCase().includes(text) ||
               !q.tags.every((t) => !t.toLowerCase().includes(text))
           )
         );
-      else onQuestionsChange(questions);
-  }, [text, tests, onTestsChange, questions, onQuestionsChange]);
+      else onQuestionsChange(originalQuestions);
+  }, [
+    text,
+    originalTests,
+    onTestsChange,
+    originalQuestions,
+    onQuestionsChange,
+  ]);
 
   return (
     <div className={classes.container}>

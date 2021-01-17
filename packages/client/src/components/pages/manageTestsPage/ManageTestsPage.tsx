@@ -25,7 +25,6 @@ const titles = [
   "",
 ];
 //TODO by Bar
-//TODO add serch filter
 const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
   match,
   fields,
@@ -42,7 +41,7 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
       <div className={classes.filterRow}>
         Filter names by keywords:{" "}
         <SearchFilter
-          tests={field?.tests}
+          originalTests={field?.tests}
           onTestsChange={setTests}
           placeholder="Search..."
         />
