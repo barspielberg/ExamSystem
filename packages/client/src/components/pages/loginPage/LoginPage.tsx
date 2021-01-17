@@ -13,16 +13,16 @@ interface ILoginPageProps {
   login: (email: string, password: string) => void;
 }
 
-const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organization }) => {
+const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organizations }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
   useEffect(() => {
-    if (organization) {
+    if (organizations) {
       history.replace("/MainMenu");
     }
-  }, [organization, history]);
+  }, [organizations, history]);
 
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organization }) => {
 };
 
 const mapState2Props = (state: RootState) => ({
-  organization: state.organization.organization,
+  organizations: state.organization.organizations,
   err: state.organization.error,
 });
 const mapDispatch2Props = {
