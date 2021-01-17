@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Button from "../Button/Button";
 import Header from "../Header/Header";
 import classes from "./PopupMessage.module.scss";
 
@@ -30,7 +31,7 @@ const PopupMessage: React.FC<IPopupMessageProps> = ({
           <div className={classes.body}>
             <p>{text}</p>
             <footer>
-              <button onClick={clear}>OK</button>
+              <Button onClick={clear}>OK</Button>
             </footer>
           </div>
         </div>
