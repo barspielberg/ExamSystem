@@ -1,14 +1,18 @@
 {
-  "admins":[
+  "admins": [
     {
       "id": "0",
       "email": "test@test.com",
-      "password": "tester"
+      "password": "tester",
+      "organizationIds": ["0"],
+      "organizations": []
     },
     {
       "id": "1",
       "email": "bar@bar.com",
-      "password": "barbar"
+      "password": "barbar",
+      "organizationIds": ["0"],
+      "organizations": []
     }
   ]
 }
