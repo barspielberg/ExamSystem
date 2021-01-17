@@ -1,20 +1,16 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
-import { FieldOfStudy } from "@examsystem/common";
+import { Organization } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { Header, PopupMessage } from "../../uiElements";
 import classes from "./MainMenuPage.module.scss";
 
 interface IMainMenuPageProps {
-  organizationName: string | undefined;
-  fields: FieldOfStudy[] | undefined;
+  organizations: Organization[] | undefined;
 }
 
-const MainMenuPage: React.FC<IMainMenuPageProps> = ({
-  organizationName,
-  fields,
-}) => {
+const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
   const [fieldId, setFieldId] = useState("");
   const [errMsg, setErrMsg] = useState(false);
   const history = useHistory();
@@ -23,10 +19,10 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({
     if (fieldId) history.push(`${path}/${fieldId}`);
     else setErrMsg(true);
   };
-
+  const tmpOrg = organizations && organizations[0]; //TODO need to fix
   return (
     <div className={classes.main}>
-      <Header>Administration System - {organizationName} </Header>
+      <Header>Administration System - {tmpOrg?.name}</Header>
       <b> Main Menu </b>
       <section>
         <p>
@@ -37,7 +33,7 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({
             onChange={(e) => setFieldId(e.target.value)}
           >
             <option value="">please choose field of study</option>
-            {fields?.map((f) => (
+            {tmpOrg?.fields.map((f) => (
               <option key={f.id} value={f.id}>
                 {f.title}
               </option>
@@ -74,8 +70,7 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({
 };
 
 const mapState2Props = (state: RootState) => ({
-  organizationName: state.organization.organization?.name,
-  fields: state.organization.organization?.fields,
+  organizations: state.admin.admin?.organizations,
 });
 
 export default connect(mapState2Props)(MainMenuPage);

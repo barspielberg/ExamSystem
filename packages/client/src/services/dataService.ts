@@ -1,21 +1,21 @@
 import axios from "axios";
-import { Organization } from "@examsystem/common";
+import { Admin } from "@examsystem/common";
 
 const server = axios.create({ baseURL: "http://localhost:4000/" });
 
 class DataService {
-  async getOrganization(email: string, password: string) {
+  async getAdmin(email: string, password: string) {
     try {
-      const res = await server.get<{
-        message: string;
-        organization: Organization;
-      }>("organization", {
-        params: {
-          email: email,
-          password: password,
-        },
-      });
-      return res.data.organization;
+      const res = await server.get<{ message: string; admin: Admin }>(
+        "organization",
+        {
+          params: {
+            email: email,
+            password: password,
+          },
+        }
+      );
+      return res.data.admin;
     } catch (error) {
       console.log(error);
       return undefined;

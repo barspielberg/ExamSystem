@@ -2,27 +2,27 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { Organization } from "@examsystem/common";
-import { getOrganization } from "../../../redux/actions/organizationActions";
+import { Admin } from "@examsystem/common";
+import { getAdmin } from "../../../redux/actions/adminActions";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { Header } from "../../uiElements";
 
 interface ILoginPageProps {
-  organization: Organization | null;
+  admin: Admin | null;
   err: string;
   login: (email: string, password: string) => void;
 }
 
-const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organizations }) => {
+const LoginPage: React.FC<ILoginPageProps> = ({ login, err, admin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
 
   useEffect(() => {
-    if (organizations) {
+    if (admin) {
       history.replace("/MainMenu");
     }
-  }, [organizations, history]);
+  }, [admin, history]);
 
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -65,11 +65,11 @@ const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organizations }) => 
 };
 
 const mapState2Props = (state: RootState) => ({
-  organizations: state.organization.organizations,
-  err: state.organization.error,
+  admin: state.admin.admin,
+  err: state.admin.error,
 });
 const mapDispatch2Props = {
-  login: getOrganization,
+  login: getAdmin,
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(LoginPage);

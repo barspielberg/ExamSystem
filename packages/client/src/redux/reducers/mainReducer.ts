@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import organizationReducer from "./organizationReducer";
+import adminReducer from "./adminReducer";
 
 export const rootReducer = combineReducers({
-  organization: organizationReducer,
+  admin: adminReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -6,12 +6,12 @@ import { Table, SearchFilter } from "../../uiElements";
 
 import { connect } from "react-redux";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import { FieldOfStudy } from "@examsystem/common";
+import { FieldOfStudy, Organization } from "@examsystem/common";
 import TableRowsTests from "./TableRowsTests";
 
 interface IManageTestsPageProps {
   match: match<{ fieldId: string }>;
-  fields: FieldOfStudy[] | undefined;
+  organizations: Organization[] | undefined;
 }
 
 const titles = [
@@ -26,8 +26,11 @@ const titles = [
 //TODO by Bar
 const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
   match,
-  fields,
+  organizations,
 }) => {
+  const fields = organizations?.reduce((pre, cur) => {
+    return [...pre, ...cur.fields];
+  }, Array<FieldOfStudy>());
   const field = fields?.find((f) => f.id === match.params.fieldId);
   const [tests, setTests] = useState(field?.tests);
 
@@ -53,6 +56,6 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
   );
 };
 const mapState2Props = (state: RootState) => ({
-  fields: state.organization.organization?.fields,
+  organizations: state.admin.admin?.organizations,
 });
 export default connect(mapState2Props)(ManageTestsPage);
