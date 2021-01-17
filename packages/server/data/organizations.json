@@ -1,0 +1,47 @@
+{
+  "organizations": [
+    {
+      "id": "0",
+      "name": "BlaBla",
+      "adminIds": ["0", "1"],
+      "questions": [],
+      "fields": [
+        {
+          "id": "1",
+          "title": "Development",
+          "questionIds": [],
+          "tests": [
+            {
+              "id": "45",
+              "lastUpdate": "2021-01-17T09:50:35.793Z",
+              "version": 1,
+              "lang": 1,
+              "title": "Great test",
+              "introduction": "wooooow! ye!!",
+              "testerEmail": "bar@bar.com",
+              "failMessage": "Fail!!",
+              "passingGrade": 65,
+              "reviewAnswers": false,
+              "successMessage": "Success!!",
+              "questionIds": ["56", "41", "12"]
+            },
+            {
+              "id": "46",
+              "lastUpdate": "2021-01-17T09:50:35.793Z",
+              "version": 1,
+              "lang": 1,
+              "title": "Amazing test",
+              "introduction": "wooooow! ye!!",
+              "testerEmail": "bar@bar.com",
+              "failMessage": "Fail!!",
+              "passingGrade": 65,
+              "reviewAnswers": false,
+              "successMessage": "Success!!",
+              "questionIds": ["56", "41", "12"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
