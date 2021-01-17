@@ -3,6 +3,6 @@ import organizationController from "../controllers/organizationController";
 
 const router = express.Router();
 
-router.get("/", organizationController.getOrganization);
+router.get("/", organizationController.getAdmin);
 
 export default router;
