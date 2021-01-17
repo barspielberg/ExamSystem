@@ -1,0 +1,28 @@
+@import "styles/colors";
+
+.Table {
+  border-collapse: collapse;
+  thead {
+    background-color: $primary;
+  }
+  th,
+  td {
+    border: 1px solid #ababab;
+    padding: 0.5rem;
+  }
+  th {
+    color: white;
+    font-weight: inherit;
+  }
+  tbody {
+    tr:nth-child(odd) {
+      background-color: $dark_row;
+    }
+    tr:nth-child(even) {
+      background-color: $light_row;
+    }
+    tr:hover {
+      background-color: darken($color: $dark_row, $amount: 3%);
+    }
+  }
+}
