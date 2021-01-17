@@ -13,7 +13,11 @@ interface ILoginPageProps {
   login: (email: string, password: string) => void;
 }
 
-const LoginPage: React.FC<ILoginPageProps> = ({ login, err, organizations }) => {
+const LoginPage: React.FC<ILoginPageProps> = ({
+  login,
+  err,
+  organizations,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
