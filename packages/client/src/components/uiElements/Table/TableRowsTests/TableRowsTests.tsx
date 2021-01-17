@@ -1,5 +1,6 @@
 import React from "react";
 import { Test } from "@examsystem/common";
+import Button from "../../Button/Button";
 
 interface ITableRowsTestsProps {
   tests?: Test[];
@@ -15,16 +16,16 @@ const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
           <tr key={index}>
             <td>{t.id}</td>
             <td>
-              <button>Copy</button>
+              <Button>Copy</Button>
             </td>
             <td>{t.title}</td>
             <td>{t.questionIds.length}</td>
             <td>{new Date(t.lastUpdate).toLocaleDateString()}</td>
             <td>{t.version}</td>
             <td>
-              <button>btn</button>
-              <button>btn</button>
-              <button>btn</button>
+              <Button>Edit</Button>
+              <Button>Duplicate</Button>
+              <Button danger>Delete</Button>
             </td>
           </tr>
         ))}

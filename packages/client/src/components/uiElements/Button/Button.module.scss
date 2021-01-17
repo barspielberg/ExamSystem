@@ -1,0 +1,30 @@
+.btn {
+  $bkg_color: #5a5a5a;
+
+  cursor: pointer;
+  background-color: $bkg_color;
+  color: white;
+  font: inherit;
+  border: none;
+  border-radius: 5px;
+  padding: 0.2rem 0.6rem;
+  margin: 0 0.2rem;
+  &:hover {
+    background-color: lighten($color: $bkg_color, $amount: 20%);
+  }
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    background-color: lighten($color: $bkg_color, $amount: 40%);
+    cursor: not-allowed;
+  }
+
+  &.danger {
+    $bkg_color: #b82b2b;
+    background-color: $bkg_color;
+    &:hover {
+      background-color: lighten($color: $bkg_color, $amount: 20%);
+    }
+  }
+}
