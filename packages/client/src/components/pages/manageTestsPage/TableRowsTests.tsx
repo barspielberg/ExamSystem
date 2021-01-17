@@ -1,6 +1,6 @@
 import React from "react";
 import { Test } from "@examsystem/common";
-import Button from "../../Button/Button";
+import Button from "../../uiElements/Button/Button";
 import { useHistory } from "react-router";
 
 interface ITableRowsTestsProps {

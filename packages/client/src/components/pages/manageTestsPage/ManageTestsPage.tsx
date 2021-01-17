@@ -6,7 +6,7 @@ import Table from "../../uiElements/Table/Table";
 import { connect } from "react-redux";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { FieldOfStudy } from "@examsystem/common";
-import TableRowsTests from "../../uiElements/Table/TableRowsTests/TableRowsTests";
+import TableRowsTests from "./TableRowsTests";
 import SearchFilter from "../../uiElements/SearchFilter/SearchFilter";
 import { useState } from "react";
 
