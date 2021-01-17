@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./ManageTestsPage.module.scss";
 
 import { match } from "react-router";
-import Table from "../../uiElements/Table/Table";
+import { Table, SearchFilter } from "../../uiElements";
+
 import { connect } from "react-redux";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { FieldOfStudy } from "@examsystem/common";
 import TableRowsTests from "./TableRowsTests";
-import SearchFilter from "../../uiElements/SearchFilter/SearchFilter";
-import { useState } from "react";
 
 interface IManageTestsPageProps {
   match: match<{ fieldId: string }>;

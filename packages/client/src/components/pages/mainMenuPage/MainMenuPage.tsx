@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { FieldOfStudy } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import Header from "../../uiElements/Header/Header";
-import PopupMessage from "../../uiElements/PopupMessage/PopupMessage";
+import { Header, PopupMessage } from "../../uiElements";
 import classes from "./MainMenuPage.module.scss";
 
 interface IMainMenuPageProps {

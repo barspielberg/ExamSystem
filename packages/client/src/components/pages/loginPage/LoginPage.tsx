@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Organization } from "@examsystem/common";
 import { getOrganization } from "../../../redux/actions/organizationActions";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import Header from "../../uiElements/Header/Header";
+import { Header } from "../../uiElements";
 
 interface ILoginPageProps {
   organization: Organization | null;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Button from "../Button/Button";
-import Header from "../Header/Header";
+import { Button } from "../Button/Button";
+import { Header } from "../Header/Header";
 import classes from "./PopupMessage.module.scss";
 
 interface IPopupMessageProps {
@@ -10,7 +10,7 @@ interface IPopupMessageProps {
   clear: () => void;
 }
 
-const PopupMessage: React.FC<IPopupMessageProps> = ({
+export const PopupMessage: React.FC<IPopupMessageProps> = ({
   title,
   text,
   show,
@@ -39,5 +39,3 @@ const PopupMessage: React.FC<IPopupMessageProps> = ({
     </div>
   ) : null;
 };
-
-export default PopupMessage;

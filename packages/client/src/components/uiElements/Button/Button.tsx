@@ -9,7 +9,7 @@ interface IButtonProps {
   danger?: boolean;
 }
 
-const Button: React.FC<IButtonProps> = ({
+export const Button: React.FC<IButtonProps> = ({
   onClick,
   children,
   disabled,
@@ -25,5 +25,3 @@ const Button: React.FC<IButtonProps> = ({
     </button>
   );
 };
-
-export default Button;

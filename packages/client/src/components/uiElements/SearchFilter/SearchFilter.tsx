@@ -14,7 +14,7 @@ interface ISearchFilterProps {
   placeholder?: string;
 }
 
-const SearchFilter: React.FC<ISearchFilterProps> = ({
+export const SearchFilter: React.FC<ISearchFilterProps> = ({
   originalTests,
   onTestsChange,
   originalQuestions,
@@ -67,5 +67,3 @@ const SearchFilter: React.FC<ISearchFilterProps> = ({
     </div>
   );
 };
-
-export default SearchFilter;

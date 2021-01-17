@@ -5,7 +5,7 @@ interface ITableProps {
   titles: string[];
 }
 
-const Table: React.FC<ITableProps> = ({ titles, children }) => {
+export const Table: React.FC<ITableProps> = ({ titles, children }) => {
   return (
     <table className={classes.Table}>
       <thead>
@@ -19,5 +19,3 @@ const Table: React.FC<ITableProps> = ({ titles, children }) => {
     </table>
   );
 };
-
-export default Table;
