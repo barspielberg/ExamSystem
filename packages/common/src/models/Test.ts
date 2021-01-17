@@ -3,6 +3,8 @@ import { EmailMessage } from "./EmailMessage";
 
 export interface Test {
   id: string;
+  lastUpdate: string;
+  version: number;
   lang: Language;
   title: string;
   introduction: string;
