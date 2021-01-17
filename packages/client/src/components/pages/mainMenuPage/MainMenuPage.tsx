@@ -5,24 +5,45 @@ import { Organization } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { Header, PopupMessage } from "../../uiElements";
 import classes from "./MainMenuPage.module.scss";
+import { useEffect } from "react";
+import SelectOrganization from "./SelectOrganization/SelectOrganization";
 
 interface IMainMenuPageProps {
   organizations: Organization[] | undefined;
 }
-
+//TODO needs better design
 const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
   const [fieldId, setFieldId] = useState("");
+  const [organization, setOrganization] = useState<Organization>();
   const [errMsg, setErrMsg] = useState(false);
   const history = useHistory();
+
+  useEffect(() => {
+    if (organizations && organizations.length > 0)
+      setOrganization(organizations[0]);
+  }, [organizations, setOrganization]);
 
   const navigationHandler = (path: string) => {
     if (fieldId) history.push(`${path}/${fieldId}`);
     else setErrMsg(true);
   };
-  const tmpOrg = organizations && organizations[0]; //TODO need to fix
+
   return (
     <div className={classes.main}>
-      <Header>Administration System - {tmpOrg?.name}</Header>
+      <Header>
+        Administration System {organization ? `- ${organization.name}` : ""}
+      </Header>
+
+      {organizations && organizations.length > 1 && (
+        <section>
+          You have more than one organization associated to you, please choose
+          one:{" "}
+          <SelectOrganization
+            organizations={organizations}
+            onChange={setOrganization}
+          />
+        </section>
+      )}
       <b> Main Menu </b>
       <section>
         <p>
@@ -33,7 +54,7 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
             onChange={(e) => setFieldId(e.target.value)}
           >
             <option value="">please choose field of study</option>
-            {tmpOrg?.fields.map((f) => (
+            {organization?.fields.map((f) => (
               <option key={f.id} value={f.id}>
                 {f.title}
               </option>
