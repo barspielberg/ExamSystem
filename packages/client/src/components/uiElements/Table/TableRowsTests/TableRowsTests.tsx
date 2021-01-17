@@ -1,6 +1,8 @@
 import React from "react";
 import { Test } from "@examsystem/common";
 import Button from "../../Button/Button";
+import { useHistory, useLocation } from "react-router";
+import { useRef } from "react";
 
 interface ITableRowsTestsProps {
   tests?: Test[];
@@ -8,6 +10,23 @@ interface ITableRowsTestsProps {
 
 const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
   const notEmpty = !!tests && tests.length > 0;
+  const history = useHistory();
+  const hostname = `${window.location.hostname}:${window.location.port}`;
+  const txtRef = useRef<HTMLTextAreaElement>(null);
+
+  const copyHandler = (id: string) => {
+    const selBox = document.createElement("textarea");
+    selBox.style.position = "fixed";
+    selBox.style.left = "0";
+    selBox.style.top = "0";
+    selBox.style.opacity = "0";
+    selBox.value = `${hostname}/ActiveTest/${id}`;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand("copy");
+    document.body.removeChild(selBox);
+  };
 
   return (
     <React.Fragment>
@@ -16,19 +35,23 @@ const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
           <tr key={index}>
             <td>{t.id}</td>
             <td>
-              <Button>Copy</Button>
+              <Button onClick={() => copyHandler(t.id)}>Copy</Button>
             </td>
             <td>{t.title}</td>
             <td>{t.questionIds.length}</td>
             <td>{new Date(t.lastUpdate).toLocaleDateString()}</td>
             <td>{t.version}</td>
             <td>
-              <Button>Edit</Button>
-              <Button>Duplicate</Button>
-              <Button danger>Delete</Button>
+              <Button onClick={() => history.push(`/EditTest/${t.id}`)}>
+                Edit
+              </Button>
+              <Button disabled danger>
+                Delete
+              </Button>
             </td>
           </tr>
         ))}
+      <textarea ref={txtRef} hidden />
     </React.Fragment>
   );
 };

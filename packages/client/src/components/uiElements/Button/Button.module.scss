@@ -26,5 +26,8 @@
     &:hover {
       background-color: lighten($color: $bkg_color, $amount: 20%);
     }
+    &:disabled {
+      background-color: lighten($color: $bkg_color, $amount: 40%);
+    }
   }
 }
