@@ -28,10 +28,7 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
   match,
   organizations,
 }) => {
-  const fields = organizations?.reduce((pre, cur) => {
-    return [...pre, ...cur.fields];
-  }, Array<FieldOfStudy>());
-  const field = fields?.find((f) => f.id === match.params.fieldId);
+  const field = getField(match.params.fieldId, organizations);
   const [tests, setTests] = useState(field?.tests);
 
   return (
@@ -59,3 +56,13 @@ const mapState2Props = (state: RootState) => ({
   organizations: state.admin.admin?.organizations,
 });
 export default connect(mapState2Props)(ManageTestsPage);
+
+const getField = (
+  id: string,
+  org?: Organization[]
+): FieldOfStudy | undefined => {
+  const allFields = org?.reduce((pre, cur) => {
+    return [...pre, ...cur.fields];
+  }, Array<FieldOfStudy>());
+  return allFields?.find((f) => f.id === id);
+};
