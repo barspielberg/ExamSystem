@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
-import { Organization } from "@examsystem/common";
+import { FieldOfStudy, Organization } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { Header, PopupMessage } from "../../uiElements";
 import classes from "./MainMenuPage.module.scss";
 import { useEffect } from "react";
-import SelectOrganization from "./SelectOrganization/SelectOrganization";
+import { SelectFields, SelectOrganization } from "./Selects";
 
 interface IMainMenuPageProps {
   organizations: Organization[] | undefined;
 }
-//TODO needs better design
+
 const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
-  const [fieldId, setFieldId] = useState("");
   const [organization, setOrganization] = useState<Organization>();
+  const [field, setField] = useState<FieldOfStudy>();
   const [errMsg, setErrMsg] = useState(false);
   const history = useHistory();
 
@@ -23,8 +23,13 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
       setOrganization(organizations[0]);
   }, [organizations, setOrganization]);
 
+  useEffect(() => {
+    if (organization && organization.fields.length > 0)
+      setField(organization.fields[0]);
+  }, [organization, setField]);
+
   const navigationHandler = (path: string) => {
-    if (fieldId) history.push(`${path}/${fieldId}`);
+    if (field) history.push(`${path}/${field.id}`);
     else setErrMsg(true);
   };
 
@@ -46,21 +51,17 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
       )}
       <b> Main Menu </b>
       <section>
-        <p>
-          Choose a field of study:{" "}
-          <select
-            className={classes.clickable}
-            value={fieldId}
-            onChange={(e) => setFieldId(e.target.value)}
-          >
-            <option value="">please choose field of study</option>
-            {organization?.fields.map((f) => (
-              <option key={f.id} value={f.id}>
-                {f.title}
-              </option>
-            ))}
-          </select>
-        </p>
+        {organization && organization?.fields.length > 1 ? (
+          <p>
+            Choose a field of study:{" "}
+            <SelectFields fields={organization?.fields} onChange={setField} />
+          </p>
+        ) : (
+          <p>
+            Field of study:{" "}
+            {organization?.fields[0].title || "No fields in this organization"}
+          </p>
+        )}
         <p
           className={classes.clickable}
           onClick={() => navigationHandler("/ManageQuestions")}
