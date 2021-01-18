@@ -5,9 +5,10 @@ import { useHistory } from "react-router";
 
 interface ITableRowsTestsProps {
   tests?: Test[];
+  fieldId: string;
 }
 
-const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
+const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests, fieldId }) => {
   const notEmpty = !!tests && tests.length > 0;
   const history = useHistory();
   const hostname = `${window.location.hostname}:${window.location.port}`;
@@ -40,7 +41,11 @@ const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
             <td>{new Date(t.lastUpdate).toLocaleDateString()}</td>
             <td>{t.version}</td>
             <td>
-              <Button onClick={() => history.push(`/EditTest/${t.id}`)}>
+              <Button
+                onClick={() =>
+                  history.push(`/EditTest?fieldId=${fieldId}&testId=${t.id}`)
+                }
+              >
                 Edit
               </Button>
               <Button disabled danger>

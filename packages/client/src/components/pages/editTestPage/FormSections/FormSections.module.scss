@@ -1,0 +1,13 @@
+@import "styles/colors";
+.section {
+  border: 1px solid $grey;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: $dark_row;
+  header {
+    padding: 0.5rem;
+    background-color: $primary;
+    color: white;
+    font-weight: 400;
+  }
+}

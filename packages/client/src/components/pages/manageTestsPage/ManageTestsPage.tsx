@@ -47,7 +47,7 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
       </div>
 
       <Table titles={titles}>
-        <TableRowsTests tests={tests} />
+        <TableRowsTests tests={tests} fieldId={match.params.fieldId} />
       </Table>
     </div>
   );
