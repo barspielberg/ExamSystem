@@ -1,13 +1,13 @@
-import { Organization } from "@examsystem/common";
 import React from "react";
-import { useEffect } from "react";
+import { Organization } from "@examsystem/common";
+import classes from "./Selects.module.scss";
 
 interface ISelectOrganizationProps {
   organizations: Organization[];
   onChange: (selcted: Organization | undefined) => void;
 }
 
-const SelectOrganization: React.FC<ISelectOrganizationProps> = ({
+export const SelectOrganization: React.FC<ISelectOrganizationProps> = ({
   organizations,
   onChange,
 }) => {
@@ -15,7 +15,10 @@ const SelectOrganization: React.FC<ISelectOrganizationProps> = ({
     onChange(organizations.find((o) => o.id === id));
   };
   return (
-    <select onChange={(e) => changHandler(e.target.value)}>
+    <select
+      className={classes.select}
+      onChange={(e) => changHandler(e.target.value)}
+    >
       {organizations.map((o) => (
         <option key={o.id} value={o.id}>
           {o.name}
@@ -24,5 +27,3 @@ const SelectOrganization: React.FC<ISelectOrganizationProps> = ({
     </select>
   );
 };
-
-export default SelectOrganization;
