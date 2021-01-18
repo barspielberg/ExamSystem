@@ -1,14 +1,46 @@
 import React, { useState } from "react";
-import { match } from "react-router";
-import { QuestionType } from "@examsystem/common";
+import { match, useHistory } from "react-router";
+import { Answer, QuestionType } from "@examsystem/common";
+import { Alignment } from "@examsystem/common";
 
 interface IEditQuestionPageProps {
   match: match<{ questionId: string }>;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
+  const history = useHistory();
   const [selectedType, setSelectedType] = useState(-1);
-  const [answers, setAnswers] = useState([]);
+  const [selectedAlignment, setSelectedAlignment] = useState(Alignment[0]);
+  const [tags, setTags] = useState("");
+  const defaultAnswers: Answer[] = [
+    {
+      id: "0",
+      content: "first answer",
+      correct: false,
+    },
+    {
+      id: "1",
+      content: "second answer",
+      correct: false,
+    },
+    {
+      id: "2",
+      content: "third answer",
+      correct: true,
+    },
+    {
+      id: "3",
+      content: "fourth answer",
+      correct: false,
+    },
+  ];
+  const [answers, setAnswers] = useState(defaultAnswers);
+
+  const updateContent = (index: any) => (e: any) => {
+    let newArr = [...answers];
+    newArr[index] = e.target.value;
+    setAnswers(newArr);
+  };
 
   return (
     <div>
@@ -38,6 +70,69 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
         <div>
           {/* #TODO plan how to show answers and add new answers single/muktiple choice */}
           <label>Possible Answers:</label>
+          {answers.map((ans, index) => {
+            return (
+              <div key={index}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    /*hadle remove answer */
+                  }}
+                >
+                  X
+                </button>
+                <input
+                  value={ans.content}
+                  onChange={(e) => updateContent(index)(e)}
+                />
+                <input
+                  type="radio"
+                  name="WhoIsCorrect"
+                  checked={ans.correct === true}
+                  onChange={(e) => {
+                    /*hadle change is correct */
+                  }}
+                />
+              </div>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => {
+              /*hadle add answer */
+            }}
+          >
+            Add an Answer
+          </button>
+        </div>
+        <div>
+          <label>Answers Layout:</label>
+          <input
+            type="radio"
+            value={0}
+            name="alignment"
+            onSelect={() => setSelectedAlignment(Alignment[0])}
+          />
+          <label>Horizontal</label>
+          <input
+            type="radio"
+            value={1}
+            name="alignment"
+            onSelect={() => setSelectedAlignment(Alignment[1])}
+          />
+          <label>Vertical</label>
+        </div>
+        <hr />
+        <div>
+          <label>Tags: </label>
+          <input value={tags} onChange={(e) => setTags(e.target.value)} />
+        </div>
+        <div>
+          <button type="button" onClick={history.goBack}>
+            Back
+          </button>
+          <button type="button">Show</button>
+          <button type="button">Save</button>
         </div>
       </form>
     </div>
