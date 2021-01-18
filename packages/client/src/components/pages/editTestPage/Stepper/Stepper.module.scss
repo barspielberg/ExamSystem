@@ -1,0 +1,34 @@
+@import "styles/colors";
+
+.stepper {
+  $grey: #cacaca;
+
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+
+  .step {
+    color: $grey;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+    &[aria-selected="true"] {
+      transform: scale(1.1);
+      color: $secondary;
+    }
+  }
+
+  .line {
+    flex: 1;
+    margin: 0 0.7rem;
+    span {
+      border-top: 1px solid $grey;
+      display: block;
+    }
+  }
+}
