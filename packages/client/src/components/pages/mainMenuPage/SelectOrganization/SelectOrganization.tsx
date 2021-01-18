@@ -1,6 +1,5 @@
 import { Organization } from "@examsystem/common";
 import React from "react";
-import { useEffect } from "react";
 
 interface ISelectOrganizationProps {
   organizations: Organization[];
