@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import organizationRepository from "../Dal/organizationRepository";
 import adminRepository from "../Dal/adminRepository";
-import { Organization } from "@examsystem/common";
 
 class OrganozationController {
   async getAdmin(req: Request, res: Response, next: NextFunction) {
