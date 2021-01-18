@@ -22,7 +22,7 @@ function App() {
           path="/StudentReport/:fieldId"
           Component={StudentReportPage}
         />
-        <PrivateRoute path="/EditTest/:testId" Component={EditTestPage} />
+        <PrivateRoute path="/EditTest" Component={EditTestPage} />
         <PrivateRoute
           path="/EditQuestion/:questionId"
           Component={EditQuestionPage}
