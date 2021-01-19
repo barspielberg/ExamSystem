@@ -21,12 +21,12 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
     {
       id: "1",
       content: "second answer",
-      correct: false,
+      correct: true,
     },
     {
       id: "2",
       content: "third answer",
-      correct: true,
+      correct: false,
     },
     {
       id: "3",
@@ -38,7 +38,32 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
 
   const updateContent = (index: any) => (e: any) => {
     let newArr = [...answers];
-    newArr[index] = e.target.value;
+    newArr[index].content = e.target.value;
+    setAnswers(newArr);
+  };
+
+  const removeAnswer = (id:string) => {
+    let newArr = answers.filter((ans) => ans.id != id);
+    setAnswers(newArr);
+  };
+
+  const addNewAnswer = () => {
+    const newAnswer: Answer = {
+      id: answers.length.toString(),
+      content: "new answer",
+      correct: false,
+    };
+    setAnswers([...answers, newAnswer]);
+  };
+
+  const setCorrectAnswer = (index: any) => {
+    const currentCorrect = answers.find((ans) => ans.correct === true);
+    const newArr = answers;
+    if (currentCorrect) {
+      currentCorrect.correct = false;
+      newArr[+currentCorrect] = currentCorrect;
+    }
+    newArr[index].correct = true;
     setAnswers(newArr);
   };
 
@@ -73,12 +98,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
           {answers.map((ans, index) => {
             return (
               <div key={index}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    /*hadle remove answer */
-                  }}
-                >
+                <button type="button" onClick={() =>{removeAnswer(ans.id);} }>
                   X
                 </button>
                 <input
@@ -88,20 +108,13 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
                 <input
                   type="radio"
                   name="WhoIsCorrect"
-                  checked={ans.correct === true}
-                  onChange={(e) => {
-                    /*hadle change is correct */
-                  }}
+                  checked={ans.correct}
+                  onChange={() => setCorrectAnswer(index)}
                 />
               </div>
             );
           })}
-          <button
-            type="button"
-            onClick={() => {
-              /*hadle add answer */
-            }}
-          >
+          <button type="button" onClick={addNewAnswer}>
             Add an Answer
           </button>
         </div>
