@@ -46,7 +46,7 @@ export const GeneralDetails: React.FC<IGeneralDetailsProps> = ({
           <input
             id="show_checkbox"
             type="checkbox"
-            value={`${test.reviewAnswers}`}
+            checked={test.reviewAnswers}
             onChange={(e) =>
               onTestChange({
                 ...test,
