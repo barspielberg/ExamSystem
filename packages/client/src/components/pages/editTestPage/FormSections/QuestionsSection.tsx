@@ -3,7 +3,7 @@ import classes from "./FormSections.module.scss";
 import { Test } from "@examsystem/common";
 
 interface IQuestionsSectionProps {
-  test?: Test;
+  test: Test;
   onTestChange: (test: Test) => void;
 }
 

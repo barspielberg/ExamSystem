@@ -30,4 +30,14 @@
       background-color: lighten($color: $bkg_color, $amount: 40%);
     }
   }
+  &.success {
+    $bkg_color: #2bb832;
+    background-color: $bkg_color;
+    &:hover {
+      background-color: lighten($color: $bkg_color, $amount: 20%);
+    }
+    &:disabled {
+      background-color: lighten($color: $bkg_color, $amount: 40%);
+    }
+  }
 }

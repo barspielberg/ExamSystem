@@ -40,14 +40,14 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
       </Header>
 
       {organizations && organizations.length > 1 && (
-        <section>
+        <h4>
           You have more than one organization associated to you, please choose
           one:{" "}
           <SelectOrganization
             organizations={organizations}
             onChange={setOrganization}
           />
-        </section>
+        </h4>
       )}
       <b> Main Menu </b>
       <section>

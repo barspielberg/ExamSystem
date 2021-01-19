@@ -16,6 +16,7 @@
 .container {
   position: absolute;
   left: 50%;
+  top: 35%;
 }
 
 .content {
@@ -25,6 +26,7 @@
   transition: all 0.5s;
   transform: translateY(100px);
   opacity: 0;
+  text-align: center;
 
   &.in {
     transform: translateY(0);
@@ -36,7 +38,9 @@
 
     footer {
       display: flex;
-      flex-direction: row-reverse;
+      .filler {
+        flex: 1;
+      }
     }
   }
 }

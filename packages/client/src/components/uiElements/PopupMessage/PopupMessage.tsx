@@ -8,6 +8,10 @@ interface IPopupMessageProps {
   text: string;
   show: boolean;
   clear: () => void;
+  action?: () => void;
+  actionTag?: string;
+  clearTag?: string;
+  warning?: boolean;
 }
 
 export const PopupMessage: React.FC<IPopupMessageProps> = ({
@@ -15,6 +19,10 @@ export const PopupMessage: React.FC<IPopupMessageProps> = ({
   text,
   show,
   clear,
+  action,
+  actionTag,
+  clearTag,
+  warning,
 }) => {
   const [fade, setFade] = useState(false);
 
@@ -27,11 +35,17 @@ export const PopupMessage: React.FC<IPopupMessageProps> = ({
       <div className={`${classes.backdrop} ${fade ? classes.dark : ""}`}></div>
       <div className={classes.container}>
         <div className={`${classes.content} ${fade ? classes.in : ""}`}>
-          <Header>{title}</Header>
+          <Header warning={warning}>{title}</Header>
           <div className={classes.body}>
             <p>{text}</p>
             <footer>
-              <Button onClick={clear}>OK</Button>
+              {action && (
+                <Button danger onClick={action}>
+                  {actionTag || "OK"}
+                </Button>
+              )}
+              <div className={classes.filler} />
+              <Button onClick={clear}>{clearTag || "OK"}</Button>
             </footer>
           </div>
         </div>
