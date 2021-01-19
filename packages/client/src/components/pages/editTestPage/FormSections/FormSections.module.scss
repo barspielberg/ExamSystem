@@ -24,12 +24,15 @@
       margin: 0.5rem 0;
     }
 
-    *:nth-child(odd) {
-      text-align: end;
-      padding-inline-end: 1rem;
+    h4 {
+      grid-column: span 2;
+      text-align: center;
+      background-color: $grey;
     }
 
     label {
+      text-align: end;
+      padding-inline-end: 1rem;
       user-select: none;
     }
     select,
@@ -54,6 +57,11 @@
       @media (min-width: 600px) {
         margin-right: 2rem;
       }
+    }
+    .tampInfo {
+      grid-column: span 2;
+      padding: 1rem 2rem;
+      cursor: pointer;
     }
   }
 }
