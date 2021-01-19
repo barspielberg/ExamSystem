@@ -7,7 +7,7 @@ import { Location } from "history";
 import { useLocation } from "react-router";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import Stepper from "./Stepper/Stepper";
-import { Header } from "../../uiElements";
+import { Button, Header } from "../../uiElements";
 import {
   EmailDelivery,
   GeneralDetails,
@@ -40,6 +40,12 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
       )}
       {step === 1 && <EmailDelivery test={test} onTestChange={setTest} />}
       {step === 2 && <QuestionsSection test={test} onTestChange={setTest} />}
+      <div className={classes.btns}>
+        <Button>« Back</Button>
+        <div className={classes.filler} />
+        <Button disabled>Show</Button>
+        <Button success>Save »</Button>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,11 @@
 .page {
   max-width: 800px;
   margin: auto;
+  .btns {
+    display: flex;
+    margin-top: 0.5rem;
+    .filler {
+      flex: 1;
+    }
+  }
 }
