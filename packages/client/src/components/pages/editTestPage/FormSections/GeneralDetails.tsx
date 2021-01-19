@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./FormSections.module.scss";
-import { FieldOfStudy, Test } from "@examsystem/common";
+import { Test } from "@examsystem/common";
 
 interface IGeneralDetailsProps {
   test?: Test;
