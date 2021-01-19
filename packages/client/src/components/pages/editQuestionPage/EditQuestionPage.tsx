@@ -42,7 +42,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
     setAnswers(newArr);
   };
 
-  const removeAnswer = (id:string) => {
+  const removeAnswer = (id: string) => {
     let newArr = answers.filter((ans) => ans.id != id);
     setAnswers(newArr);
   };
@@ -56,15 +56,8 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
     setAnswers([...answers, newAnswer]);
   };
 
-  const setCorrectAnswer = (index: any) => {
-    const currentCorrect = answers.find((ans) => ans.correct === true);
-    const newArr = answers;
-    if (currentCorrect) {
-      currentCorrect.correct = false;
-      newArr[+currentCorrect] = currentCorrect;
-    }
-    newArr[index].correct = true;
-    setAnswers(newArr);
+  const setCorrectAnswer = (id: string) => {
+    setAnswers(answers.map((ans) => ({ ...ans, correct: ans.id === id })));
   };
 
   return (
@@ -98,7 +91,12 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
           {answers.map((ans, index) => {
             return (
               <div key={index}>
-                <button type="button" onClick={() =>{removeAnswer(ans.id);} }>
+                <button
+                  type="button"
+                  onClick={() => {
+                    removeAnswer(ans.id);
+                  }}
+                >
                   X
                 </button>
                 <input
@@ -109,7 +107,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
                   type="radio"
                   name="WhoIsCorrect"
                   checked={ans.correct}
-                  onChange={() => setCorrectAnswer(index)}
+                  onChange={() => setCorrectAnswer(ans.id)}
                 />
               </div>
             );
