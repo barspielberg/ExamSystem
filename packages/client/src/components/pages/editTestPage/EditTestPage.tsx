@@ -24,7 +24,7 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
   const testClone = deepClone(getTest(testId, organizations));
   const field = getFields(organizations)?.find((f) => f.id === fieldId);
 
-  const [test, setTest] = useState(testClone);
+  const [test, setTest] = useState(testClone || newTest);
   const [step, setStep] = useState(0);
 
   return (
@@ -68,4 +68,19 @@ function deepClone<T>(obj: T): T {
 const getParams = (location: Location) => {
   const params = new URLSearchParams(location.search);
   return { fieldId: params.get("fieldId"), testId: params.get("testId") };
+};
+
+const newTest: Test = {
+  id: "",
+  lang: 0,
+  title: "",
+  introduction: "",
+  lastUpdate: new Date().toString(),
+  passingGrade: 0,
+  questionIds: [],
+  reviewAnswers: false,
+  successMessage: "",
+  failMessage: "",
+  testerEmail: "",
+  version: 1,
 };

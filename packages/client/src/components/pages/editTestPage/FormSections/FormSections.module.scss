@@ -1,13 +1,71 @@
 @import "styles/colors";
 .section {
-  border: 1px solid $grey;
-  border-radius: 10px;
-  overflow: hidden;
-  background-color: $dark_row;
   header {
     padding: 0.5rem;
     background-color: $primary;
     color: white;
-    font-weight: 400;
+    font-weight: 500;
+    border: 1px solid $grey;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .inputs {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    background-color: $dark_row;
+    border: 1px solid $grey;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transform-origin: top center;
+    animation: drop 300ms ease-in-out forwards;
+
+    * {
+      margin: 0.5rem 0;
+    }
+
+    *:nth-child(odd) {
+      text-align: end;
+      padding-inline-end: 1rem;
+    }
+
+    label {
+      user-select: none;
+    }
+    select,
+    input {
+      font: inherit;
+      max-width: 15rem;
+      border-radius: 5px;
+      border-width: 1px;
+      border-color: $grey;
+      &:focus {
+        outline: none;
+      }
+    }
+    textarea {
+      font: inherit;
+      padding: 0.2rem;
+      border-color: $grey;
+      border-radius: 5px;
+      &:focus {
+        outline-color: darken($color: $grey, $amount: 5%);
+      }
+      @media (min-width: 600px) {
+        margin-right: 2rem;
+      }
+    }
+  }
+}
+
+@keyframes drop {
+  0% {
+    transform: rotateX(-90deg);
+  }
+  80% {
+    transform: rotateX(15deg);
+  }
+  100% {
+    transform: rotateX(0deg);
   }
 }
