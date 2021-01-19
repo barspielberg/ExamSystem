@@ -6,4 +6,7 @@
   font-size: larger;
   font-weight: bold;
   padding: 0.5rem;
+  &.warning {
+    background-color: #ff5722;
+  }
 }

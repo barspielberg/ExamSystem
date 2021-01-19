@@ -4,10 +4,10 @@ import { FieldOfStudy, Organization, Test } from "@examsystem/common";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { Location } from "history";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import Stepper from "./Stepper/Stepper";
-import { Button, Header } from "../../uiElements";
+import { Button, Header, PopupMessage } from "../../uiElements";
 import {
   EmailDelivery,
   GeneralDetails,
@@ -24,8 +24,10 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
   const testClone = deepClone(getTest(testId, organizations));
   const field = getFields(organizations)?.find((f) => f.id === fieldId);
 
+  const history = useHistory();
   const [test, setTest] = useState(testClone || newTest);
   const [step, setStep] = useState(0);
+  const [showMsg, setShowMsg] = useState(false);
 
   return (
     <div className={classes.page}>
@@ -41,11 +43,21 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
       {step === 1 && <EmailDelivery test={test} onTestChange={setTest} />}
       {step === 2 && <QuestionsSection test={test} onTestChange={setTest} />}
       <div className={classes.btns}>
-        <Button>« Back</Button>
+        <Button onClick={() => setShowMsg(true)}>« Back</Button>
         <div className={classes.filler} />
         <Button disabled>Show</Button>
         <Button success>Save »</Button>
       </div>
+      <PopupMessage
+        show={showMsg}
+        clear={() => setShowMsg(false)}
+        warning
+        action={() => history.goBack()}
+        actionTag="« Go Back"
+        clearTag="Stay"
+        title="Warning!"
+        text="Are you sure you want to go back? The changes you have made will not be saved!"
+      />
     </div>
   );
 };
