@@ -3,7 +3,6 @@ import classes from "./EditTestPage.module.scss";
 import { FieldOfStudy, Organization, Test } from "@examsystem/common";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { Location } from "history";
 import { useHistory, useLocation } from "react-router";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import Stepper from "./Stepper/Stepper";
@@ -13,16 +12,17 @@ import {
   GeneralDetails,
   QuestionsSection,
 } from "./FormSections";
+import { useDebugValue } from "react";
 
 interface IEditTestPageProps {
   organizations?: Organization[];
 }
 //TODO by Bar
+//TODO add error msg if no test found
 const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
-  const location = useLocation();
-  const { fieldId, testId } = getParams(location);
-  const testClone = deepClone(getTest(testId, organizations));
+  const { fieldId, testId } = useParams();
   const field = getFields(organizations)?.find((f) => f.id === fieldId);
+  const testClone = deepClone(field?.tests.find((t) => t.id === testId));
 
   const history = useHistory();
   const [test, setTest] = useState(testClone || newTest);
@@ -67,15 +67,6 @@ const mapState2Props = (state: RootState) => ({
 });
 export default connect(mapState2Props)(EditTestPage);
 
-const getTest = (id: string | null, org?: Organization[]): Test | undefined => {
-  const allFields = getFields(org);
-  const allTests = allFields?.reduce(
-    (pre, cur) => [...pre, ...cur.tests],
-    Array<Test>()
-  );
-  return allTests?.find((t) => t.id === id);
-};
-
 const getFields = (org?: Organization[]): FieldOfStudy[] | undefined =>
   org?.reduce((pre, cur) => [...pre, ...cur.fields], Array<FieldOfStudy>());
 
@@ -83,9 +74,12 @@ function deepClone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
 }
 
-const getParams = (location: Location) => {
+const useParams = () => {
+  const location = useLocation();
   const params = new URLSearchParams(location.search);
-  return { fieldId: params.get("fieldId"), testId: params.get("testId") };
+  const res = { fieldId: params.get("fieldId"), testId: params.get("testId") };
+  useDebugValue(res ?? "loading...");
+  return res;
 };
 
 const newTest: Test = {
