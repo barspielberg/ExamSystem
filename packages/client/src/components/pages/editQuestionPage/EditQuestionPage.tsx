@@ -9,8 +9,8 @@ interface IEditQuestionPageProps {
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
   const history = useHistory();
-  const [selectedType, setSelectedType] = useState(-1);
-  const [selectedAlignment, setSelectedAlignment] = useState(Alignment[0]);
+  const [selectedType, setSelectedType] = useState<QuestionType>();
+  const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
   const [tags, setTags] = useState("");
   const defaultAnswers: Answer[] = [
     {
@@ -43,7 +43,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
   };
 
   const removeAnswer = (id: string) => {
-    let newArr = answers.filter((ans) => ans.id != id);
+    let newArr = answers.filter((ans) => ans.id !== id);
     setAnswers(newArr);
   };
 
@@ -69,11 +69,14 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
         </div>
         <div>
           <label>Question Type:</label>
-          {/* #TODO make select more reactive,this is temporary solution */}
           <select>
             <option value={-1}>please choose question type</option>
-            <option value={0}>{QuestionType[0]}</option>
-            <option value={1}>{QuestionType[1]}</option>
+            <option value={selectedType} onSelect={() => setSelectedType(0)}>
+              {QuestionType[0]}
+            </option>
+            <option value={selectedType} onSelect={() => setSelectedType(1)}>
+              {QuestionType[1]}
+            </option>
           </select>
         </div>
         <div>
@@ -120,16 +123,16 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
           <label>Answers Layout:</label>
           <input
             type="radio"
-            value={0}
+            checked={selectedAlignment === 0}
             name="alignment"
-            onSelect={() => setSelectedAlignment(Alignment[0])}
+            onChange={() => setSelectedAlignment(0)}
           />
           <label>Horizontal</label>
           <input
             type="radio"
-            value={1}
+            checked={selectedAlignment === 1}
             name="alignment"
-            onSelect={() => setSelectedAlignment(Alignment[1])}
+            onChange={() => setSelectedAlignment(1)}
           />
           <label>Vertical</label>
         </div>
