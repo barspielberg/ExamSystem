@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Admin } from "@examsystem/common";
+import { Admin, Organization, Question } from "@examsystem/common";
 
 const server = axios.create({ baseURL: "http://localhost:4000/" });
 
@@ -20,6 +20,11 @@ class DataService {
       console.log(error);
       return undefined;
     }
+  }
+
+  async addQuestion(question: Question, org: Organization) {
+    console.log("hey mich", question);
+    return true;
   }
 }
 
