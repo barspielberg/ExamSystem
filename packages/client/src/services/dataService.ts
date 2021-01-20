@@ -22,6 +22,7 @@ class DataService {
     }
   }
 
+
   async addQuestion(question: Question, orgId: string) {
     console.log("hey mich", question);
     console.log("hey mich", orgId);

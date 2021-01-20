@@ -1,9 +1,9 @@
 import React from "react";
 import classes from "./EditTestPage.module.scss";
-import { FieldOfStudy, Organization, Test } from "@examsystem/common";
+import { FieldOfStudy, Organization, Question, Test } from "@examsystem/common";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import Stepper from "./Stepper/Stepper";
 import { Button, Header, PopupMessage } from "../../uiElements";
@@ -12,7 +12,7 @@ import {
   GeneralDetails,
   QuestionsSection,
 } from "./FormSections";
-import { useDebugValue } from "react";
+import { useParamsFull } from "../../../hooks";
 
 interface IEditTestPageProps {
   organizations?: Organization[];
@@ -20,12 +20,15 @@ interface IEditTestPageProps {
 //TODO by Bar
 //TODO add error msg if no test found
 const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
-  const { fieldId, testId } = useParams();
-  const field = getFields(organizations)?.find((f) => f.id === fieldId);
-  const testClone = deepClone(field?.tests.find((t) => t.id === testId));
+  const { organization, field, test: originalTets } = useParamsFull(
+    organizations
+  );
+
+  const questions = getQuestions(organization, field);
+  const testClone = originalTets ? deepClone(originalTets) : newTest;
 
   const history = useHistory();
-  const [test, setTest] = useState(testClone || newTest);
+  const [test, setTest] = useState(testClone);
   const [step, setStep] = useState(0);
   const [showMsg, setShowMsg] = useState(false);
 
@@ -41,7 +44,13 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
         />
       )}
       {step === 1 && <EmailDelivery test={test} onTestChange={setTest} />}
-      {step === 2 && <QuestionsSection test={test} onTestChange={setTest} />}
+      {step === 2 && (
+        <QuestionsSection
+          test={test}
+          onTestChange={setTest}
+          allQuestionsInField={questions}
+        />
+      )}
       <div className={classes.btns}>
         <Button onClick={() => setShowMsg(true)}>« Back</Button>
         <div className={classes.filler} />
@@ -67,20 +76,20 @@ const mapState2Props = (state: RootState) => ({
 });
 export default connect(mapState2Props)(EditTestPage);
 
-const getFields = (org?: Organization[]): FieldOfStudy[] | undefined =>
-  org?.reduce((pre, cur) => [...pre, ...cur.fields], Array<FieldOfStudy>());
+const getQuestions = (
+  org?: Organization,
+  field?: FieldOfStudy
+): Question[] | undefined => {
+  if (org && field) {
+    return field.questionIds
+      .map((id) => org?.questions.find((q) => q.id === id))
+      .reduce((pre, cur) => (cur ? [...pre, cur] : pre), Array<Question>());
+  } else return undefined;
+};
 
 function deepClone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
 }
-
-const useParams = () => {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const res = { fieldId: params.get("fieldId"), testId: params.get("testId") };
-  useDebugValue(res ?? "loading...");
-  return res;
-};
 
 const newTest: Test = {
   id: "",
