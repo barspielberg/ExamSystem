@@ -5,10 +5,15 @@ import { useHistory } from "react-router";
 
 interface ITableRowsTestsProps {
   tests?: Test[];
-  fieldId: string;
+  fieldId?: string;
+  orgId?: string;
 }
 
-const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests, fieldId }) => {
+const TableRowsTests: React.FC<ITableRowsTestsProps> = ({
+  tests,
+  fieldId,
+  orgId,
+}) => {
   const notEmpty = !!tests && tests.length > 0;
   const history = useHistory();
   const hostname = `${window.location.hostname}:${window.location.port}`;
@@ -43,7 +48,9 @@ const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests, fieldId }) => {
             <td>
               <Button
                 onClick={() =>
-                  history.push(`/EditTest?fieldId=${fieldId}&testId=${t.id}`)
+                  history.push(
+                    `/EditTest?organizationId=${orgId}&fieldId=${fieldId}&testId=${t.id}`
+                  )
                 }
               >
                 Edit

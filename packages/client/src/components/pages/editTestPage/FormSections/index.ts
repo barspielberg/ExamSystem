@@ -1,3 +1,3 @@
 export * from "./GeneralDetails";
 export * from "./EmailDelivery";
-export * from "./QuestionsSection";
+export * from "./QuestionsSection/QuestionsSection";

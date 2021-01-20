@@ -29,7 +29,10 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
   }, [organization, setField]);
 
   const navigationHandler = (path: string) => {
-    if (field) history.push(`${path}/${field.id}`);
+    if (organization && field)
+      history.push(
+        `${path}/?organizationId=${organization.id}&fieldId=${field.id}`
+      );
     else setErrMsg(true);
   };
 
