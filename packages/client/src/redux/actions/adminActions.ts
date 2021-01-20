@@ -13,17 +13,17 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export type adminActionTypes =
   | {
-    type: "SET_ADMIN";
-    admin: Admin | null;
-  }
+      type: "SET_ADMIN";
+      admin: Admin | null;
+    }
   | {
-    type: "SET_ERROR";
-    err: string;
-  }
+      type: "SET_ERROR";
+      err: string;
+    }
   | {
-    type: "SET_QUESTION_ADDED";
-    isSuccessfull: boolean;
-  };
+      type: "SET_QUESTION_ADDED";
+      isSuccessfull: boolean;
+    };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch

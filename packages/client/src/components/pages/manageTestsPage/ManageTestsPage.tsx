@@ -24,7 +24,7 @@ const titles = [
 const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
   organizations,
 }) => {
-  const { organization, field } = useParamsFull(organizations);
+  const { field } = useParamsFull(organizations);
   const [tests, setTests] = useState(field?.tests);
 
   return (
@@ -43,11 +43,7 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
       </div>
 
       <Table titles={titles}>
-        <TableRowsTests
-          orgId={organization?.id}
-          tests={tests}
-          fieldId={field?.id}
-        />
+        <TableRowsTests tests={tests} />
       </Table>
     </div>
   );
