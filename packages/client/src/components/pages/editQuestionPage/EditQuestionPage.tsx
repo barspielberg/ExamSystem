@@ -1,4 +1,4 @@
-import React, { useDebugValue, useState } from "react";
+import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import {
   Answer,
@@ -6,7 +6,6 @@ import {
   Alignment,
   Admin,
   Question,
-  Organization,
 } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
@@ -19,10 +18,11 @@ interface IEditQuestionPageProps {
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
-  admin,
 }) => {
   const history = useHistory();
-  const organizationId = useParams();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const organizationId = params.get("orgId") || "";
   const [selectedType, setSelectedType] = useState<QuestionType>(0);
   const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
   const [tags, setTags] = useState("");
@@ -212,7 +212,6 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 };
 
 const mapState2Props = (state: RootState) => ({
-  admin: state.admin.admin,
   isSuccessfull: state.admin.isSuccessfull,
 });
 const mapDispatch2Props = {
@@ -220,11 +219,3 @@ const mapDispatch2Props = {
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);
-
-const useParams = () => {
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const res = params.get("orgId");
-  useDebugValue(res ?? "loading...");
-  return res || '';
-};
