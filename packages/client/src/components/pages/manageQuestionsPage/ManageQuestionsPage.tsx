@@ -1,4 +1,3 @@
-import { Organization } from "@examsystem/common";
 import React from "react";
 import { match, useHistory } from "react-router";
 

@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { Admin, Question } from "@examsystem/common";
+import { Admin, Organization, Question } from "@examsystem/common";
 import DataService from "../../services/dataService";
 import { RootState } from "../reducers/mainReducer";
 
@@ -33,10 +33,10 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
   else dispatch(setError("Error occured"));
 };
 
-export const addQuestion = (question: Question): AppThunk => async (
+export const addQuestion = (question: Question,orgId:string): AppThunk => async (
   dispatch
 ) => {
-  const quest = await DataService.addQuestion(question);
+  const quest = await DataService.addQuestion(question,orgId);
   if (quest) dispatch(setQuestionAdded(true));
   else dispatch(setError("Error occured"));
 };
