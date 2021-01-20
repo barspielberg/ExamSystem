@@ -1,17 +1,34 @@
 import React, { useState } from "react";
 import { match, useHistory } from "react-router";
-import { Answer, QuestionType } from "@examsystem/common";
-import { Alignment } from "@examsystem/common";
+import {
+  Answer,
+  QuestionType,
+  Alignment,
+  Admin,
+  Question,
+} from "@examsystem/common";
+import { RootState } from "../../../redux/reducers/mainReducer";
+import { connect } from "react-redux";
+import { addQuestion } from "../../../redux/actions/adminActions";
 
 interface IEditQuestionPageProps {
   match: match<{ questionId: string }>;
+  admin: Admin | null;
+  addQuestion: (question: Question) => void;
 }
 //TODO by Michael
-const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
+const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
+  match,
+  addQuestion,
+  admin
+  }) => {
   const history = useHistory();
-  const [selectedType, setSelectedType] = useState<QuestionType>();
+  const [selectedType, setSelectedType] = useState<QuestionType>(0);
   const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
   const [tags, setTags] = useState("");
+  const [mainTitle, setMainTitle] = useState("");
+  const [secondaryTitle, setSecondaryTitle] = useState("");
+
   const defaultAnswers: Answer[] = [
     {
       id: "0",
@@ -57,39 +74,66 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
   };
 
   const setCorrectAnswer = (id: string) => {
-    setAnswers(answers.map((ans) => ({ ...ans, correct: ans.id === id })));
+    selectedType === QuestionType.singleChoiceQuestion
+      ? setAnswers(answers.map((ans) => ({ ...ans, correct: ans.id === id })))
+      : setAnswers(
+          answers.map((ans) => ({
+            ...ans,
+            correct: ans.id === id ? !ans.correct : ans.correct,
+          }))
+        );
+  };
+
+  const submitForm = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    addQuestion({
+      id: Date.now().toString(),
+      mainTitle,
+      secondaryTitle,
+      alignment: selectedAlignment,
+      type: selectedType,
+      possibleAnswers: answers,
+      tags: tags.split(","),
+    },);
   };
 
   return (
     <div>
       <form>
         <div>
-          {/* #TODO replace text to field, maybe should be passed as prop or fetched*/}
-          <label>Field: {match.params.questionId}</label>
-        </div>
-        <div>
           <label>Question Type:</label>
-          <select>
-            <option value={-1}>please choose question type</option>
-            <option value={selectedType} onSelect={() => setSelectedType(0)}>
-              {QuestionType[0]}
-            </option>
-            <option value={selectedType} onSelect={() => setSelectedType(1)}>
-              {QuestionType[1]}
-            </option>
-          </select>
+          {/* maybe chage back to select */}
+          <input
+            type="radio"
+            checked={selectedType === 0}
+            name="type"
+            onChange={() => setSelectedType(0)}
+          />
+          <label>Single choice question</label>
+          <input
+            type="radio"
+            checked={selectedType === 1}
+            name="type"
+            onChange={() => setSelectedType(1)}
+          />
+          <label>Multiple choice question</label>
         </div>
         <div>
           <label>Qustion Text:</label>
-          <textarea></textarea>
+          <textarea
+            value={mainTitle}
+            onChange={(e) => setMainTitle(e.target.value)}
+          ></textarea>
         </div>
         <div>
           <label>Text below question:</label>
-          <textarea></textarea>
+          <textarea
+            value={secondaryTitle}
+            onChange={(e) => setSecondaryTitle(e.target.value)}
+          ></textarea>
         </div>
         <hr />
         <div>
-          {/* #TODO plan how to show answers and add new answers single/muktiple choice */}
           <label>Possible Answers:</label>
           {answers.map((ans, index) => {
             return (
@@ -106,12 +150,21 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
                   value={ans.content}
                   onChange={(e) => updateContent(index)(e)}
                 />
-                <input
-                  type="radio"
-                  name="WhoIsCorrect"
-                  checked={ans.correct}
-                  onChange={() => setCorrectAnswer(ans.id)}
-                />
+                {selectedType === QuestionType.singleChoiceQuestion ? (
+                  <input
+                    type="radio"
+                    name="WhoIsCorrect"
+                    checked={ans.correct}
+                    onChange={() => setCorrectAnswer(ans.id)}
+                  />
+                ) : (
+                  <input
+                    type="checkbox"
+                    name="WhoIsCorrect"
+                    checked={ans.correct}
+                    onChange={() => setCorrectAnswer(ans.id)}
+                  />
+                )}
               </div>
             );
           })}
@@ -146,11 +199,21 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({ match }) => {
             Back
           </button>
           <button type="button">Show</button>
-          <button type="button">Save</button>
+          <button type="button" onClick={submitForm}>
+            Save
+          </button>
         </div>
       </form>
     </div>
   );
 };
 
-export default EditQuestionPage;
+const mapState2Props = (state: RootState) => ({
+  admin: state.admin.admin,
+  isSuccessfull: state.admin.isSuccessfull,
+});
+const mapDispatch2Props = {
+  addQuestion,
+};
+
+export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);
