@@ -9,12 +9,17 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
   match,
 }) => {
   const history = useHistory();
-  return <div>ManageQuestionsPage Worked!  id: {match.params.fieldId}
-    <div>table of questions for this filed</div>
+  return (
     <div>
-      <button onClick={() => history.push('/EditQuestion/addNew')}>Add Question</button>
+      ManageQuestionsPage Worked! id: {match.params.fieldId}
+      <div>table of questions for this filed</div>
+      <div>
+        <button onClick={() => history.push("/EditQuestion/addNew")}>
+          Add Question
+        </button>
+      </div>
     </div>
-  </div>;
+  );
 };
 
 export default ManageQuestionsPage;
