@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import { match, useHistory } from "react-router";
+import React, { useDebugValue, useState } from "react";
+import { useHistory, useLocation } from "react-router";
 import {
   Answer,
   QuestionType,
   Alignment,
   Admin,
   Question,
+  Organization,
 } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import { addQuestion } from "../../../redux/actions/adminActions";
 
 interface IEditQuestionPageProps {
-  match: match<{ questionId: string }>;
   admin: Admin | null;
-  addQuestion: (question: Question) => void;
+  addQuestion: (question: Question, orgId: string) => void;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
-  match,
   addQuestion,
-  admin
-  }) => {
+  admin,
+}) => {
   const history = useHistory();
+  const organizationId = useParams();
   const [selectedType, setSelectedType] = useState<QuestionType>(0);
   const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
   const [tags, setTags] = useState("");
@@ -86,15 +86,18 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    addQuestion({
-      id: Date.now().toString(),
-      mainTitle,
-      secondaryTitle,
-      alignment: selectedAlignment,
-      type: selectedType,
-      possibleAnswers: answers,
-      tags: tags.split(","),
-    },);
+    addQuestion(
+      {
+        id: Date.now().toString(),
+        mainTitle,
+        secondaryTitle,
+        alignment: selectedAlignment,
+        type: selectedType,
+        possibleAnswers: answers,
+        tags: tags.split(","),
+      },
+      organizationId
+    );
   };
 
   return (
@@ -217,3 +220,11 @@ const mapDispatch2Props = {
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);
+
+const useParams = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const res = params.get("orgId");
+  useDebugValue(res ?? "loading...");
+  return res || '';
+};
