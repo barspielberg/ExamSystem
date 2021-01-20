@@ -2,14 +2,15 @@ import React from "react";
 import { Test } from "@examsystem/common";
 import { Button } from "../../uiElements";
 import { useHistory } from "react-router";
+import { useParams } from "../../../hooks";
 
 interface ITableRowsTestsProps {
   tests?: Test[];
-  fieldId: string;
 }
 
-const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests, fieldId }) => {
+const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests }) => {
   const notEmpty = !!tests && tests.length > 0;
+  const { fieldId, organizationId } = useParams();
   const history = useHistory();
   const hostname = `${window.location.hostname}:${window.location.port}`;
 
@@ -43,7 +44,9 @@ const TableRowsTests: React.FC<ITableRowsTestsProps> = ({ tests, fieldId }) => {
             <td>
               <Button
                 onClick={() =>
-                  history.push(`/EditTest?fieldId=${fieldId}&testId=${t.id}`)
+                  history.push(
+                    `/EditTest?organizationId=${organizationId}&fieldId=${fieldId}&testId=${t.id}`
+                  )
                 }
               >
                 Edit

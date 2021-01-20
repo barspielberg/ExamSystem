@@ -17,24 +17,12 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route path="/ActiveTest/:testId" component={ActiveTestPage} />
-        <PrivateRoute path="/TestReport/:fieldId" Component={TestReportPage} />
-        <PrivateRoute
-          path="/StudentReport/:fieldId"
-          Component={StudentReportPage}
-        />
+        <PrivateRoute path="/TestReport" Component={TestReportPage} />
+        <PrivateRoute path="/StudentReport" Component={StudentReportPage} />
         <PrivateRoute path="/EditTest" Component={EditTestPage} />
-        <PrivateRoute
-          path="/EditQuestion/:questionId"
-          Component={EditQuestionPage}
-        />
-        <PrivateRoute
-          path="/ManageTests/:fieldId"
-          Component={ManageTestsPage}
-        />
-        <PrivateRoute
-          path="/ManageQuestions/:fieldId"
-          Component={ManageQuestionsPage}
-        />
+        <PrivateRoute path="/EditQuestion" Component={EditQuestionPage} />
+        <PrivateRoute path="/ManageTests" Component={ManageTestsPage} />
+        <PrivateRoute path="/ManageQuestions" Component={ManageQuestionsPage} />
         <PrivateRoute path="/MainMenu" Component={MainMenuPage} />
         <Route path="/" component={LoginPage} />
       </Switch>

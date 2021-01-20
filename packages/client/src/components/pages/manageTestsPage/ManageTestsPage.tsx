@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import classes from "./ManageTestsPage.module.scss";
-
-import { match } from "react-router";
 import { Table, SearchFilter } from "../../uiElements";
-
 import { connect } from "react-redux";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import { FieldOfStudy, Organization } from "@examsystem/common";
+import { Organization } from "@examsystem/common";
 import TableRowsTests from "./TableRowsTests";
+import { useParamsFull } from "../../../hooks";
 
 interface IManageTestsPageProps {
-  match: match<{ fieldId: string }>;
   organizations: Organization[] | undefined;
 }
 
@@ -25,10 +22,9 @@ const titles = [
 ];
 //TODO by Bar
 const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
-  match,
   organizations,
 }) => {
-  const field = getField(match.params.fieldId, organizations);
+  const { field } = useParamsFull(organizations);
   const [tests, setTests] = useState(field?.tests);
 
   return (
@@ -47,7 +43,7 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
       </div>
 
       <Table titles={titles}>
-        <TableRowsTests tests={tests} fieldId={match.params.fieldId} />
+        <TableRowsTests tests={tests} />
       </Table>
     </div>
   );
@@ -56,13 +52,3 @@ const mapState2Props = (state: RootState) => ({
   organizations: state.admin.admin?.organizations,
 });
 export default connect(mapState2Props)(ManageTestsPage);
-
-const getField = (
-  id: string,
-  org?: Organization[]
-): FieldOfStudy | undefined => {
-  const allFields = org?.reduce((pre, cur) => {
-    return [...pre, ...cur.fields];
-  }, Array<FieldOfStudy>());
-  return allFields?.find((f) => f.id === id);
-};

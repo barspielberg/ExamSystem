@@ -1,0 +1,47 @@
+@import "styles/colors";
+.section {
+  header {
+    padding: 0.5rem;
+    background-color: $primary;
+    color: white;
+    font-weight: 500;
+    border: 1px solid $grey;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .inputs {
+    background-color: $dark_row;
+    border: 1px solid $grey;
+    border-top: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transform-origin: top center;
+    animation: drop 300ms ease-in-out forwards;
+    padding: 1rem 2rem;
+
+    & > h4 {
+      color: $primary;
+    }
+    .row {
+      display: flex;
+      b {
+        margin-inline-end: 1rem;
+      }
+      .filler {
+        flex: 1;
+      }
+    }
+  }
+}
+
+@keyframes drop {
+  0% {
+    transform: rotateX(-90deg);
+  }
+  80% {
+    transform: rotateX(15deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}

@@ -22,7 +22,7 @@ class DataService {
     }
   }
 
-  async addQuestion(question: Question, org: Organization) {
+  async addQuestion(question: Question) {
     console.log("hey mich", question);
     return true;
   }
