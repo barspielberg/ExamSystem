@@ -16,16 +16,17 @@ class OrganizationRepository {
     return organizations.filter((o) => o.adminIds.includes(adminId));
   }
 
-  async getOrganization(orgId: string) {
+  async getAllOrganizations() {
     const orgStr = await fsPromises.readFile(organizationPath, "utf8");
     const organizations: Organization[] = JSON.parse(orgStr).organizations;
-    return organizations.find(o => o.id === orgId);
+    return organizations;
   }
 
   async addQuestion(orgId: string, question: Question) {
-    const organization = await this.getOrganization(orgId);
-    const stringifiedOrg = JSON.stringify(organization?.questions.push(question));
-    await fsPromises.appendFile(organizationPath, stringifiedOrg, 'utf8');
+    const organizations = await this.getAllOrganizations();
+    organizations.find(o => o.id === orgId)?.questions.push(question);
+    const stringifiedOrgs = JSON.stringify(organizations);
+    await fsPromises.writeFile(organizationPath, stringifiedOrgs, 'utf8');
   }
 }
 

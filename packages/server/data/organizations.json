@@ -1,125 +1,187 @@
-{
-  "organizations": [
-    {
-      "id": "0",
-      "name": "BlaBla",
-      "adminIds": ["0", "1"],
-      "questions": [],
-      "fields": [
-        {
-          "id": "1",
-          "title": "Development",
-          "questionIds": [],
-          "tests": [
-            {
-              "id": "45",
-              "lastUpdate": "2021-01-17T09:50:35.793Z",
-              "version": 1,
-              "lang": 1,
-              "title": "Great test",
-              "introduction": "wooooow! ye!!",
-              "testerEmail": "bar@bar.com",
-              "failMessage": "Fail!!",
-              "passingGrade": 65,
-              "reviewAnswers": false,
-              "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
-            },
-            {
-              "id": "46",
-              "lastUpdate": "2021-01-17T09:50:35.793Z",
-              "version": 1,
-              "lang": 1,
-              "title": "Amazing test",
-              "introduction": "wooooow! ye!!",
-              "testerEmail": "bar@bar.com",
-              "failMessage": "Fail!!",
-              "passingGrade": 65,
-              "reviewAnswers": false,
-              "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "1",
-      "name": "New Bla",
-      "adminIds": ["0", "1"],
-      "questions": [],
-      "fields": [
-        {
-          "id": "356",
-          "title": "Development",
-          "questionIds": [],
-          "tests": [
-            {
-              "id": "6427",
-              "lastUpdate": "2021-01-17T09:50:35.793Z",
-              "version": 1,
-              "lang": 1,
-              "title": "Great test",
-              "introduction": "wooooow! ye!!",
-              "testerEmail": "bar@bar.com",
-              "failMessage": "Fail!!",
-              "passingGrade": 65,
-              "reviewAnswers": false,
-              "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
-            },
-            {
-              "id": "24359",
-              "lastUpdate": "2021-01-17T09:50:35.793Z",
-              "version": 1,
-              "lang": 1,
-              "title": "Amazing test",
-              "introduction": "wooooow! ye!!",
-              "testerEmail": "bar@bar.com",
-              "failMessage": "Fail!!",
-              "passingGrade": 65,
-              "reviewAnswers": false,
-              "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
-            }
-          ]
-        },
-        {
-          "id": "5472",
-          "title": "Web Design",
-          "questionIds": [],
-          "tests": [
-            {
-              "id": "24379",
-              "lastUpdate": "2021-01-17T09:50:35.793Z",
-              "version": 1,
-              "lang": 1,
-              "title": "Great test",
-              "introduction": "wooooow! ye!!",
-              "testerEmail": "bar@bar.com",
-              "failMessage": "Fail!!",
-              "passingGrade": 65,
-              "reviewAnswers": false,
-              "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
-            },
-            {
-              "id": "315729",
-              "lastUpdate": "2021-01-17T09:50:35.793Z",
-              "version": 1,
-              "lang": 1,
-              "title": "Amazing test",
-              "introduction": "wooooow! ye!!",
-              "testerEmail": "bar@bar.com",
-              "failMessage": "Fail!!",
-              "passingGrade": 65,
-              "reviewAnswers": false,
-              "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "id": "0",
+    "name": "BlaBla",
+    "adminIds": [
+      "0",
+      "1"
+    ],
+    "questions": [
+      {
+        "id": "1611220204757",
+        "mainTitle": "testing",
+        "secondaryTitle": "test",
+        "alignment": 0,
+        "type": 0,
+        "possibleAnswers": [
+          {
+            "id": "0",
+            "content": "first answer",
+            "correct": false
+          },
+          {
+            "id": "1",
+            "content": "second answer",
+            "correct": false
+          },
+          {
+            "id": "2",
+            "content": "this is mich",
+            "correct": true
+          },
+          {
+            "id": "3",
+            "content": "fourth answer",
+            "correct": false
+          }
+        ],
+        "tags": [
+          "C#",
+          " nodeJs"
+        ]
+      }
+    ],
+    "fields": [
+      {
+        "id": "1",
+        "title": "Development",
+        "questionIds": [],
+        "tests": [
+          {
+            "id": "45",
+            "lastUpdate": "2021-01-17T09:50:35.793Z",
+            "version": 1,
+            "lang": 1,
+            "title": "Great test",
+            "introduction": "wooooow! ye!!",
+            "testerEmail": "bar@bar.com",
+            "failMessage": "Fail!!",
+            "passingGrade": 65,
+            "reviewAnswers": false,
+            "successMessage": "Success!!",
+            "questionIds": [
+              "56",
+              "41",
+              "12"
+            ]
+          },
+          {
+            "id": "46",
+            "lastUpdate": "2021-01-17T09:50:35.793Z",
+            "version": 1,
+            "lang": 1,
+            "title": "Amazing test",
+            "introduction": "wooooow! ye!!",
+            "testerEmail": "bar@bar.com",
+            "failMessage": "Fail!!",
+            "passingGrade": 65,
+            "reviewAnswers": false,
+            "successMessage": "Success!!",
+            "questionIds": [
+              "56",
+              "41",
+              "12"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "1",
+    "name": "New Bla",
+    "adminIds": [
+      "0",
+      "1"
+    ],
+    "questions": [],
+    "fields": [
+      {
+        "id": "356",
+        "title": "Development",
+        "questionIds": [],
+        "tests": [
+          {
+            "id": "6427",
+            "lastUpdate": "2021-01-17T09:50:35.793Z",
+            "version": 1,
+            "lang": 1,
+            "title": "Great test",
+            "introduction": "wooooow! ye!!",
+            "testerEmail": "bar@bar.com",
+            "failMessage": "Fail!!",
+            "passingGrade": 65,
+            "reviewAnswers": false,
+            "successMessage": "Success!!",
+            "questionIds": [
+              "56",
+              "41",
+              "12"
+            ]
+          },
+          {
+            "id": "24359",
+            "lastUpdate": "2021-01-17T09:50:35.793Z",
+            "version": 1,
+            "lang": 1,
+            "title": "Amazing test",
+            "introduction": "wooooow! ye!!",
+            "testerEmail": "bar@bar.com",
+            "failMessage": "Fail!!",
+            "passingGrade": 65,
+            "reviewAnswers": false,
+            "successMessage": "Success!!",
+            "questionIds": [
+              "56",
+              "41",
+              "12"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5472",
+        "title": "Web Design",
+        "questionIds": [],
+        "tests": [
+          {
+            "id": "24379",
+            "lastUpdate": "2021-01-17T09:50:35.793Z",
+            "version": 1,
+            "lang": 1,
+            "title": "Great test",
+            "introduction": "wooooow! ye!!",
+            "testerEmail": "bar@bar.com",
+            "failMessage": "Fail!!",
+            "passingGrade": 65,
+            "reviewAnswers": false,
+            "successMessage": "Success!!",
+            "questionIds": [
+              "56",
+              "41",
+              "12"
+            ]
+          },
+          {
+            "id": "315729",
+            "lastUpdate": "2021-01-17T09:50:35.793Z",
+            "version": 1,
+            "lang": 1,
+            "title": "Amazing test",
+            "introduction": "wooooow! ye!!",
+            "testerEmail": "bar@bar.com",
+            "failMessage": "Fail!!",
+            "passingGrade": 65,
+            "reviewAnswers": false,
+            "successMessage": "Success!!",
+            "questionIds": [
+              "56",
+              "41",
+              "12"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
