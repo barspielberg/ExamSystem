@@ -19,6 +19,7 @@ export const Button: React.FC<IButtonProps> = ({
 }) => {
   return (
     <button
+      type="button"
       disabled={disabled}
       className={`${classes.btn} ${danger ? classes.danger : ""} ${
         success ? classes.success : ""

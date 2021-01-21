@@ -1,3 +1,4 @@
+import classes from "./EditQUestionPage.module.scss";
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router";
 import {
@@ -10,6 +11,7 @@ import {
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import { addQuestion } from "../../../redux/actions/adminActions";
+import { Button, Header, PopupMessage } from "../../uiElements";
 
 interface IEditQuestionPageProps {
   admin: Admin | null;
@@ -28,6 +30,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [tags, setTags] = useState("");
   const [mainTitle, setMainTitle] = useState("");
   const [secondaryTitle, setSecondaryTitle] = useState("");
+  const [showMsg, setShowMsg] = useState(false);
 
   const defaultAnswers: Answer[] = [
     {
@@ -101,11 +104,11 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   };
 
   return (
-    <div>
-      <form>
+    <div className={classes.page}>
+      <Header>Add New Question</Header>
+      <form className={classes.inputs}>
         <div>
           <label>Question Type:</label>
-          {/* maybe chage back to select */}
           <input
             type="radio"
             checked={selectedType === 0}
@@ -197,15 +200,32 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
           <label>Tags: </label>
           <input value={tags} onChange={(e) => setTags(e.target.value)} />
         </div>
-        <div>
-          <button type="button" onClick={history.goBack}>
+        <div className={classes.btns}>
+          <Button onClick={() => setShowMsg(true)}>« Back</Button>
+          {/* <button type="button" onClick={history.goBack}>
             Back
-          </button>
-          <button type="button">Show</button>
+          </button> */}
+          <div className={classes.filler} />
+          {/* <button type="button">Show</button>
           <button type="button" onClick={submitForm}>
+
             Save
-          </button>
+          </button> */}
+          <Button>Show</Button>
+          <Button success onClick={submitForm}>
+            Save »
+          </Button>
         </div>
+        <PopupMessage
+          show={showMsg}
+          clear={() => setShowMsg(false)}
+          warning
+          action={() => history.goBack()}
+          actionTag="« Go Back"
+          clearTag="Stay"
+          title="Warning!"
+          text="Are you sure you want to go back? The changes you have made will not be saved!"
+        />
       </form>
     </div>
   );
