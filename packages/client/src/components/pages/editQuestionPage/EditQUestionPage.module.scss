@@ -1,0 +1,68 @@
+@import "styles/colors";
+
+.page {
+  max-width: 800px;
+  margin: auto;
+  .btns {
+    display: flex;
+    margin-top: 0.5rem;
+    .filler {
+      flex: 1;
+    }
+  }
+  
+   header {
+    padding: 0.5rem;
+    background-color: $primary;
+    color: white;
+    font-weight: 500;
+    border: 1px solid $grey;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    background-color: $dark_row;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    transform-origin: top center;
+    animation: drop 300ms ease-in-out forwards;
+
+    * {
+      margin: 0.5rem 0;
+    }
+
+    label {
+      text-align: end;
+      padding-inline-end: 1rem;
+      user-select: none;
+    }
+    
+    input {
+      font: inherit;
+      max-width: 15rem;
+      border-radius: 5px;
+      border-width: 1px;
+      border-color: $grey;
+      &:focus {
+        outline: none;
+      }
+    }
+    textarea {
+      font: inherit;
+      padding: 0.2rem;
+      border-color: $grey;
+      border-radius: 5px;
+      &:focus {
+        outline-color: darken($color: $grey, $amount: 5%);
+      }
+      @media (min-width: 600px) {
+        margin-right: 2rem;
+      }
+    }
+    
+  }
+}
+

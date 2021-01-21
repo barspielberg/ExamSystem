@@ -24,6 +24,8 @@ const adminReducer = (
       return { ...state, error: action.err };
     case "SET_QUESTION_ADDED":
       return { ...state, isSuccessfull: action.isSuccessfull };
+    case "RESET_QUESTION_ADDED":
+      return { ...state, isSuccessfull: false };
     default:
       return state;
   }

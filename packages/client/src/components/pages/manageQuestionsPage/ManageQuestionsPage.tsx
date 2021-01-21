@@ -1,23 +1,46 @@
-import React from "react";
+import { Organization } from "@examsystem/common";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import { match, useHistory } from "react-router";
-import { useParams } from "../../../hooks";
+import { useParams, useParamsFull } from "../../../hooks";
+import { RootState } from "../../../redux/reducers/mainReducer";
+import { Table } from "../../uiElements";
 
 interface IManageQuestionsPageProps {
-  match: match<{ fieldId: string }>;
+  organizations?: Organization[];
 }
+
+const titles = [
+  "ID",
+  "Question text and Tags",
+  "Last Update",
+  "Question Type",
+  "Num of Tests",
+  "",
+];
+
 //TODO by Michael
 const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
-  match,
+  organizations,
 }) => {
   const history = useHistory();
-  const organizationId = useParams().organizationId;
+
+  const { question, organization, field } = useParamsFull(organizations);
+  const [questions, setQuestions] = useState(field?.tests);
 
   return (
     <div>
-      ManageQuestionsPage Worked! id: {match.params.fieldId}
       <div>table of questions for this filed</div>
+      <Table titles={titles}></Table>
       <div>
-        <button onClick={() => history.push({pathname: "/EditQuestion/addNew/", search: `?orgId=${organizationId}`})}>
+        <button
+          onClick={() =>
+            history.push({
+              pathname: "/EditQuestion/addNew/",
+              search: `?orgId=${organization?.id}`,
+            })
+          }
+        >
           Add Question
         </button>
       </div>
@@ -25,4 +48,7 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
   );
 };
 
-export default ManageQuestionsPage;
+const mapState2Props = (state: RootState) => ({
+  organizations: state.admin.admin?.organizations,
+});
+export default connect(mapState2Props)(ManageQuestionsPage);
