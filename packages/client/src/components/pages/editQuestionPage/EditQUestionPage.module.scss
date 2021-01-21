@@ -10,6 +10,16 @@
       flex: 1;
     }
   }
+  
+   header {
+    padding: 0.5rem;
+    background-color: $primary;
+    color: white;
+    font-weight: 500;
+    border: 1px solid $grey;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
 
   .inputs {
     display: flex;

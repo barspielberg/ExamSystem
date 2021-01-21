@@ -1,6 +1,6 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { Admin, Organization, Question } from "@examsystem/common";
+import { Admin, Question } from "@examsystem/common";
 import DataService from "../../services/dataService";
 import { RootState } from "../reducers/mainReducer";
 
@@ -13,17 +13,21 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export type adminActionTypes =
   | {
-      type: "SET_ADMIN";
-      admin: Admin | null;
-    }
+    type: "SET_ADMIN";
+    admin: Admin | null;
+  }
   | {
-      type: "SET_ERROR";
-      err: string;
-    }
+    type: "SET_ERROR";
+    err: string;
+  }
   | {
-      type: "SET_QUESTION_ADDED";
-      isSuccessfull: boolean;
-    };
+    type: "SET_QUESTION_ADDED";
+    isSuccessfull: boolean;
+  }
+  | {
+    type: "RESET_QUESTION_ADDED";
+    isSuccessfull: boolean;
+  };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
@@ -33,12 +37,18 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
   else dispatch(setError("Error occured"));
 };
 
-export const addQuestion = (question: Question,orgId:string): AppThunk => async (
+export const addQuestion = (question: Question, orgId: string): AppThunk => async (
   dispatch
 ) => {
-  const quest = await DataService.addQuestion(question,orgId);
+  const quest = await DataService.addQuestion(question, orgId);
   if (quest) dispatch(setQuestionAdded(true));
   else dispatch(setError("Error occured"));
+};
+
+export const resetAddQuestion = (): AppThunk => async (
+  dispatch
+) => {
+  dispatch(resetQuestionAdded());
 };
 
 const setAdmin = (admin: Admin): adminActionTypes => ({
@@ -54,4 +64,9 @@ const setError = (err: string): adminActionTypes => ({
 const setQuestionAdded = (isSuccessfull: boolean): adminActionTypes => ({
   type: "SET_QUESTION_ADDED",
   isSuccessfull,
+});
+
+const resetQuestionAdded = (): adminActionTypes => ({
+  type: "RESET_QUESTION_ADDED",
+  isSuccessfull: false,
 });
