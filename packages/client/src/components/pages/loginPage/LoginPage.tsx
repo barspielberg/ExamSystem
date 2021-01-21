@@ -1,3 +1,4 @@
+import classes from "./LoginPage.module.scss";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { connect } from "react-redux";
@@ -5,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { Admin } from "@examsystem/common";
 import { getAdmin } from "../../../redux/actions/adminActions";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import { Header } from "../../uiElements";
+import { Header,Button } from "../../uiElements";
 
 interface ILoginPageProps {
   admin: Admin | null;
@@ -32,8 +33,9 @@ const LoginPage: React.FC<ILoginPageProps> = ({ login, err, admin }) => {
   return (
     <div>
       <Header>Administration Sytem Login</Header>
-      <div>
-        <form>
+      <div className={classes.page}>
+      <header>Sign in</header>
+        <form className={classes.form}>
           <div>
             <label>Email: </label>
             <input
@@ -52,7 +54,8 @@ const LoginPage: React.FC<ILoginPageProps> = ({ login, err, admin }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button onClick={submitForm}>Sumbit</button>
+          {/* <button onClick={submitForm}>Sumbit</button> */}
+          <Button success  onClick={submitForm}>Sumbit</Button>
         </form>
       </div>
       {err && (
