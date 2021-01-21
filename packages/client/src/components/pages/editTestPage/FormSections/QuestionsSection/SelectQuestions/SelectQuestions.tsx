@@ -28,6 +28,7 @@ const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
     if (test.questionIds.includes(id)) removeQuestion(id);
     else addQuestion(id);
   };
+  // console.log(JSON.stringify(tmpQues));
 
   return (
     <div className={classes.questions}>
@@ -39,7 +40,7 @@ const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
         </div>
       </header>
 
-      {tmpQues.map((q) => (
+      {questions?.map((q) => (
         <div
           key={q.id}
           className={classes.row}
@@ -65,22 +66,22 @@ const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
 
 export default SelectQuestions;
 
-const tmpQue: Question = {
-  id: "13588551315",
-  mainTitle: "The Main Tilte",
-  secondaryTitle: "Optional Secondary Title",
-  alignment: Alignment.vertical,
-  type: QuestionType.singleChoiceQuestion,
-  tags: ["first", "second", "therd"],
-  possibleAnswers: [
-    { id: "4545923288", content: "Yes!", correct: true },
-    { id: "454923f288", content: "no" },
-    { id: "45459228f8", content: "no" },
-    { id: "45s4923288", content: "no" },
-  ],
-};
+// const tmpQue: Question = {
+//   id: "13588551315",
+//   mainTitle: "The Main Tilte",
+//   secondaryTitle: "Optional Secondary Title",
+//   alignment: Alignment.vertical,
+//   type: QuestionType.singleChoiceQuestion,
+//   tags: ["first", "second", "therd"],
+//   possibleAnswers: [
+//     { id: "4545923288", content: "Yes!", correct: true },
+//     { id: "454923f288", content: "no" },
+//     { id: "45459228f8", content: "no" },
+//     { id: "45s4923288", content: "no" },
+//   ],
+// };
 
-const tmpQues: Question[] = ["41", "56", "12", "5689", "sdf"].map((id) => ({
-  ...tmpQue,
-  id: id,
-}));
+// const tmpQues: Question[] = ["41", "56", "12", "5689", "sdf"].map((id) => ({
+//   ...tmpQue,
+//   id: id,
+// }));
