@@ -25,7 +25,7 @@ class OrganizationRepository {
   async addQuestion(orgId: string, question: Question) {
     const organizations = await this.getAllOrganizations();
     organizations.find(o => o.id === orgId)?.questions.push(question);
-    const stringifiedOrgs = JSON.stringify(organizations);
+    const stringifiedOrgs = JSON.stringify({organizations: organizations});
     await fsPromises.writeFile(organizationPath, stringifiedOrgs, 'utf8');
   }
 }
