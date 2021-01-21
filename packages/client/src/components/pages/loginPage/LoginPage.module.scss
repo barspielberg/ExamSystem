@@ -1,0 +1,59 @@
+@import "styles/colors";
+.page{
+  max-width: 800px;
+  margin: auto;
+  background-color: $dark_row;
+  transform-origin: top center;
+  animation: drop 300ms ease-in-out forwards;
+  
+  .form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  * {
+      margin: 0.5rem 0;
+    }
+
+  header {
+    padding: 0.5rem;
+    background-color: $primary;
+    color: white;
+    font-weight: 500;
+    border: 1px solid $grey;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  label {
+      text-align: end;
+      padding-inline-end: 1rem;
+      user-select: none;
+    }
+
+  input {
+      font: inherit;
+      max-width: 15rem;
+      border-radius: 5px;
+      border-width: 1px;
+      border-color: $grey;
+      &:focus {
+        outline: none;
+      }
+    }
+
+  
+}
+
+@keyframes drop {
+  0% {
+    transform: rotateX(-90deg);
+  }
+  80% {
+    transform: rotateX(15deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}

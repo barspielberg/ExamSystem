@@ -3,8 +3,115 @@
     {
       "id": "0",
       "name": "BlaBla",
-      "adminIds": ["0", "1"],
-      "questions": [],
+      "adminIds": [
+        "0",
+        "1"
+      ],
+      "questions": [
+        {
+          "id": "1611220558226",
+          "mainTitle": "testing2",
+          "secondaryTitle": "test2",
+          "alignment": 1,
+          "type": 0,
+          "possibleAnswers": [
+            {
+              "id": "0",
+              "content": "first answer",
+              "correct": false
+            },
+            {
+              "id": "1",
+              "content": "this is mich2",
+              "correct": true
+            },
+            {
+              "id": "2",
+              "content": "this is mich",
+              "correct": true
+            },
+            {
+              "id": "3",
+              "content": "fourth answer",
+              "correct": false
+            }
+          ],
+          "tags": [
+            "C#",
+            " havascript"
+          ]
+        },
+        {
+          "id": "1611220595317",
+          "mainTitle": "testing3",
+          "secondaryTitle": "test3",
+          "alignment": 0,
+          "type": 1,
+          "possibleAnswers": [
+            {
+              "id": "0",
+              "content": "first answer",
+              "correct": false
+            },
+            {
+              "id": "1",
+              "content": "this is mich2",
+              "correct": true
+            },
+            {
+              "id": "2",
+              "content": "this is mich",
+              "correct": true
+            },
+            {
+              "id": "3",
+              "content": "test3",
+              "correct": true
+            }
+          ],
+          "tags": [
+            "C#",
+            " havascript"
+          ]
+        },
+        {
+          "id": "1611220700146",
+          "mainTitle": "last test",
+          "secondaryTitle": "last test",
+          "alignment": 0,
+          "type": 0,
+          "possibleAnswers": [
+            {
+              "id": "0",
+              "content": "first answer",
+              "correct": false
+            },
+            {
+              "id": "1",
+              "content": "this is mich2",
+              "correct": false
+            },
+            {
+              "id": "2",
+              "content": "this is mich",
+              "correct": false
+            },
+            {
+              "id": "3",
+              "content": "test3",
+              "correct": false
+            },
+            {
+              "id": "4",
+              "content": "new answer",
+              "correct": true
+            }
+          ],
+          "tags": [
+            "C#"
+          ]
+        }
+      ],
       "fields": [
         {
           "id": "1",
@@ -23,7 +130,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             },
             {
               "id": "46",
@@ -37,7 +148,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             }
           ]
         }
@@ -46,7 +161,10 @@
     {
       "id": "1",
       "name": "New Bla",
-      "adminIds": ["0", "1"],
+      "adminIds": [
+        "0",
+        "1"
+      ],
       "questions": [],
       "fields": [
         {
@@ -66,7 +184,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             },
             {
               "id": "24359",
@@ -80,7 +202,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             }
           ]
         },
@@ -101,7 +227,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             },
             {
               "id": "315729",
@@ -115,7 +245,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             }
           ]
         }

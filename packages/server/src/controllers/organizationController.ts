@@ -26,25 +26,6 @@ class OrganozationController {
     }
 
   }
-
-  // async getOrganizations(req: Request, res: Response, next: NextFunction) {
-  //   const { adminId } = req.query;
-  //   const adminIdSt = adminId?.toString();
-
-  //   if (!adminIdSt)
-  //     return res.status(401).send("not valid parametrs");
-
-  //   try {
-  //     const organizations = await organizationRepository.getOrganizations(adminIdSt);
-
-  //     if (!organizations)
-  //       return res.status(401).send("there are no organizations for that admin");
-
-  //      return organizations;
-  //   } catch (error) {
-  //     res.status(500).send("OOPS something went wrong");
-  //   }
-  // }
 }
 
 export default new OrganozationController();
