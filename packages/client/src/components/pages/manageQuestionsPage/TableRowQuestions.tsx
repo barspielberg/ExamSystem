@@ -3,7 +3,6 @@ import classes from "./ManageQuestionsPage.module.scss";
 import { Question, QuestionType, Test } from "@examsystem/common";
 import { Button } from "../../uiElements";
 import { useHistory } from "react-router";
-import { useParams } from "../../../hooks";
 
 interface ITableRowsQuestionsProps {
   questions?: Question[];

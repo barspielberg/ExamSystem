@@ -1,6 +1,5 @@
 import { Alignment, Question } from "@examsystem/common";
 import React from "react";
-import { useState } from "react";
 import classes from "./DisplayQuestion.module.scss";
 
 interface IDisplayQuestionProps {
