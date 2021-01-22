@@ -9,4 +9,5 @@ export interface Question {
   possibleAnswers: Answer[];
   alignment: Alignment;
   tags: string[];
+  lastUpdate: string;
 }
