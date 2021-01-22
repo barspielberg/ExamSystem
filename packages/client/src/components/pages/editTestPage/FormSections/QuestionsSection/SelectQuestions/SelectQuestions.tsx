@@ -1,5 +1,7 @@
-import { Question, Test } from "@examsystem/common";
 import React from "react";
+import classes from "./SelectQuestions.module.scss";
+import { Question, Test } from "@examsystem/common";
+import { Button } from "../../../../../uiElements";
 
 interface ISelectQuestionsProps {
   test: Test;
@@ -10,6 +12,7 @@ interface ISelectQuestionsProps {
 const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
   test,
   onTestChange,
+  questions,
 }) => {
   const addQuestion = (id: string) => {
     onTestChange({ ...test, questionIds: [...test.questionIds, id] });
@@ -20,7 +23,44 @@ const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
       questionIds: test.questionIds.filter((i) => i !== id),
     });
   };
-  return <div>SelectQuestions Worked!</div>;
+
+  const rowClicked = (id: string) => {
+    if (test.questionIds.includes(id)) removeQuestion(id);
+    else addQuestion(id);
+  };
+
+  return (
+    <div className={classes.questions}>
+      <header>
+        <div>Currently showing {questions?.length} questions</div>
+        <div>
+          Total selected for the test{" "}
+          <span className={classes.num}>{test.questionIds.length}</span>{" "}
+        </div>
+      </header>
+
+      {questions?.map((q) => (
+        <div
+          key={q.id}
+          className={classes.row}
+          aria-selected={test.questionIds.includes(q.id)}
+        >
+          <div className={classes.des} onClick={() => rowClicked(q.id)}>
+            <b>{q.mainTitle}</b>
+            <h5>{q.secondaryTitle}</h5>
+            <div className={classes.tags}>
+              {q.tags.map((t, index) => (
+                <span key={index}>{t}</span>
+              ))}
+            </div>
+          </div>
+          <div className={classes.showBtn}>
+            <Button>Show</Button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default SelectQuestions;
