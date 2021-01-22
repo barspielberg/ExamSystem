@@ -1,0 +1,25 @@
+@import "styles/colors";
+
+.Page {
+  max-width: 800px;
+  margin: auto;
+
+  header {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+
+    .fieldTitle {
+      color: $primary;
+    }
+  }
+  .filterRow {
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+}
+
+.btns{
+  display: flex;
+}

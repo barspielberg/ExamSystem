@@ -1,10 +1,12 @@
 import { Organization } from "@examsystem/common";
 import React, { useState } from "react";
+import classes from "./ManageQuestionsPage.module.scss";
 import { connect } from "react-redux";
-import { match, useHistory } from "react-router";
-import { useParams, useParamsFull } from "../../../hooks";
+import { useHistory } from "react-router";
+import { useParamsFull } from "../../../hooks";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import { Table } from "../../uiElements";
+import { Table, SearchFilter } from "../../uiElements";
+import TableRowsQuestions from "./TableRowQuestions";
 
 interface IManageQuestionsPageProps {
   organizations?: Organization[];
@@ -26,12 +28,27 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
   const history = useHistory();
 
   const { question, organization, field } = useParamsFull(organizations);
-  const [questions, setQuestions] = useState(field?.tests);
+  const [questions, setQuestions] = useState(
+    organization?.questions.filter((q) => field?.questionIds.includes(q.id))
+  );
 
   return (
-    <div>
-      <div>table of questions for this filed</div>
-      <Table titles={titles}></Table>
+    <div className={classes.Page}>
+      <header>
+        Available Questions for:{" "}
+        <span className={classes.fieldTitle}>{field?.title}</span>
+      </header>
+      <div className={classes.filterRow}>
+        Filter names by keywords:{" "}
+        <SearchFilter
+          originalQuestions={questions}
+          onQuestionsChange={setQuestions}
+          placeholder="Search..."
+        />
+      </div>
+      <Table titles={titles}>
+        <TableRowsQuestions questions={questions}/>
+      </Table>
       <div>
         <button
           onClick={() =>

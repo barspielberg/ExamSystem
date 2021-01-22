@@ -7,12 +7,49 @@
         "0",
         "1"
       ],
-      "questions": [],
+      "questions": [
+        {
+          "id": "1611304621543",
+          "mainTitle": "new q",
+          "secondaryTitle": "new question",
+          "alignment": 1,
+          "type": 0,
+          "possibleAnswers": [
+            {
+              "id": "0",
+              "content": "first answer",
+              "correct": true
+            },
+            {
+              "id": "1",
+              "content": "second answer",
+              "correct": false
+            },
+            {
+              "id": "2",
+              "content": "third answer",
+              "correct": false
+            },
+            {
+              "id": "3",
+              "content": "fourth answer",
+              "correct": false
+            }
+          ],
+          "tags": [
+            "C#",
+            " Sela"
+          ],
+          "lastUpdate": "Fri Jan 22 2021 10:37:01 GMT+0200 (Israel Standard Time)"
+        }
+      ],
       "fields": [
         {
           "id": "1",
           "title": "Development",
-          "questionIds": [],
+          "questionIds": [
+            "1611304621543"
+          ],
           "tests": [
             {
               "id": "45",
@@ -29,7 +66,8 @@
               "questionIds": [
                 "56",
                 "41",
-                "12"
+                "12",
+                "1611304621543"
               ]
             },
             {

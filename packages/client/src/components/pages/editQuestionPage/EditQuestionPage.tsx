@@ -103,6 +103,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         type: selectedType,
         possibleAnswers: answers,
         tags: tags.split(","),
+        lastUpdate: new Date().toString(),
       },
       organizationId
     );
