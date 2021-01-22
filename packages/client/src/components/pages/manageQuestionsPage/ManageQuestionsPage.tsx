@@ -27,7 +27,7 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
 }) => {
   const history = useHistory();
 
-  const { question, organization, field } = useParamsFull(organizations);
+  const {  organization, field } = useParamsFull(organizations);
   const [questions, setQuestions] = useState(
     organization?.questions.filter((q) => field?.questionIds.includes(q.id))
   );
@@ -47,7 +47,7 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
         />
       </div>
       <Table titles={titles}>
-        <TableRowsQuestions questions={questions}/>
+        <TableRowsQuestions questions={questions} tests={field?.tests || []}/>
       </Table>
       <div>
         <button

@@ -1,20 +1,31 @@
 import React from "react";
 import classes from "./ManageQuestionsPage.module.scss";
-import { Question, QuestionType } from "@examsystem/common";
+import { Question, QuestionType, Test } from "@examsystem/common";
 import { Button } from "../../uiElements";
 import { useHistory } from "react-router";
 import { useParams } from "../../../hooks";
 
 interface ITableRowsQuestionsProps {
   questions?: Question[];
+  tests: Test[];
 }
 
 const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
   questions,
+  tests,
 }) => {
   const notEmpty = !!questions && questions.length > 0;
-  const { fieldId, organizationId } = useParams();
+  // const { fieldId, organizationId } = useParams();
   const history = useHistory();
+
+  const numberOfTest = (ques: Question, tests: Test[]): number => {
+    let counter = 0;
+    for (let index = 0; index < tests.length; index++) {
+      if (tests[index].questionIds.includes(ques.id)) counter += 1;
+    }
+
+    return counter;
+  };
 
   return (
     <React.Fragment>
@@ -27,7 +38,7 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
             </td>
             <td>{new Date(q.lastUpdate).toLocaleDateString()}</td>
             <td>{QuestionType[q.type]}</td>
-            <td> 0 </td>
+            <td> {numberOfTest(q, tests)} </td>
             <td className={classes.btns}>
               <Button
                 onClick={
