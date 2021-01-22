@@ -1,7 +1,8 @@
 import React from "react";
 import classes from "./SelectQuestions.module.scss";
 import { Question, Test } from "@examsystem/common";
-import { Button } from "../../../../../uiElements";
+import { Button, DisplayQuestion } from "../../../../../uiElements";
+import { useState } from "react";
 
 interface ISelectQuestionsProps {
   test: Test;
@@ -14,6 +15,8 @@ const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
   onTestChange,
   questions,
 }) => {
+  const [showId, setShowId] = useState("");
+
   const addQuestion = (id: string) => {
     onTestChange({ ...test, questionIds: [...test.questionIds, id] });
   };
@@ -47,7 +50,6 @@ const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
         >
           <div className={classes.des} onClick={() => rowClicked(q.id)}>
             <b>{q.mainTitle}</b>
-            <h5>{q.secondaryTitle}</h5>
             <div className={classes.tags}>
               {q.tags.map((t, index) => (
                 <span key={index}>{t}</span>
@@ -55,8 +57,15 @@ const SelectQuestions: React.FC<ISelectQuestionsProps> = ({
             </div>
           </div>
           <div className={classes.showBtn}>
-            <Button>Show</Button>
+            <Button onClick={() => setShowId(showId === q.id ? "" : q.id)}>
+              {showId === q.id ? "Shrink" : "Show"}
+            </Button>
           </div>
+          {q.id === showId && (
+            <div className={classes.fullQ}>
+              <DisplayQuestion question={q} />
+            </div>
+          )}
         </div>
       ))}
     </div>
