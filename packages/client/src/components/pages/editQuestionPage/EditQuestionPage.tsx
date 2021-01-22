@@ -1,23 +1,25 @@
-import React, { useState } from "react";
+import classes from "./EditQUestionPage.module.scss";
+import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
-import {
-  Answer,
-  QuestionType,
-  Alignment,
-  Admin,
-  Question,
-} from "@examsystem/common";
+import { Answer, QuestionType, Alignment, Question } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
-import { addQuestion } from "../../../redux/actions/adminActions";
+import {
+  addQuestion,
+  resetAddQuestion,
+} from "../../../redux/actions/adminActions";
+import { Button, PopupMessage } from "../../uiElements";
 
 interface IEditQuestionPageProps {
-  admin: Admin | null;
+  isSuccessfull: boolean;
   addQuestion: (question: Question, orgId: string) => void;
+  resetAddQuestion: any;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
+  isSuccessfull,
+  resetAddQuestion,
 }) => {
   const history = useHistory();
   const location = useLocation();
@@ -28,6 +30,12 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [tags, setTags] = useState("");
   const [mainTitle, setMainTitle] = useState("");
   const [secondaryTitle, setSecondaryTitle] = useState("");
+  const [showMsg, setShowMsg] = useState(false);
+
+  useEffect(() => {
+    if (isSuccessfull) history.goBack();
+    resetAddQuestion();
+  }, [isSuccessfull]);
 
   const defaultAnswers: Answer[] = [
     {
@@ -101,11 +109,11 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   };
 
   return (
-    <div>
-      <form>
+    <div className={classes.page}>
+      <header>Add new Question</header>
+      <form className={classes.inputs}>
         <div>
           <label>Question Type:</label>
-          {/* maybe chage back to select */}
           <input
             type="radio"
             checked={selectedType === 0}
@@ -123,6 +131,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         </div>
         <div>
           <label>Qustion Text:</label>
+          <br />
           <textarea
             value={mainTitle}
             onChange={(e) => setMainTitle(e.target.value)}
@@ -130,6 +139,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         </div>
         <div>
           <label>Text below question:</label>
+          <br />
           <textarea
             value={secondaryTitle}
             onChange={(e) => setSecondaryTitle(e.target.value)}
@@ -197,15 +207,24 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
           <label>Tags: </label>
           <input value={tags} onChange={(e) => setTags(e.target.value)} />
         </div>
-        <div>
-          <button type="button" onClick={history.goBack}>
-            Back
-          </button>
-          <button type="button">Show</button>
-          <button type="button" onClick={submitForm}>
-            Save
-          </button>
+        <div className={classes.btns}>
+          <Button onClick={() => setShowMsg(true)}>« Back</Button>
+          <div className={classes.filler} />
+          <Button>Show</Button>
+          <Button success onClick={submitForm}>
+            Save »
+          </Button>
         </div>
+        <PopupMessage
+          show={showMsg}
+          clear={() => setShowMsg(false)}
+          warning
+          action={() => history.goBack()}
+          actionTag="« Go Back"
+          clearTag="Stay"
+          title="Warning!"
+          text="Are you sure you want to go back? The changes you have made will not be saved!"
+        />
       </form>
     </div>
   );
@@ -216,6 +235,7 @@ const mapState2Props = (state: RootState) => ({
 });
 const mapDispatch2Props = {
   addQuestion,
+  resetAddQuestion,
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);

@@ -94,7 +94,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             },
             {
               "id": "46",
@@ -108,7 +112,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             }
           ]
         }
@@ -117,7 +125,10 @@
     {
       "id": "1",
       "name": "New Bla",
-      "adminIds": ["0", "1"],
+      "adminIds": [
+        "0",
+        "1"
+      ],
       "questions": [],
       "fields": [
         {
@@ -137,7 +148,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             },
             {
               "id": "24359",
@@ -151,7 +166,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             }
           ]
         },
@@ -172,7 +191,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             },
             {
               "id": "315729",
@@ -186,7 +209,11 @@
               "passingGrade": 65,
               "reviewAnswers": false,
               "successMessage": "Success!!",
-              "questionIds": ["56", "41", "12"]
+              "questionIds": [
+                "56",
+                "41",
+                "12"
+              ]
             }
           ]
         }
