@@ -26,7 +26,7 @@ export type adminActionTypes =
       isSuccessfull: boolean;
     }
   | {
-      type: "RESET_QUESTION_ADDED";
+      type: "RESET_QUESTION_ADDED"; // why? they are the same
       isSuccessfull: boolean;
     }
   | {
@@ -54,6 +54,7 @@ export const addQuestion = (
 };
 
 export const resetAddQuestion = (): AppThunk => async (dispatch) => {
+  // why???
   dispatch(resetQuestionAdded());
 };
 
@@ -86,6 +87,7 @@ const setQuestionAdded = (isSuccessfull: boolean): adminActionTypes => ({
 });
 
 const resetQuestionAdded = (): adminActionTypes => ({
+  // why?
   type: "RESET_QUESTION_ADDED",
   isSuccessfull: false,
 });

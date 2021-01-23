@@ -6,10 +6,10 @@ class QuestionsController {
   //   res.send([1, 2, 3]);
   // }
   async addQuestion(req: Request, res: Response, next: NextFunction) {
-    const { orgId, question } = req.body;
+    const { orgId, question } = req.body; //needs validation
     try {
       await organizationRepository.addQuestion(orgId, question);
-      res.status(201).json({ message: "Question added successfully" });
+      res.status(201).json({ message: "Question added successfully" }); //return question
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "OOPS somwthing went wrong" });
