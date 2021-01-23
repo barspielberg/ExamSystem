@@ -1,8 +1,9 @@
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { Admin, Question } from "@examsystem/common";
+import { Admin, Question, Test } from "@examsystem/common";
 import DataService from "../../services/dataService";
 import { RootState } from "../reducers/mainReducer";
+import dataService from "../../services/dataService";
 
 type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -13,21 +14,27 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export type adminActionTypes =
   | {
-    type: "SET_ADMIN";
-    admin: Admin | null;
-  }
+      type: "SET_ADMIN";
+      admin: Admin | null;
+    }
   | {
-    type: "SET_ERROR";
-    err: string;
-  }
+      type: "SET_ERROR";
+      err: string;
+    }
   | {
-    type: "SET_QUESTION_ADDED";
-    isSuccessfull: boolean;
-  }
+      type: "SET_QUESTION_ADDED";
+      isSuccessfull: boolean;
+    }
   | {
-    type: "RESET_QUESTION_ADDED";
-    isSuccessfull: boolean;
-  };
+      type: "RESET_QUESTION_ADDED";
+      isSuccessfull: boolean;
+    }
+  | {
+      type: "UPDATE_TEST";
+      orgId: string;
+      fieldId: string;
+      test: Test;
+    };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
@@ -37,18 +44,29 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
   else dispatch(setError("Error occured"));
 };
 
-export const addQuestion = (question: Question, orgId: string): AppThunk => async (
-  dispatch
-) => {
+export const addQuestion = (
+  question: Question,
+  orgId: string
+): AppThunk => async (dispatch) => {
   const quest = await DataService.addQuestion(question, orgId);
   if (quest) dispatch(setQuestionAdded(true));
   else dispatch(setError("Error occured"));
 };
 
-export const resetAddQuestion = (): AppThunk => async (
-  dispatch
-) => {
+export const resetAddQuestion = (): AppThunk => async (dispatch) => {
   dispatch(resetQuestionAdded());
+};
+
+export const putTest = (
+  orgId: string,
+  fieldId: string,
+  test: Test
+): AppThunk => async (dispatch) => {
+  const updatedTest = await dataService.putTest(orgId, fieldId, test);
+
+  if (updatedTest) {
+    dispatch(updateTest(orgId, fieldId, updatedTest));
+  }
 };
 
 const setAdmin = (admin: Admin): adminActionTypes => ({
@@ -69,4 +87,15 @@ const setQuestionAdded = (isSuccessfull: boolean): adminActionTypes => ({
 const resetQuestionAdded = (): adminActionTypes => ({
   type: "RESET_QUESTION_ADDED",
   isSuccessfull: false,
+});
+
+const updateTest = (
+  orgId: string,
+  fieldId: string,
+  test: Test
+): adminActionTypes => ({
+  type: "UPDATE_TEST",
+  orgId,
+  fieldId,
+  test,
 });

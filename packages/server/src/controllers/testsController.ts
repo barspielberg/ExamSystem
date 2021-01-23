@@ -13,7 +13,7 @@ class TestsController {
       const dbTest = await organizationRepository.putTest(orgId, fieldId, test);
       if (dbTest)
         return res
-          .status(201)
+          .status(200)
           .json({ message: "Test updated successfully", test: dbTest });
       else res.status(410).json({ message: "Test not found" });
     } catch (error) {

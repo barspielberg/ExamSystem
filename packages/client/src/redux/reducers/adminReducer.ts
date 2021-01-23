@@ -1,4 +1,4 @@
-import { Admin } from "@examsystem/common";
+import { Admin, Test } from "@examsystem/common";
 import { adminActionTypes } from "../actions/adminActions";
 
 type stateType = {
@@ -10,7 +10,7 @@ type stateType = {
 const initialState: stateType = {
   admin: null,
   error: "",
-  isSuccessfull: false
+  isSuccessfull: false,
 };
 
 const adminReducer = (
@@ -26,9 +26,46 @@ const adminReducer = (
       return { ...state, isSuccessfull: action.isSuccessfull };
     case "RESET_QUESTION_ADDED":
       return { ...state, isSuccessfull: false };
+    case "UPDATE_TEST":
+      return updateTest(state, action.orgId, action.fieldId, action.test);
     default:
       return state;
   }
 };
 
 export default adminReducer;
+
+//🙈
+const updateTest = (
+  state: stateType,
+  orgId: string,
+  fieldId: string,
+  test: Test
+): stateType => {
+  if (state.admin) {
+    return {
+      ...state,
+      admin: {
+        ...state.admin,
+        organizations: state.admin.organizations.map((o) =>
+          o.id === orgId
+            ? {
+                ...o,
+                fields: o.fields.map((f) =>
+                  f.id === fieldId
+                    ? {
+                        ...f,
+                        tests: f.tests.map((t) =>
+                          t.id === test.id ? test : t
+                        ),
+                      }
+                    : f
+                ),
+              }
+            : o
+        ),
+      },
+    };
+  }
+  return state;
+};

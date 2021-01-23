@@ -13,13 +13,18 @@ import {
   QuestionsSection,
 } from "./FormSections";
 import { useParamsFull } from "../../../hooks";
+import { putTest } from "../../../redux/actions/adminActions";
 
 interface IEditTestPageProps {
   organizations?: Organization[];
+  update: (orgId: string, fieldId: string, test: Test) => void;
 }
 //TODO by Bar
 //TODO add error msg if no test found
-const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
+const EditTestPage: React.FC<IEditTestPageProps> = ({
+  organizations,
+  update,
+}) => {
   const { organization, field, test: originalTets } = useParamsFull(
     organizations
   );
@@ -31,6 +36,10 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
   const [test, setTest] = useState(testClone);
   const [step, setStep] = useState(0);
   const [showMsg, setShowMsg] = useState(false);
+
+  const onSubmitHandler = () => {
+    if (organization && field && test) update(organization.id, field.id, test);
+  };
 
   return (
     <div className={classes.page}>
@@ -55,7 +64,9 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
         <Button onClick={() => setShowMsg(true)}>« Back</Button>
         <div className={classes.filler} />
         <Button disabled>Show</Button>
-        <Button success>Save »</Button>
+        <Button success onClick={onSubmitHandler}>
+          Save »
+        </Button>
       </div>
       <PopupMessage
         show={showMsg}
@@ -74,7 +85,10 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({ organizations }) => {
 const mapState2Props = (state: RootState) => ({
   organizations: state.admin.admin?.organizations,
 });
-export default connect(mapState2Props)(EditTestPage);
+const mapDispatch2Props = {
+  update: putTest,
+};
+export default connect(mapState2Props, mapDispatch2Props)(EditTestPage);
 
 const getQuestions = (
   org?: Organization,

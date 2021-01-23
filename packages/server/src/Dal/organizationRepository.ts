@@ -38,7 +38,10 @@ class OrganizationRepository {
       .find((o) => o.id === orgId)
       ?.fields.find((f) => f.id === fieldId)?.tests;
 
-    tests?.map((t) => (t.id === test.id ? test : t));
+    const index = tests?.findIndex((t) => t.id === test.id);
+    if (index != undefined && index != -1) {
+      tests?.splice(index, 1, test);
+    }
 
     const dbTest = tests?.find((t) => t.id === test.id);
 
