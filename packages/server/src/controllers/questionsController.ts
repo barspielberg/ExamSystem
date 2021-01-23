@@ -7,6 +7,7 @@ class QuestionsController {
   // }
   async addQuestion(req: Request, res: Response, next: NextFunction) {
     const { orgId, question } = req.body;
+    if (question.id === "") question.id = Date.now().toString()
     try {
       await organizationRepository.addQuestion(orgId, question);
       res.status(201).json({ message: "Question added successfully" });
