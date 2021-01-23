@@ -6,20 +6,20 @@ import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import {
   addQuestion,
-  resetAddQuestion,
+  questionAdded,
 } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
 
 interface IEditQuestionPageProps {
   isSuccessfull: boolean;
   addQuestion: (question: Question, orgId: string, fieldsIds: string[]) => void;
-  resetAddQuestion: any;
+  questionAdded: any;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
   isSuccessfull,
-  resetAddQuestion,
+  questionAdded,
 }) => {
   const history = useHistory();
   const location = useLocation();
@@ -34,7 +34,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 
   useEffect(() => {
     if (isSuccessfull) history.goBack();
-    resetAddQuestion();
+    questionAdded(false);
   }, [isSuccessfull, history]);
 
   const defaultAnswers: Answer[] = [
@@ -237,7 +237,7 @@ const mapState2Props = (state: RootState) => ({
 });
 const mapDispatch2Props = {
   addQuestion,
-  resetAddQuestion,
+  questionAdded,
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);

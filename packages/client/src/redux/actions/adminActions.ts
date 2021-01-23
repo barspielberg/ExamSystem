@@ -47,12 +47,7 @@ export const addQuestion = (
 ): AppThunk => async (dispatch) => {
   const res = await DataService.addQuestion(question, orgId, fieldsIds);
   if (typeof res === "string") dispatch(setError(res));
-  else dispatch(setQuestionAdded(true));
-};
-
-//#TODO i need help here
-export const resetAddQuestion = () => (dispatch) => {
-  dispatch(setQuestionAdded(false));
+  else dispatch(questionAdded(true));
 };
 
 export const putTest = (
@@ -78,7 +73,7 @@ const setError = (err: string): adminActionTypes => ({
   err,
 });
 
-const setQuestionAdded = (isSuccessfull: boolean): adminActionTypes => ({
+export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({
   type: "QUESTION_ADDED",
   isSuccessfull,
 });
