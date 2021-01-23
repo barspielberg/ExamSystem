@@ -17,7 +17,7 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
   const [showId, setShowId] = useState("");
   // const { fieldId, organizationId } = useParams();
   const history = useHistory();
-  // console.log(questions);
+
   const numberOfTest = (ques: Question, tests: Test[]): number => {
     let counter = 0;
     for (let index = 0; index < tests.length; index++) {

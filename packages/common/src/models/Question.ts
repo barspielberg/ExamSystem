@@ -10,4 +10,5 @@ export interface Question {
   alignment: Alignment;
   tags: string[];
   lastUpdate: string;
+  fieldId: string;
 }
