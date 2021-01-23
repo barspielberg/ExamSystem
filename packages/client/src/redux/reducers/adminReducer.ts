@@ -22,10 +22,8 @@ const adminReducer = (
       return { ...state, admin: action.admin };
     case "SET_ERROR":
       return { ...state, error: action.err };
-    case "SET_QUESTION_ADDED":
+    case "QUESTION_ADDED":
       return { ...state, isSuccessfull: action.isSuccessfull };
-    case "RESET_QUESTION_ADDED":
-      return { ...state, isSuccessfull: false };
     case "UPDATE_TEST":
       return updateTest(state, action.orgId, action.fieldId, action.test);
     default:
@@ -50,18 +48,18 @@ const updateTest = (
         organizations: state.admin.organizations.map((o) =>
           o.id === orgId
             ? {
-                ...o,
-                fields: o.fields.map((f) =>
-                  f.id === fieldId
-                    ? {
-                        ...f,
-                        tests: f.tests.map((t) =>
-                          t.id === test.id ? test : t
-                        ),
-                      }
-                    : f
-                ),
-              }
+              ...o,
+              fields: o.fields.map((f) =>
+                f.id === fieldId
+                  ? {
+                    ...f,
+                    tests: f.tests.map((t) =>
+                      t.id === test.id ? test : t
+                    ),
+                  }
+                  : f
+              ),
+            }
             : o
         ),
       },

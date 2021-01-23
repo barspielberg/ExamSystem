@@ -14,27 +14,23 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export type adminActionTypes =
   | {
-      type: "SET_ADMIN";
-      admin: Admin | null;
-    }
+    type: "SET_ADMIN";
+    admin: Admin | null;
+  }
   | {
-      type: "SET_ERROR";
-      err: string;
-    }
+    type: "SET_ERROR";
+    err: string;
+  }
   | {
-      type: "SET_QUESTION_ADDED";
-      isSuccessfull: boolean;
-    }
+    type: "QUESTION_ADDED";
+    isSuccessfull: boolean;
+  }
   | {
-      type: "RESET_QUESTION_ADDED"; // why? they are the same
-      isSuccessfull: boolean;
-    }
-  | {
-      type: "UPDATE_TEST";
-      orgId: string;
-      fieldId: string;
-      test: Test;
-    };
+    type: "UPDATE_TEST";
+    orgId: string;
+    fieldId: string;
+    test: Test;
+  };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
@@ -47,16 +43,16 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
 export const addQuestion = (
   question: Question,
   orgId: string,
-  fieldsIds:string[]
+  fieldsIds: string[]
 ): AppThunk => async (dispatch) => {
-  const quest = await DataService.addQuestion(question, orgId,fieldsIds);
-  if (quest) dispatch(setQuestionAdded(true));
-  else dispatch(setError("Error occured"));
+  const res = await DataService.addQuestion(question, orgId, fieldsIds);
+  if (typeof res === "string") dispatch(setError(res));
+  else dispatch(setQuestionAdded(true));
 };
 
-export const resetAddQuestion = (): AppThunk => async (dispatch) => {
-  // why???
-  dispatch(resetQuestionAdded());
+//#TODO i need help here
+export const resetAddQuestion = () => (dispatch) => {
+  dispatch(setQuestionAdded(false));
 };
 
 export const putTest = (
@@ -83,15 +79,10 @@ const setError = (err: string): adminActionTypes => ({
 });
 
 const setQuestionAdded = (isSuccessfull: boolean): adminActionTypes => ({
-  type: "SET_QUESTION_ADDED",
+  type: "QUESTION_ADDED",
   isSuccessfull,
 });
 
-const resetQuestionAdded = (): adminActionTypes => ({
-  // why?
-  type: "RESET_QUESTION_ADDED",
-  isSuccessfull: false,
-});
 
 const updateTest = (
   orgId: string,
