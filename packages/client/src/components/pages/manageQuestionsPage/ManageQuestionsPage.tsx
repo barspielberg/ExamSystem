@@ -29,7 +29,7 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
 
   const { organization, field } = useParamsFull(organizations);
   const [questions, setQuestions] = useState(
-    organization?.questions.filter((q) => q.fieldId === field?.id)
+    organization?.questions.filter((q) => field?.questionIds.includes(q.id))
   );
 
   return (
@@ -54,7 +54,7 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
           onClick={() =>
             history.push({
               pathname: "/EditQuestion/addNew/",
-              search: `?orgId=${organization?.id}&fieldId=${field?.id}&fieldTitle=${field?.title}`,
+              search: `?orgId=${organization?.id}&fields=${organization?.fields}`,
             })
           }
         >

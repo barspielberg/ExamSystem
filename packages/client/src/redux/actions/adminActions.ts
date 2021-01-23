@@ -46,9 +46,10 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
 
 export const addQuestion = (
   question: Question,
-  orgId: string
+  orgId: string,
+  fieldsIds:string[]
 ): AppThunk => async (dispatch) => {
-  const quest = await DataService.addQuestion(question, orgId);
+  const quest = await DataService.addQuestion(question, orgId,fieldsIds);
   if (quest) dispatch(setQuestionAdded(true));
   else dispatch(setError("Error occured"));
 };
