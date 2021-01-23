@@ -25,6 +25,8 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const organizationId = params.get("orgId") || "";
+  const fieldId = params.get("fieldId") || "";
+  const fieldTitle = params.get("fieldTitle") || "";
   const [selectedType, setSelectedType] = useState<QuestionType>(0);
   const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
   const [tags, setTags] = useState("");
@@ -96,14 +98,15 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
     e.preventDefault();
     addQuestion(
       {
-        id: Date.now().toString(),
+        id: "",
         mainTitle,
         secondaryTitle,
         alignment: selectedAlignment,
         type: selectedType,
         possibleAnswers: answers,
         tags: tags.split(","),
-        lastUpdate: new Date().toString(),
+        lastUpdate: Date.now().toString(),
+        fieldId: fieldId,
       },
       organizationId
     );
@@ -113,6 +116,11 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
     <div className={classes.page}>
       <header>Add new Question</header>
       <form className={classes.inputs}>
+        <div>
+          <label>
+            Field: <strong>{fieldTitle}</strong>{" "}
+          </label>
+        </div>
         <div>
           <label>Question Type:</label>
           <input
