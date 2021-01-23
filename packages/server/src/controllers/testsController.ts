@@ -10,10 +10,14 @@ class TestsController {
         .json({ message: "OOPS it seems like you are missing some inputs" });
 
     try {
-      await organizationRepository.putTest(orgId, fieldId, test);
-      res.status(201).json({ message: "Test updated successfully" });
+      const dbTest = await organizationRepository.putTest(orgId, fieldId, test);
+      if (dbTest)
+        return res
+          .status(201)
+          .json({ message: "Test updated successfully", test: dbTest });
+      else res.status(410).json({ message: "Test not found" });
     } catch (error) {
-      res
+      return res
         .status(500)
         .json({ message: "OOPS somwthing went wrong", error: error });
     }

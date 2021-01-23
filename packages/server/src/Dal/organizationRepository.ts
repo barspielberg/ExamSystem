@@ -32,16 +32,19 @@ class OrganizationRepository {
   }
 
   async putTest(orgId: string, fieldId: string, test: Test) {
-    test.id = getNewId();
     const organizations = await this.getAllOrganizations();
 
-    organizations
+    const tests = organizations
       .find((o) => o.id === orgId)
-      ?.fields.find((f) => f.id === fieldId)
-      ?.tests.push(test);
+      ?.fields.find((f) => f.id === fieldId)?.tests;
+
+    tests?.map((t) => (t.id === test.id ? test : t));
+
+    const dbTest = tests?.find((t) => t.id === test.id);
 
     const stringifiedOrgs = JSON.stringify({ organizations: organizations });
     await fsPromises.writeFile(organizationPath, stringifiedOrgs, "utf8");
+    return dbTest;
   }
 }
 
