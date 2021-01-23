@@ -1,0 +1,26 @@
+.que {
+  padding: 1rem;
+  padding-top: 0;
+  transform-origin: center top;
+
+  h5 {
+    color: rgb(85, 84, 84);
+  }
+  .answers {
+    display: flex;
+    flex-direction: column;
+    &.row {
+      flex-direction: row;
+    }
+
+    .answer {
+      margin: 0.2rem;
+      &[aria-selected="true"] {
+        font-weight: 800;
+        &::after {
+          content: " ✔";
+        }
+      }
+    }
+  }
+}

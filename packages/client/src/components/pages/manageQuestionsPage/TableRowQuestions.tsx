@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./ManageQuestionsPage.module.scss";
 import { Question, QuestionType, Test } from "@examsystem/common";
-import { Button } from "../../uiElements";
+import { Button, DisplayQuestion } from "../../uiElements";
 import { useHistory } from "react-router";
-import { useParams } from "../../../hooks";
 
 interface ITableRowsQuestionsProps {
   questions?: Question[];
@@ -15,8 +14,10 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
   tests,
 }) => {
   const notEmpty = !!questions && questions.length > 0;
+  const [showId, setShowId] = useState("");
   // const { fieldId, organizationId } = useParams();
   const history = useHistory();
+
   const numberOfTest = (ques: Question, tests: Test[]): number => {
     let counter = 0;
     for (let index = 0; index < tests.length; index++) {
@@ -29,8 +30,8 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
   return (
     <React.Fragment>
       {notEmpty &&
-        questions?.map((q, index) => (
-          <tr key={index}>
+        questions?.map((q) => [
+          <tr key={q.id}>
             <td>{q.id}</td>
             <td>
               {q.mainTitle} {q.tags}
@@ -46,10 +47,19 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
               >
                 Edit
               </Button>
-              <Button>show</Button>
+              <Button onClick={() => setShowId(showId === q.id ? "" : q.id)}>
+                {showId === q.id ? "Shrink" : "Show"}
+              </Button>
             </td>
-          </tr>
-        ))}
+          </tr>,
+          showId === q.id && (
+            <tr key={q.id + 5}>
+              <td style={{ textAlign: "start" }} colSpan={6}>
+                <DisplayQuestion question={q} />
+              </td>
+            </tr>
+          ),
+        ])}
     </React.Fragment>
   );
 };

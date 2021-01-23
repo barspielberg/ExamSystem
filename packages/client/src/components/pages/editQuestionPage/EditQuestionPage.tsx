@@ -37,7 +37,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   useEffect(() => {
     if (isSuccessfull) history.goBack();
     resetAddQuestion();
-  }, [isSuccessfull]);
+  }, [isSuccessfull, history, resetAddQuestion]);
 
   const defaultAnswers: Answer[] = [
     {

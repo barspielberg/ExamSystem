@@ -8,6 +8,7 @@ interface IButtonProps {
   disabled?: boolean;
   success?: boolean;
   danger?: boolean;
+  submit?: boolean;
 }
 
 export const Button: React.FC<IButtonProps> = ({
@@ -16,10 +17,11 @@ export const Button: React.FC<IButtonProps> = ({
   disabled,
   success,
   danger,
+  submit,
 }) => {
   return (
     <button
-      type="button"
+      type={submit ? "submit" : "button"}
       disabled={disabled}
       className={`${classes.btn} ${danger ? classes.danger : ""} ${
         success ? classes.success : ""
