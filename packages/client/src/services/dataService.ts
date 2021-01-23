@@ -42,15 +42,15 @@ class DataService {
     orgId: string,
     fieldId: string,
     test: Test
-  ): Promise<Test | undefined> {
+  ): Promise<Test | string> {
     try {
       const res = await server.put("tests", { orgId, fieldId, test });
 
       if (res.status === 200) return res.data.test;
-      else return undefined;
+      else return res.data.message;
     } catch (error) {
       console.error(error);
-      return undefined;
+      return error;
     }
   }
 }

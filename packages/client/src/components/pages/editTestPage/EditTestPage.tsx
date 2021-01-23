@@ -38,7 +38,12 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({
   const [showMsg, setShowMsg] = useState(false);
 
   const onSubmitHandler = () => {
-    if (organization && field && test) update(organization.id, field.id, test);
+    if (organization && field && test) {
+      update(organization.id, field.id, test);
+      history.push(
+        `/ManageTests/?organizationId=${organization.id}&fieldId=${field.id}`
+      );
+    }
   };
 
   return (

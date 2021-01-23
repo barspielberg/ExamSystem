@@ -62,10 +62,11 @@ export const putTest = (
   fieldId: string,
   test: Test
 ): AppThunk => async (dispatch) => {
-  const updatedTest = await dataService.putTest(orgId, fieldId, test);
-
-  if (updatedTest) {
-    dispatch(updateTest(orgId, fieldId, updatedTest));
+  const res = await dataService.putTest(orgId, fieldId, test);
+  if (typeof res === "string") {
+    dispatch(setError(res));
+  } else {
+    dispatch(updateTest(orgId, fieldId, res));
   }
 };
 
