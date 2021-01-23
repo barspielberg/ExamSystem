@@ -23,12 +23,21 @@ class OrganizationRepository {
     return organizations;
   }
 
-  async addQuestion(orgId: string, question: Question) {
+  async addQuestion(orgId: string, question: Question, fieldsIds: string[]) {
     question.id = getNewId();
     const organizations = await this.getAllOrganizations();
-    organizations.find((o) => o.id === orgId)?.questions.push(question);
+    const foundOrg = organizations.find((o) => o.id === orgId);
+    foundOrg?.questions.push(question);
+    foundOrg?.fields.map(field => {
+      if (fieldsIds.includes(field.id))
+        field.questionIds.push(question.id);
+    });
+
+    const dbQuestion = foundOrg?.questions.find(q => q.id === question.id);
+
     const stringifiedOrgs = JSON.stringify({ organizations: organizations });
     await fsPromises.writeFile(organizationPath, stringifiedOrgs, "utf8");
+    return dbQuestion;
   }
 
   async putTest(orgId: string, fieldId: string, test: Test) {

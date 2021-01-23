@@ -7,15 +7,21 @@ class QuestionsController {
   // }
   async addQuestion(req: Request, res: Response, next: NextFunction) {
 
-    const { orgId, question } = req.body;//needs validation
-    if (question.id === "") question.id = Date.now().toString()
+    const { orgId, question, fieldsIds } = req.body;
+    if (!orgId || !fieldsIds || !question)
+      return res
+        .status(400)
+        .json({ message: "OOPS it seems like you are missing some inputs" });
+
+    if (question.id === "") question.id = Date.now().toString();
 
     try {
-      await organizationRepository.addQuestion(orgId, question);
-      res.status(201).json({ message: "Question added successfully" }); //return question
+      const dbQuestion = await organizationRepository.addQuestion(orgId, question, fieldsIds);
+      if (dbQuestion) {
+        res.status(201).json({ message: "Question added successfully", question: dbQuestion });
+      } else res.status(410).json({ message: "Question not found" });
     } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "OOPS somwthing went wrong" });
+      res.status(500).json({ message: "OOPS somwthing went wrong", error });
     }
   }
 }

@@ -6,27 +6,25 @@ import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import {
   addQuestion,
-  resetAddQuestion,
+  questionAdded,
 } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
 
 interface IEditQuestionPageProps {
   isSuccessfull: boolean;
-  addQuestion: (question: Question, orgId: string) => void;
-  resetAddQuestion: any;
+  addQuestion: (question: Question, orgId: string, fieldsIds: string[]) => void;
+  questionAdded: any;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
   isSuccessfull,
-  resetAddQuestion,
+  questionAdded,
 }) => {
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const organizationId = params.get("orgId") || "";
-  const fieldId = params.get("fieldId") || "";
-  const fieldTitle = params.get("fieldTitle") || "";
   const [selectedType, setSelectedType] = useState<QuestionType>(0);
   const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
   const [tags, setTags] = useState("");
@@ -36,8 +34,8 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 
   useEffect(() => {
     if (isSuccessfull) history.goBack();
-    resetAddQuestion();
-  }, [isSuccessfull, history, resetAddQuestion]);
+    questionAdded(false);
+  }, [isSuccessfull, history]);
 
   const defaultAnswers: Answer[] = [
     {
@@ -106,9 +104,9 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         possibleAnswers: answers,
         tags: tags.split(","),
         lastUpdate: Date.now().toString(),
-        fieldId: fieldId,
       },
-      organizationId
+      organizationId,
+      ["1"]
     );
   };
 
@@ -116,11 +114,6 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
     <div className={classes.page}>
       <header>Add new Question</header>
       <form className={classes.inputs}>
-        <div>
-          <label>
-            Field: <strong>{fieldTitle}</strong>{" "}
-          </label>
-        </div>
         <div>
           <label>Question Type:</label>
           <input
@@ -244,7 +237,7 @@ const mapState2Props = (state: RootState) => ({
 });
 const mapDispatch2Props = {
   addQuestion,
-  resetAddQuestion,
+  questionAdded,
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);

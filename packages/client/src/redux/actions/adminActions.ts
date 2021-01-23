@@ -14,27 +14,23 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export type adminActionTypes =
   | {
-      type: "SET_ADMIN";
-      admin: Admin | null;
-    }
+    type: "SET_ADMIN";
+    admin: Admin | null;
+  }
   | {
-      type: "SET_ERROR";
-      err: string;
-    }
+    type: "SET_ERROR";
+    err: string;
+  }
   | {
-      type: "SET_QUESTION_ADDED";
-      isSuccessfull: boolean;
-    }
+    type: "QUESTION_ADDED";
+    isSuccessfull: boolean;
+  }
   | {
-      type: "RESET_QUESTION_ADDED"; // why? they are the same
-      isSuccessfull: boolean;
-    }
-  | {
-      type: "UPDATE_TEST";
-      orgId: string;
-      fieldId: string;
-      test: Test;
-    };
+    type: "UPDATE_TEST";
+    orgId: string;
+    fieldId: string;
+    test: Test;
+  };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
@@ -46,16 +42,12 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
 
 export const addQuestion = (
   question: Question,
-  orgId: string
+  orgId: string,
+  fieldsIds: string[]
 ): AppThunk => async (dispatch) => {
-  const quest = await DataService.addQuestion(question, orgId);
-  if (quest) dispatch(setQuestionAdded(true));
-  else dispatch(setError("Error occured"));
-};
-
-export const resetAddQuestion = (): AppThunk => async (dispatch) => {
-  // why???
-  dispatch(resetQuestionAdded());
+  const res = await DataService.addQuestion(question, orgId, fieldsIds);
+  if (typeof res === "string") dispatch(setError(res));
+  else dispatch(questionAdded(true));
 };
 
 export const putTest = (
@@ -81,16 +73,11 @@ const setError = (err: string): adminActionTypes => ({
   err,
 });
 
-const setQuestionAdded = (isSuccessfull: boolean): adminActionTypes => ({
-  type: "SET_QUESTION_ADDED",
+export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({
+  type: "QUESTION_ADDED",
   isSuccessfull,
 });
 
-const resetQuestionAdded = (): adminActionTypes => ({
-  // why?
-  type: "RESET_QUESTION_ADDED",
-  isSuccessfull: false,
-});
 
 const updateTest = (
   orgId: string,

@@ -22,19 +22,19 @@ class DataService {
     }
   }
 
-  async addQuestion(question: Question, orgId: string) {
+  async addQuestion(question: Question, orgId: string, fieldsIds: string[]) {
     try {
       const res = await server.post("questions/addquestion", {
         orgId,
         question,
+        fieldsIds,
       });
       if (res.status === 201) {
-        console.log(res.data.message);
-        return true;
+        return res.data.question;
       }
     } catch (error) {
       console.log(error);
-      return false;
+      return error;
     }
   }
 
