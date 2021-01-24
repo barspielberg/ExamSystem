@@ -26,6 +26,14 @@ export type adminActionTypes =
     isSuccessfull: boolean;
   }
   | {
+    type: "QUESTION_UPDATED";
+    isSuccessfull: boolean;
+  }
+  | {
+    type: "GET_QUESTION";
+    question: Question
+  }
+  | {
     type: "UPDATE_TEST";
     orgId: string;
     fieldId: string;
@@ -40,12 +48,32 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
   else dispatch(setError("Error occured"));
 };
 
+export const getQuestion = (
+  orgId: string,
+  adminId: string,
+  questionId: string
+): AppThunk => async (dispatch) => {
+  const res = await DataService.getQuestion(orgId, adminId, questionId);
+  if (typeof res === "string") dispatch(setError(res));
+  else dispatch(getQuestionFromDb(res));
+};
+
 export const addQuestion = (
   question: Question,
   orgId: string,
   fieldsIds: string[]
 ): AppThunk => async (dispatch) => {
   const res = await DataService.addQuestion(question, orgId, fieldsIds);
+  if (typeof res === "string") dispatch(setError(res));
+  else dispatch(questionAdded(true));
+};
+
+export const putQuestion = (
+  question: Question,
+  orgId: string,
+  fieldsIds: string[]
+): AppThunk => async (dispatch) => {
+  const res = await DataService.updateQuestion(question, orgId, fieldsIds);
   if (typeof res === "string") dispatch(setError(res));
   else dispatch(questionAdded(true));
 };
@@ -71,6 +99,11 @@ const setAdmin = (admin: Admin): adminActionTypes => ({
 const setError = (err: string): adminActionTypes => ({
   type: "SET_ERROR",
   err,
+});
+
+const getQuestionFromDb = (question: Question): adminActionTypes => ({
+  type: "GET_QUESTION",
+  question,
 });
 
 export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({

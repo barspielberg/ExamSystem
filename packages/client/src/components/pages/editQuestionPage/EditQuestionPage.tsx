@@ -6,22 +6,30 @@ import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import {
   addQuestion,
+  getQuestion,
   questionAdded,
+  putQuestion,
 } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
 
 interface IEditQuestionPageProps {
   isSuccessfull: boolean;
   addQuestion: (question: Question, orgId: string, fieldsIds: string[]) => void;
+  getQuestion: (orgId: string, adminId: string, questionId: string) => any;
+  putQuestion: (question: Question, orgId: string, fieldsIds: string[]) => any;
   questionAdded: any;
   admin: Admin | null;
+  questionFromDb: Question | null;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
+  getQuestion,
+  putQuestion,
   isSuccessfull,
   questionAdded,
   admin,
+  questionFromDb,
 }) => {
   const history = useHistory();
   const location = useLocation();
@@ -32,6 +40,16 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
   const [showMsg, setShowMsg] = useState(false);
   const [question, setQuestion] = useState(newQuestion);
+
+  useEffect(() => {
+    const questionId = history.location.pathname.split("/")[2];
+    if (questionId) {
+      getQuestion(organizationId, admin?.id || "", questionId);
+      if (questionFromDb) {
+        setQuestion(questionFromDb);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (isSuccessfull) history.goBack();
@@ -91,7 +109,11 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    addQuestion(question, organizationId, selectedFields);
+    if (question.id === "") {
+      addQuestion(question, organizationId, selectedFields);
+    } else {
+      putQuestion(question, organizationId, selectedFields);
+    }
   };
 
   return (
@@ -244,10 +266,13 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 const mapState2Props = (state: RootState) => ({
   isSuccessfull: state.admin.isSuccessfull,
   admin: state.admin.admin,
+  questionFromDb: state.admin.question,
 });
 const mapDispatch2Props = {
   addQuestion,
   questionAdded,
+  getQuestion,
+  putQuestion,
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);

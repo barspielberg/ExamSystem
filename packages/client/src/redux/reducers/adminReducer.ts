@@ -1,16 +1,18 @@
-import { Admin, Test } from "@examsystem/common";
+import { Admin, Question, Test } from "@examsystem/common";
 import { adminActionTypes } from "../actions/adminActions";
 
 type stateType = {
   admin: Admin | null;
   error: string;
   isSuccessfull: boolean;
+  question: Question | null
 };
 
 const initialState: stateType = {
   admin: null,
   error: "",
   isSuccessfull: false,
+  question: null
 };
 
 const adminReducer = (
@@ -24,6 +26,10 @@ const adminReducer = (
       return { ...state, error: action.err };
     case "QUESTION_ADDED":
       return { ...state, isSuccessfull: action.isSuccessfull };
+    case "QUESTION_UPDATED":
+      return { ...state, isSuccessfull: action.isSuccessfull };
+    case "GET_QUESTION":
+      return { ...state, question: action.question };
     case "UPDATE_TEST":
       return updateTest(state, action.orgId, action.fieldId, action.test);
     default:

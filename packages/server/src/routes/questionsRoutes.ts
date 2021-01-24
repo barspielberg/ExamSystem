@@ -3,7 +3,8 @@ import questionsController from "../controllers/questionsController";
 
 const router = express.Router();
 
-// router.get("/", questionsController.getQuestions);
-router.post("/addquestion", questionsController.addQuestion); // post "/"
+router.get("/getquestion", questionsController.getQuestion);
+router.post("/addquestion", questionsController.addQuestion);
+router.put("/updateQuestion", questionsController.updateQuestion);
 
 export default router;
