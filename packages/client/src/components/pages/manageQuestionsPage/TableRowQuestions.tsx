@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import classes from "./ManageQuestionsPage.module.scss";
-import { Question, QuestionType, Test } from "@examsystem/common";
+import { Organization, Question, QuestionType, Test } from "@examsystem/common";
 import { Button, DisplayQuestion } from "../../uiElements";
 import { useHistory } from "react-router";
 
 interface ITableRowsQuestionsProps {
   questions?: Question[];
   tests: Test[];
+  organization?: Organization;
 }
 
 const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
   questions,
   tests,
+  organization,
 }) => {
   const notEmpty = !!questions && questions.length > 0;
   const [showId, setShowId] = useState("");
-  // const { fieldId, organizationId } = useParams();
   const history = useHistory();
 
   const numberOfTest = (ques: Question, tests: Test[]): number => {
@@ -41,8 +42,11 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
             <td> {numberOfTest(q, tests)} </td>
             <td className={classes.btns}>
               <Button
-                onClick={
-                  () => history.push("") //TODO push to edit question
+                onClick={() =>
+                  history.push({
+                    pathname: `/EditQuestion/${q.id}/`,
+                    search: `?orgId=${organization?.id}`,
+                  })
                 }
               >
                 Edit

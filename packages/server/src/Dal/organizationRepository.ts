@@ -23,8 +23,15 @@ class OrganizationRepository {
     return organizations;
   }
 
+  async getQuestion(orgId: string, adminId: string, questionId: string) {
+    const orgs = await this.getOrganizations(adminId);
+    const org = orgs.find(o => o.id === orgId && o.adminIds.includes(adminId));
+    const question = org?.questions.find(q => q.id === questionId);
+    return question;
+  }
+
   async addQuestion(orgId: string, question: Question, fieldsIds: string[]) {
-    question.id = getNewId();
+    if (question.id === "") question.id = getNewId();
     const organizations = await this.getAllOrganizations();
     const foundOrg = organizations.find((o) => o.id === orgId);
     foundOrg?.questions.push(question);
@@ -33,6 +40,26 @@ class OrganizationRepository {
         field.questionIds.push(question.id);
     });
 
+    const dbQuestion = foundOrg?.questions.find(q => q.id === question.id);
+
+    const stringifiedOrgs = JSON.stringify({ organizations: organizations });
+    await fsPromises.writeFile(organizationPath, stringifiedOrgs, "utf8");
+    return dbQuestion;
+  }
+
+  async updateQuestion(orgId: string, question: Question, fieldsIds: string[]) {
+    const organizations = await this.getAllOrganizations();
+    const foundOrg = organizations.find((o) => o.id === orgId);
+    foundOrg?.questions.map((q,index) => {
+      if(q.id === question.id) foundOrg.questions[index] = question;
+    });
+    
+    foundOrg?.fields.map(field => {
+      if (fieldsIds.includes(field.id))
+        field.questionIds.push(question.id);
+    });
+
+    console.log(foundOrg?.questions);
     const dbQuestion = foundOrg?.questions.find(q => q.id === question.id);
 
     const stringifiedOrgs = JSON.stringify({ organizations: organizations });
