@@ -1,13 +1,7 @@
 import classes from "./EditQUestionPage.module.scss";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
-import {
-  Answer,
-  QuestionType,
-  Alignment,
-  Question,
-  Admin,
-} from "@examsystem/common";
+import { Answer, QuestionType, Question, Admin } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import {
@@ -36,71 +30,53 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const fields = admin?.organizations.find((o) => o.id === organizationId)
     ?.fields;
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
-  const [selectedType, setSelectedType] = useState<QuestionType>(0);
-  const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
-  const [tags, setTags] = useState("");
-  const [mainTitle, setMainTitle] = useState("");
-  const [secondaryTitle, setSecondaryTitle] = useState("");
   const [showMsg, setShowMsg] = useState(false);
+  const [question, setQuestion] = useState(newQuestion);
 
   useEffect(() => {
     if (isSuccessfull) history.goBack();
     questionAdded(false);
   }, [isSuccessfull, history]);
 
-  const defaultAnswers: Answer[] = [
-    {
-      id: "0",
-      content: "first answer",
-      correct: false,
-    },
-    {
-      id: "1",
-      content: "second answer",
-      correct: true,
-    },
-    {
-      id: "2",
-      content: "third answer",
-      correct: false,
-    },
-    {
-      id: "3",
-      content: "fourth answer",
-      correct: false,
-    },
-  ];
-  const [answers, setAnswers] = useState(defaultAnswers);
-
   const updateContent = (index: any) => (e: any) => {
-    let newArr = [...answers];
+    let newArr = [...question.possibleAnswers];
     newArr[index].content = e.target.value;
-    setAnswers(newArr);
+    setQuestion({ ...question, possibleAnswers: newArr });
   };
 
   const removeAnswer = (id: string) => {
-    let newArr = answers.filter((ans) => ans.id !== id);
-    setAnswers(newArr);
+    let newArr = question.possibleAnswers.filter((ans) => ans.id !== id);
+    setQuestion({ ...question, possibleAnswers: newArr });
   };
 
   const addNewAnswer = () => {
     const newAnswer: Answer = {
-      id: answers.length.toString(),
+      id: question.possibleAnswers.length.toString(),
       content: "new answer",
       correct: false,
     };
-    setAnswers([...answers, newAnswer]);
+    setQuestion({
+      ...question,
+      possibleAnswers: [...question.possibleAnswers, newAnswer],
+    });
   };
 
   const setCorrectAnswer = (id: string) => {
-    selectedType === QuestionType.singleChoiceQuestion
-      ? setAnswers(answers.map((ans) => ({ ...ans, correct: ans.id === id })))
-      : setAnswers(
-          answers.map((ans) => ({
+    question.type === QuestionType.singleChoiceQuestion
+      ? setQuestion({
+          ...question,
+          possibleAnswers: question.possibleAnswers.map((ans) => ({
+            ...ans,
+            correct: ans.id === id,
+          })),
+        })
+      : setQuestion({
+          ...question,
+          possibleAnswers: question.possibleAnswers.map((ans) => ({
             ...ans,
             correct: ans.id === id ? !ans.correct : ans.correct,
-          }))
-        );
+          })),
+        });
   };
 
   const setFields = (id: string) => {
@@ -115,20 +91,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    addQuestion(
-      {
-        id: "",
-        mainTitle,
-        secondaryTitle,
-        alignment: selectedAlignment,
-        type: selectedType,
-        possibleAnswers: answers,
-        tags: tags.split(","),
-        lastUpdate: new Date().toLocaleDateString(),
-      },
-      organizationId,
-      ["1"]
-    );
+    addQuestion(question, organizationId, selectedFields);
   };
 
   return (
@@ -155,16 +118,16 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
           <label>Question Type:</label>
           <input
             type="radio"
-            checked={selectedType === 0}
+            checked={question.type === 0}
             name="type"
-            onChange={() => setSelectedType(0)}
+            onChange={() => setQuestion({ ...question, type: 0 })}
           />
           <label>Single choice question</label>
           <input
             type="radio"
-            checked={selectedType === 1}
+            checked={question.type === 1}
             name="type"
-            onChange={() => setSelectedType(1)}
+            onChange={() => setQuestion({ ...question, type: 1 })}
           />
           <label>Multiple choice question</label>
         </div>
@@ -172,22 +135,26 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
           <label>Qustion Text:</label>
           <br />
           <textarea
-            value={mainTitle}
-            onChange={(e) => setMainTitle(e.target.value)}
+            value={question.mainTitle}
+            onChange={(e) =>
+              setQuestion({ ...question, mainTitle: e.target.value })
+            }
           ></textarea>
         </div>
         <div>
           <label>Text below question:</label>
           <br />
           <textarea
-            value={secondaryTitle}
-            onChange={(e) => setSecondaryTitle(e.target.value)}
+            value={question.secondaryTitle}
+            onChange={(e) =>
+              setQuestion({ ...question, secondaryTitle: e.target.value })
+            }
           ></textarea>
         </div>
         <hr />
         <div>
           <label>Possible Answers:</label>
-          {answers.map((ans, index) => {
+          {question.possibleAnswers.map((ans, index) => {
             return (
               <div key={index}>
                 <button
@@ -202,7 +169,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
                   value={ans.content}
                   onChange={(e) => updateContent(index)(e)}
                 />
-                {selectedType === QuestionType.singleChoiceQuestion ? (
+                {question.type === QuestionType.singleChoiceQuestion ? (
                   <input
                     type="radio"
                     name="WhoIsCorrect"
@@ -228,23 +195,28 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
           <label>Answers Layout:</label>
           <input
             type="radio"
-            checked={selectedAlignment === 0}
+            checked={question.alignment === 0}
             name="alignment"
-            onChange={() => setSelectedAlignment(0)}
+            onChange={() => setQuestion({ ...question, alignment: 0 })}
           />
           <label>Horizontal</label>
           <input
             type="radio"
-            checked={selectedAlignment === 1}
+            checked={question.alignment === 1}
             name="alignment"
-            onChange={() => setSelectedAlignment(1)}
+            onChange={() => setQuestion({ ...question, alignment: 1 })}
           />
           <label>Vertical</label>
         </div>
         <hr />
         <div>
           <label>Tags: </label>
-          <input value={tags} onChange={(e) => setTags(e.target.value)} />
+          <input
+            value={question.tags}
+            onChange={(e) =>
+              setQuestion({ ...question, tags: e.target.value.split(",") })
+            }
+          />
         </div>
         <div className={classes.btns}>
           <Button onClick={() => setShowMsg(true)}>« Back</Button>
@@ -279,3 +251,37 @@ const mapDispatch2Props = {
 };
 
 export default connect(mapState2Props, mapDispatch2Props)(EditQuestionPage);
+
+const defaultAnswers: Answer[] = [
+  {
+    id: "0",
+    content: "first answer",
+    correct: false,
+  },
+  {
+    id: "1",
+    content: "second answer",
+    correct: true,
+  },
+  {
+    id: "2",
+    content: "third answer",
+    correct: false,
+  },
+  {
+    id: "3",
+    content: "fourth answer",
+    correct: false,
+  },
+];
+
+const newQuestion: Question = {
+  id: "",
+  mainTitle: "",
+  secondaryTitle: "",
+  alignment: 0,
+  type: 0,
+  possibleAnswers: defaultAnswers,
+  tags: [],
+  lastUpdate: new Date().toLocaleDateString(),
+};
