@@ -3,6 +3,7 @@
 .page {
   max-width: 800px;
   margin: auto;
+  
   .btns {
     display: flex;
     margin-top: 0.5rem;
@@ -22,6 +23,7 @@
   }
 
   .inputs {
+    padding: 9px;
     display: flex;
     flex-direction: column;
     background-color: $dark_row;

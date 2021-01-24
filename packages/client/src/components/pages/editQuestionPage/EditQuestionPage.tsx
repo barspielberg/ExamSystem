@@ -1,7 +1,13 @@
 import classes from "./EditQUestionPage.module.scss";
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router";
-import { Answer, QuestionType, Alignment, Question } from "@examsystem/common";
+import {
+  Answer,
+  QuestionType,
+  Alignment,
+  Question,
+  Admin,
+} from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import {
@@ -14,17 +20,22 @@ interface IEditQuestionPageProps {
   isSuccessfull: boolean;
   addQuestion: (question: Question, orgId: string, fieldsIds: string[]) => void;
   questionAdded: any;
+  admin: Admin | null;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
   isSuccessfull,
   questionAdded,
+  admin,
 }) => {
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const organizationId = params.get("orgId") || "";
+  const fields = admin?.organizations.find((o) => o.id === organizationId)
+    ?.fields;
+  const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
   const [selectedType, setSelectedType] = useState<QuestionType>(0);
   const [selectedAlignment, setSelectedAlignment] = useState<Alignment>(0);
   const [tags, setTags] = useState("");
@@ -92,6 +103,16 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         );
   };
 
+  const setFields = (id: string) => {
+    let newSelecteffields;
+    if (selectedFields.includes(id)) {
+      newSelecteffields = selectedFields.filter((f) => f !== id);
+      setSelectedFields(newSelecteffields);
+    } else {
+      setSelectedFields([...selectedFields, id]);
+    }
+  };
+
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     addQuestion(
@@ -103,7 +124,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         type: selectedType,
         possibleAnswers: answers,
         tags: tags.split(","),
-        lastUpdate: Date.now().toString(),
+        lastUpdate: new Date().toLocaleDateString(),
       },
       organizationId,
       ["1"]
@@ -114,6 +135,22 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
     <div className={classes.page}>
       <header>Add new Question</header>
       <form className={classes.inputs}>
+        <div>
+          <label>Question Fields:</label>
+          {fields?.map((field, index) => {
+            return (
+              <div key={index}>
+                <label>{field.title}</label>
+                <input
+                  type="checkbox"
+                  name="selectedField"
+                  checked={selectedFields.includes(field.id)}
+                  onChange={() => setFields(field.id)}
+                />
+              </div>
+            );
+          })}
+        </div>
         <div>
           <label>Question Type:</label>
           <input
@@ -234,6 +271,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 
 const mapState2Props = (state: RootState) => ({
   isSuccessfull: state.admin.isSuccessfull,
+  admin: state.admin.admin,
 });
 const mapDispatch2Props = {
   addQuestion,
