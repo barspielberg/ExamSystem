@@ -230,9 +230,9 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
           <Button onClick={() => setShowMsg(true)}>« Back</Button>
           <div className={classes.filler} />
           <Button
-            onClick={() => setShowId(showId === question.id ? "" : question.id)}
+            onClick={() => setShowId(!show)}
           >
-            {showId === question.id ? "Shrink" : "Show"}
+            {show ? "Shrink" : "Show"}
           </Button>
           <Button success onClick={submitForm}>
             Save »
