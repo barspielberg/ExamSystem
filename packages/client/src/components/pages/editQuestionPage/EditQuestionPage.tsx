@@ -4,7 +4,7 @@ import { Answer, QuestionType, Question, Admin } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import { addQuestion, putQuestion } from "../../../redux/actions/adminActions";
-import { Button, PopupMessage } from "../../uiElements";
+import { Button, DisplayQuestion, PopupMessage } from "../../uiElements";
 import { useParams } from "../../../hooks";
 import { useHistory } from "react-router";
 
@@ -26,6 +26,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
   const [showMsg, setShowMsg] = useState(false);
   const [question, setQuestion] = useState(newQuestion);
+  const [showId, setShowId] = useState("");
 
   useEffect(() => {
     if (questionId) {
@@ -228,10 +229,23 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         <div className={classes.btns}>
           <Button onClick={() => setShowMsg(true)}>« Back</Button>
           <div className={classes.filler} />
-          <Button>Show</Button>
+          <Button
+            onClick={() => setShowId(showId === question.id ? "" : question.id)}
+          >
+            {showId === question.id ? "Shrink" : "Show"}
+          </Button>
           <Button success onClick={submitForm}>
             Save »
           </Button>
+        </div>
+        <div>
+          {showId === question.id && (
+            <div key={question.id + 5}>
+              <div style={{ textAlign: "start" }}></div>
+                <DisplayQuestion question={question} />
+              </div>
+            </div>
+          )}
         </div>
         <PopupMessage
           show={showMsg}
