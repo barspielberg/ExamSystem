@@ -44,7 +44,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
           admin?.id || "",
           questionId
         );
-        if (questionFromDb) setQuestion(questionFromDb);
+        if (typeof questionFromDb !== "string") setQuestion(questionFromDb);
       })();
     }
   }, []);
