@@ -14,16 +14,18 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export type adminActionTypes =
   | {
-      type: "SET_ADMIN";
-      admin: Admin | null;
-    }
+    type: "SET_ADMIN";
+    admin: Admin | null;
+  }
   | {
-      type: "SET_ERROR";
-      err: string;
-    }
+    type: "SET_ERROR";
+    err: string;
+  }
   | {
-    type: "QUESTION_ADDED";
-    isSuccessfull: boolean;
+    type: "ADD_QUESTION";
+    orgId: string;
+    fieldsIds: string[];
+    question: Question;
   }
   // | {
   //   type: "QUESTION_UPDATED";
@@ -37,17 +39,17 @@ export type adminActionTypes =
   }
 
   | {
-      type: "UPDATE_TEST";
-      orgId: string;
-      fieldId: string;
-      test: Test;
-    }
+    type: "UPDATE_TEST";
+    orgId: string;
+    fieldId: string;
+    test: Test;
+  }
   | {
-      type: "ADD_TEST";
-      orgId: string;
-      fieldId: string;
-      test: Test;
-    };
+    type: "ADD_TEST";
+    orgId: string;
+    fieldId: string;
+    test: Test;
+  };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
@@ -64,7 +66,7 @@ export const addQuestion = (
 ): AppThunk => async (dispatch) => {
   const res = await DataService.addQuestion(question, orgId, fieldsIds);
   if (typeof res === "string") dispatch(setError(res));
-  else dispatch(questionAdded(true));
+  else dispatch(createQuestion(orgId, fieldsIds, res));
 };
 
 export const putQuestion = (
@@ -113,18 +115,28 @@ export const setError = (err: string): adminActionTypes => ({
   err,
 });
 
-export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({
-  type: "QUESTION_ADDED",
-  isSuccessfull,
-});
+// export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({
+//   type: "QUESTION_ADDED",
+//   isSuccessfull,
+// });
 
+const createQuestion = (
+  orgId: string,
+  fieldsIds: string[],
+  question: Question,
+): adminActionTypes => ({
+  type: "ADD_QUESTION",
+  orgId,
+  fieldsIds,
+  question
+});
 
 const updateQuestion = (
   orgId: string,
   fieldsIds: string[],
   question: Question,
 ): adminActionTypes => ({
-  type:"UPDATE_QUESTION",
+  type: "UPDATE_QUESTION",
   orgId,
   fieldsIds,
   question
