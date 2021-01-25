@@ -1,5 +1,4 @@
 import { Admin, Question, Test } from "@examsystem/common";
-import { QuestionsSection } from "../../components/pages/editTestPage/FormSections";
 import { adminActionTypes } from "../actions/adminActions";
 
 type stateType = {
