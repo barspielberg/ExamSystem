@@ -1,7 +1,7 @@
 @import "styles/colors";
 
 .Page {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
 
   header {
@@ -17,5 +17,9 @@
   .filterRow {
     font-weight: 600;
     margin-bottom: 1rem;
+  }
+  .btns {
+    display: flex;
+    margin: 1rem 0;
   }
 }

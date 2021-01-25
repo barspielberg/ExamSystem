@@ -74,6 +74,22 @@ class DataService {
       return error.response.data;
     }
   }
+  async postTest(
+    orgId: string,
+    fieldId: string,
+    test: Test
+  ): Promise<Test | string> {
+    try {
+      const res = await server.post<
+        { orgId: string; fieldId: string; test: Test },
+        AxiosResponse<{ message: string; test: Test }>
+      >("tests", { orgId, fieldId, test });
+
+      return res.data.test;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
 }
 
 export default new DataService();

@@ -30,6 +30,8 @@ const adminReducer = (
       return updateQuestion(state, action.orgId, action.fieldsIds, action.question);
     case "UPDATE_TEST":
       return updateTest(state, action.orgId, action.fieldId, action.test);
+    case "ADD_TEST":
+      return addTest(state, action.orgId, action.fieldId, action.test);
     default:
       return state;
   }
@@ -74,18 +76,50 @@ const updateTest = (
         organizations: state.admin.organizations.map((o) =>
           o.id === orgId
             ? {
-              ...o,
-              fields: o.fields.map((f) =>
-                f.id === fieldId
-                  ? {
-                    ...f,
-                    tests: f.tests.map((t) =>
-                      t.id === test.id ? test : t
-                    ),
-                  }
-                  : f
-              ),
-            }
+                ...o,
+                fields: o.fields.map((f) =>
+                  f.id === fieldId
+                    ? {
+                        ...f,
+                        tests: f.tests.map((t) =>
+                          t.id === test.id ? test : t
+                        ),
+                      }
+                    : f
+                ),
+              }
+            : o
+        ),
+      },
+    };
+  }
+  return state;
+};
+//🙈
+const addTest = (
+  state: stateType,
+  orgId: string,
+  fieldId: string,
+  test: Test
+): stateType => {
+  if (state.admin) {
+    return {
+      ...state,
+      admin: {
+        ...state.admin,
+        organizations: state.admin.organizations.map((o) =>
+          o.id === orgId
+            ? {
+                ...o,
+                fields: o.fields.map((f) =>
+                  f.id === fieldId
+                    ? {
+                        ...f,
+                        tests: [...f.tests, test],
+                      }
+                    : f
+                ),
+              }
             : o
         ),
       },
