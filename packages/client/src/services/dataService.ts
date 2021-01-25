@@ -29,9 +29,7 @@ class DataService {
         question,
         fieldsIds,
       });
-      if (res.status === 201) {
-        return res.data.question;
-      }
+      return res.data.question;
     } catch (error) {
       console.log(error);
       return error;
@@ -45,9 +43,7 @@ class DataService {
         question,
         fieldsIds,
       });
-      if (res.status === 200) {
-        return res.data.question;
-      }
+      return res.data.question;
     } catch (error) {
       console.log(error);
       return error;

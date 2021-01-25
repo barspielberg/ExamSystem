@@ -3,32 +3,24 @@ import React, { useEffect, useState } from "react";
 import { Answer, QuestionType, Question, Admin } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
-import {
-  addQuestion,
-  questionAdded,
-  putQuestion,
-} from "../../../redux/actions/adminActions";
+import { addQuestion, putQuestion } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
 import { useParams } from "../../../hooks";
 import { useHistory } from "react-router";
 
 interface IEditQuestionPageProps {
-  isSuccessfull: boolean;
   addQuestion: (question: Question, orgId: string, fieldsIds: string[]) => void;
   putQuestion: (question: Question, orgId: string, fieldsIds: string[]) => any;
-  questionAdded: any;
   admin: Admin | null;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
   putQuestion,
-  isSuccessfull,
-  questionAdded,
   admin,
 }) => {
   const history = useHistory();
-  const { organizationId, questionId } = useParams();
+  const { organizationId, questionId, fieldId } = useParams();
   const fields = admin?.organizations.find((o) => o.id === organizationId)
     ?.fields;
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
@@ -44,12 +36,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         if (questionFromDb) setQuestion(questionFromDb);
       })();
     }
-  }, [questionId,organizationId,admin?.organizations]);
-
-  useEffect(() => {
-    if (isSuccessfull) history.goBack();
-    questionAdded(false);
-  }, [isSuccessfull, history,questionAdded]);
+  }, [questionId, organizationId, admin?.organizations]);
 
   const updateContent = (index: any) => (e: any) => {
     let newArr = [...question.possibleAnswers];
@@ -106,8 +93,10 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
     e.preventDefault();
     if (question.id === "") {
       addQuestion(question, organizationId || "-1", selectedFields);
+      history.goBack();
     } else {
       putQuestion(question, organizationId || "-1", selectedFields);
+      history.goBack();
     }
   };
 
@@ -259,12 +248,10 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 };
 
 const mapState2Props = (state: RootState) => ({
-  isSuccessfull: state.admin.isSuccessfull,
   admin: state.admin.admin,
 });
 const mapDispatch2Props = {
   addQuestion,
-  questionAdded,
   putQuestion,
 };
 
