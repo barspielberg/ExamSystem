@@ -1,5 +1,5 @@
-import { Organization } from "@examsystem/common";
-import React, { useState } from "react";
+import { Organization, Question } from "@examsystem/common";
+import React, { useEffect, useState } from "react";
 import classes from "./ManageQuestionsPage.module.scss";
 import { connect } from "react-redux";
 import { useHistory } from "react-router";
@@ -28,9 +28,14 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
   const history = useHistory();
 
   const { organization, field } = useParamsFull(organizations);
-  const [questions, setQuestions] = useState(
-    organization?.questions.filter((q) => field?.questionIds.includes(q.id))
-  );
+  const [questions, setQuestions] = useState<Question[]>([]);
+
+  useEffect(() => {
+    if (organization)
+      setQuestions(
+        organization.questions.filter((q) => field?.questionIds.includes(q.id))
+      );
+  }, [setQuestions, organization]);
 
   return (
     <div className={classes.Page}>
