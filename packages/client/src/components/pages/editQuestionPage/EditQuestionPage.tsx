@@ -6,16 +6,15 @@ import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import {
   addQuestion,
-  getQuestion,
   questionAdded,
   putQuestion,
 } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
+import dataService from "../../../services/dataService";
 
 interface IEditQuestionPageProps {
   isSuccessfull: boolean;
   addQuestion: (question: Question, orgId: string, fieldsIds: string[]) => void;
-  getQuestion: (orgId: string, adminId: string, questionId: string) => any;
   putQuestion: (question: Question, orgId: string, fieldsIds: string[]) => any;
   questionAdded: any;
   admin: Admin | null;
@@ -24,7 +23,6 @@ interface IEditQuestionPageProps {
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
-  getQuestion,
   putQuestion,
   isSuccessfull,
   questionAdded,
@@ -44,10 +42,14 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   useEffect(() => {
     const questionId = history.location.pathname.split("/")[2];
     if (questionId) {
-      getQuestion(organizationId, admin?.id || "", questionId);
-      if (questionFromDb) {
-        setQuestion(questionFromDb);
-      }
+      (async function () {
+        const qqq = await dataService.getQuestion(
+          organizationId,
+          admin?.id || "",
+          questionId
+        );
+        if (qqq) setQuestion(qqq);
+      })();
     }
   }, []);
 
@@ -271,7 +273,6 @@ const mapState2Props = (state: RootState) => ({
 const mapDispatch2Props = {
   addQuestion,
   questionAdded,
-  getQuestion,
   putQuestion,
 };
 

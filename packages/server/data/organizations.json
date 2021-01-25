@@ -78,34 +78,34 @@
         },
         {
           "id": "9467-1611431108974",
-          "mainTitle": "snsnsnsn",
-          "secondaryTitle": "nninininananan",
+          "mainTitle": "Do you love react",
+          "secondaryTitle": "nononononono",
           "alignment": 0,
           "type": 0,
           "possibleAnswers": [
             {
               "id": "0",
-              "content": "first answerninini",
+              "content": "no",
               "correct": false
             },
             {
               "id": "1",
-              "content": "second answerninin",
+              "content": "no no",
               "correct": true
             },
             {
               "id": "2",
-              "content": "third answernini",
+              "content": " no no no ",
               "correct": false
             },
             {
               "id": "3",
-              "content": "fourth answernin",
+              "content": "no no no  no",
               "correct": false
             }
           ],
           "tags": [
-            "ninin"
+            "react"
           ],
           "lastUpdate": "1/23/2021"
         },
