@@ -50,12 +50,12 @@ class OrganizationRepository {
   async updateQuestion(orgId: string, question: Question, fieldsIds: string[]) {
     const organizations = await this.getAllOrganizations();
     const foundOrg = organizations.find((o) => o.id === orgId);
-    foundOrg?.questions.map((q,index) => {
-      if(q.id === question.id) foundOrg.questions[index] = question;
+    foundOrg?.questions.map((q, index) => {
+      if (q.id === question.id) foundOrg.questions[index] = question;
     });
-    
+
     foundOrg?.fields.map(field => {
-      if (fieldsIds.includes(field.id))
+      if (fieldsIds.includes(field.id) && !field.questionIds.includes(question.id))
         field.questionIds.push(question.id);
     });
 
