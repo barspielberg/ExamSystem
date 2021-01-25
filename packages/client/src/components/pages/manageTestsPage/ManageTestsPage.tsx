@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import classes from "./ManageTestsPage.module.scss";
-import { Table, SearchFilter } from "../../uiElements";
+import { Table, SearchFilter, Button } from "../../uiElements";
 import { connect } from "react-redux";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { Organization } from "@examsystem/common";
 import TableRowsTests from "./TableRowsTests";
 import { useParamsFull } from "../../../hooks";
+import { useHistory } from "react-router";
 
 interface IManageTestsPageProps {
   organizations: Organization[] | undefined;
@@ -24,8 +25,10 @@ const titles = [
 const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
   organizations,
 }) => {
-  const { field } = useParamsFull(organizations);
+  const { field, organization } = useParamsFull(organizations);
   const [tests, setTests] = useState(field?.tests);
+
+  const history = useHistory();
 
   return (
     <div className={classes.Page}>
@@ -45,6 +48,18 @@ const ManageTestsPage: React.FC<IManageTestsPageProps> = ({
       <Table titles={titles}>
         <TableRowsTests tests={tests} />
       </Table>
+      <div className={classes.btns}>
+        <Button
+          success
+          onClick={() =>
+            history.push(
+              `/EditTest?organizationId=${organization?.id}&fieldId=${field?.id}`
+            )
+          }
+        >
+          Add New Test
+        </Button>
+      </div>
     </div>
   );
 };
