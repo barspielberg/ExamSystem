@@ -1,8 +1,12 @@
-import { Alignment, QuestionType } from "../enums";
+import { Alignment, Language, QuestionType } from "../enums";
+import { Answer } from "./Answer";
 
 export interface TakenTest {
   id: string;
   testId: string;
+  lang: Language;
+  title: string;
+  introduction: string;
   student: Student;
   questions: AnsweredQuestion[];
 }
@@ -12,7 +16,7 @@ export interface AnsweredQuestion {
   type: QuestionType;
   mainTitle: string;
   secondaryTitle?: string;
-  answers: string[];
+  possibleAnswers: Answer[];
   alignment: Alignment;
 }
 
