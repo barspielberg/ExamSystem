@@ -26,7 +26,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
   const [showMsg, setShowMsg] = useState(false);
   const [question, setQuestion] = useState(newQuestion);
-  const [showId, setShowId] = useState("");
+  const [showId, setShowId] = useState("noid");
 
   useEffect(() => {
     if (questionId) {

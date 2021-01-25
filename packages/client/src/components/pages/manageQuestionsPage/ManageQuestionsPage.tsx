@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { useHistory } from "react-router";
 import { useParamsFull } from "../../../hooks";
 import { RootState } from "../../../redux/reducers/mainReducer";
-import { Table, SearchFilter } from "../../uiElements";
+import { Table, SearchFilter, Button } from "../../uiElements";
 import TableRowsQuestions from "./TableRowQuestions";
 
 interface IManageQuestionsPageProps {
@@ -60,13 +60,13 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
         />
       </Table>
       <div>
-        <button
+        <Button
           onClick={() =>
             history.push(`/EditQuestion/?organizationId=${organization?.id}`)
           }
         >
           Add Question
-        </button>
+        </Button>
       </div>
     </div>
   );
