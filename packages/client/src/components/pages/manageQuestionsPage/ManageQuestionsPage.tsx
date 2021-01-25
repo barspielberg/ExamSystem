@@ -28,14 +28,15 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
   const history = useHistory();
 
   const { organization, field } = useParamsFull(organizations);
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [originalQuestions, setOriginalQuestions] = useState<Question[]>([]);
+  const [filteredQuestions, setFilteredQuestions] = useState<Question[]>([]);
 
   useEffect(() => {
     if (organization)
-      setQuestions(
+      setOriginalQuestions(
         organization.questions.filter((q) => field?.questionIds.includes(q.id))
       );
-  }, [setQuestions, organization,field?.questionIds]);
+  }, [setOriginalQuestions, organization, field?.questionIds]);
 
   return (
     <div className={classes.Page}>
@@ -46,15 +47,15 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
       <div className={classes.filterRow}>
         Filter names by keywords:{" "}
         <SearchFilter
-          originalQuestions={questions}
-          onQuestionsChange={setQuestions}
+          originalQuestions={originalQuestions}
+          onQuestionsChange={setFilteredQuestions}
           placeholder="Search..."
         />
       </div>
       <Table titles={titles}>
         <TableRowsQuestions
           organization={organization}
-          questions={questions}
+          questions={filteredQuestions}
           tests={field?.tests || []}
         />
       </Table>
