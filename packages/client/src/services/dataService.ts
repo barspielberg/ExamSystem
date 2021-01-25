@@ -21,24 +21,8 @@ class DataService {
     }
   }
 
-  async getQuestion(
-    orgId: string,
-    adminId: string,
-    questionId: string
-  ): Promise<Question | string> {
-    try {
-      const res = await server.get("questions/getquestion", {
-        params: {
-          orgId,
-          adminId,
-          questionId,
-        },
-      });
-      return res.data.question;
-    } catch (error) {
-      return error.response.data;
-    }
-  }
+
+  
 
   async addQuestion(
     question: Question,

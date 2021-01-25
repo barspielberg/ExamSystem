@@ -5,14 +5,12 @@ type stateType = {
   admin: Admin | null;
   error: string;
   isSuccessfull: boolean;
-  question: Question | null;
 };
 
 const initialState: stateType = {
   admin: null,
   error: "",
-  isSuccessfull: false,
-  question: null,
+  isSuccessfull: false
 };
 
 const adminReducer = (
@@ -26,8 +24,10 @@ const adminReducer = (
       return { ...state, error: action.err };
     case "QUESTION_ADDED":
       return { ...state, isSuccessfull: action.isSuccessfull };
-    case "QUESTION_UPDATED":
-      return { ...state, isSuccessfull: action.isSuccessfull };
+    // case "QUESTION_UPDATED":
+    //   return { ...state, isSuccessfull: action.isSuccessfull };
+    case "UPDATE_QUESTION":
+      return updateQuestion(state, action.orgId, action.fieldsIds, action.question);
     case "UPDATE_TEST":
       return updateTest(state, action.orgId, action.fieldId, action.test);
     case "ADD_TEST":
@@ -38,6 +38,28 @@ const adminReducer = (
 };
 
 export default adminReducer;
+
+const updateQuestion = (
+  state: stateType,
+  orgId: string,
+  fieldsIds: string[],
+  question: Question
+): stateType => {
+  if (state.admin) {
+    return {
+      ...state,
+      admin: {
+        ...state.admin,
+        organizations: state.admin.organizations.map((o) => o.id === orgId ? {
+          ...o,
+          questions: o.questions.map(q => q.id === question.id ? question : q)
+        } : o)
+      }
+    };
+  }
+  return state;
+};
+
 
 //🙈
 const updateTest = (

@@ -23,14 +23,6 @@ class OrganizationRepository {
     return organizations;
   }
 
-  async getQuestion(orgId: string, adminId: string, questionId: string) {
-    const orgs = await this.getOrganizations(adminId);
-    const org = orgs.find(
-      (o) => o.id === orgId && o.adminIds.includes(adminId)
-    );
-    const question = org?.questions.find((q) => q.id === questionId);
-    return question;
-  }
 
   async addQuestion(orgId: string, question: Question, fieldsIds: string[]) {
     if (question.id === "") question.id = getNewId();
