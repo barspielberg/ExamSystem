@@ -30,12 +30,17 @@ export type adminActionTypes =
       isSuccessfull: boolean;
     }
   | {
-    type: "UPDATE_TEST";
-    orgId: string;
-    fieldId: string;
-    test: Test;
-  };
-
+      type: "UPDATE_TEST";
+      orgId: string;
+      fieldId: string;
+      test: Test;
+    }
+  | {
+      type: "ADD_TEST";
+      orgId: string;
+      fieldId: string;
+      test: Test;
+    };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
@@ -77,6 +82,18 @@ export const putTest = (
     dispatch(updateTest(orgId, fieldId, res));
   }
 };
+export const postTest = (
+  orgId: string,
+  fieldId: string,
+  test: Test
+): AppThunk => async (dispatch) => {
+  const res = await dataService.postTest(orgId, fieldId, test);
+  if (typeof res === "string") {
+    dispatch(setError(res));
+  } else {
+    dispatch(addTest(orgId, fieldId, res));
+  }
+};
 
 const setAdmin = (admin: Admin): adminActionTypes => ({
   type: "SET_ADMIN",
@@ -99,6 +116,16 @@ const updateTest = (
   test: Test
 ): adminActionTypes => ({
   type: "UPDATE_TEST",
+  orgId,
+  fieldId,
+  test,
+});
+const addTest = (
+  orgId: string,
+  fieldId: string,
+  test: Test
+): adminActionTypes => ({
+  type: "ADD_TEST",
   orgId,
   fieldId,
   test,

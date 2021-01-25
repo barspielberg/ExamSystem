@@ -5,14 +5,14 @@ type stateType = {
   admin: Admin | null;
   error: string;
   isSuccessfull: boolean;
-  question: Question | null
+  question: Question | null;
 };
 
 const initialState: stateType = {
   admin: null,
   error: "",
   isSuccessfull: false,
-  question: null
+  question: null,
 };
 
 const adminReducer = (
@@ -30,6 +30,8 @@ const adminReducer = (
       return { ...state, isSuccessfull: action.isSuccessfull };
     case "UPDATE_TEST":
       return updateTest(state, action.orgId, action.fieldId, action.test);
+    case "ADD_TEST":
+      return addTest(state, action.orgId, action.fieldId, action.test);
     default:
       return state;
   }
@@ -52,18 +54,50 @@ const updateTest = (
         organizations: state.admin.organizations.map((o) =>
           o.id === orgId
             ? {
-              ...o,
-              fields: o.fields.map((f) =>
-                f.id === fieldId
-                  ? {
-                    ...f,
-                    tests: f.tests.map((t) =>
-                      t.id === test.id ? test : t
-                    ),
-                  }
-                  : f
-              ),
-            }
+                ...o,
+                fields: o.fields.map((f) =>
+                  f.id === fieldId
+                    ? {
+                        ...f,
+                        tests: f.tests.map((t) =>
+                          t.id === test.id ? test : t
+                        ),
+                      }
+                    : f
+                ),
+              }
+            : o
+        ),
+      },
+    };
+  }
+  return state;
+};
+//🙈
+const addTest = (
+  state: stateType,
+  orgId: string,
+  fieldId: string,
+  test: Test
+): stateType => {
+  if (state.admin) {
+    return {
+      ...state,
+      admin: {
+        ...state.admin,
+        organizations: state.admin.organizations.map((o) =>
+          o.id === orgId
+            ? {
+                ...o,
+                fields: o.fields.map((f) =>
+                  f.id === fieldId
+                    ? {
+                        ...f,
+                        tests: [...f.tests, test],
+                      }
+                    : f
+                ),
+              }
             : o
         ),
       },

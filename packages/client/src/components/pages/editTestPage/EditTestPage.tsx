@@ -13,18 +13,18 @@ import {
   QuestionsSection,
 } from "./FormSections";
 import { useParamsFull } from "../../../hooks";
-import { putTest } from "../../../redux/actions/adminActions";
+import { postTest, putTest } from "../../../redux/actions/adminActions";
 
 interface IEditTestPageProps {
   organizations?: Organization[];
   update: (orgId: string, fieldId: string, test: Test) => void;
+  saveNew: (orgId: string, fieldId: string, test: Test) => void;
 }
 //TODO by Bar
-//TODO add error msg if no test found
-//TODO add error msg if save fail
 const EditTestPage: React.FC<IEditTestPageProps> = ({
   organizations,
   update,
+  saveNew,
 }) => {
   const { organization, field, test: originalTets } = useParamsFull(
     organizations
@@ -40,7 +40,8 @@ const EditTestPage: React.FC<IEditTestPageProps> = ({
 
   const onSubmitHandler = () => {
     if (organization && field && test) {
-      update(organization.id, field.id, test);
+      if (test.id) update(organization.id, field.id, test);
+      else saveNew(organization.id, field.id, test);
       history.push(
         `/ManageTests/?organizationId=${organization.id}&fieldId=${field.id}`
       );
@@ -93,6 +94,7 @@ const mapState2Props = (state: RootState) => ({
 });
 const mapDispatch2Props = {
   update: putTest,
+  saveNew: postTest,
 };
 export default connect(mapState2Props, mapDispatch2Props)(EditTestPage);
 
