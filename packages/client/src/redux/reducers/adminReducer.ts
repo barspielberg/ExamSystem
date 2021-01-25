@@ -5,14 +5,12 @@ type stateType = {
   admin: Admin | null;
   error: string;
   isSuccessfull: boolean;
-  question: Question | null
 };
 
 const initialState: stateType = {
   admin: null,
   error: "",
-  isSuccessfull: false,
-  question: null
+  isSuccessfull: false
 };
 
 const adminReducer = (
