@@ -18,7 +18,6 @@ interface IEditQuestionPageProps {
   putQuestion: (question: Question, orgId: string, fieldsIds: string[]) => any;
   questionAdded: any;
   admin: Admin | null;
-  questionFromDb: Question | null;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
@@ -27,7 +26,6 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   isSuccessfull,
   questionAdded,
   admin,
-  questionFromDb,
 }) => {
   const history = useHistory();
   const location = useLocation();
