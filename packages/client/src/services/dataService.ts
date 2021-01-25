@@ -22,24 +22,6 @@ class DataService {
     }
   }
 
-  async getQuestion(orgId: string, adminId: string, questionId: string) {
-    try {
-      const res = await server.get("questions/getquestion", {
-        params: {
-          orgId,
-          adminId,
-          questionId
-        }
-      });
-      if (res.status === 200) {
-        return res.data.question;
-      }
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  }
-
   async addQuestion(question: Question, orgId: string, fieldsIds: string[]) {
     try {
       const res = await server.post("questions/addquestion", {

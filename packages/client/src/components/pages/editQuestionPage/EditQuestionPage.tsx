@@ -9,7 +9,6 @@ import {
   putQuestion,
 } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
-import dataService from "../../../services/dataService";
 import { useParams } from "../../../hooks";
 import { useHistory } from "react-router";
 
@@ -39,20 +38,18 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   useEffect(() => {
     if (questionId) {
       (async function () {
-        const questionFromDb = await dataService.getQuestion(
-          organizationId || "",
-          admin?.id || "",
-          questionId
-        );
+        const questionFromDb = admin?.organizations
+          .find((o) => o.id === organizationId)
+          ?.questions.find((q) => q.id === questionId);
         if (questionFromDb) setQuestion(questionFromDb);
       })();
     }
-  }, []);
+  }, [questionId,organizationId,admin?.organizations]);
 
   useEffect(() => {
     if (isSuccessfull) history.goBack();
     questionAdded(false);
-  }, [isSuccessfull, history]);
+  }, [isSuccessfull, history,questionAdded]);
 
   const updateContent = (index: any) => (e: any) => {
     let newArr = [...question.possibleAnswers];
@@ -264,7 +261,6 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
 const mapState2Props = (state: RootState) => ({
   isSuccessfull: state.admin.isSuccessfull,
   admin: state.admin.admin,
-  questionFromDb: state.admin.question,
 });
 const mapDispatch2Props = {
   addQuestion,
