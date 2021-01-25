@@ -28,8 +28,6 @@ const adminReducer = (
       return { ...state, isSuccessfull: action.isSuccessfull };
     case "QUESTION_UPDATED":
       return { ...state, isSuccessfull: action.isSuccessfull };
-    case "GET_QUESTION":
-      return { ...state, question: action.question };
     case "UPDATE_TEST":
       return updateTest(state, action.orgId, action.fieldId, action.test);
     default:

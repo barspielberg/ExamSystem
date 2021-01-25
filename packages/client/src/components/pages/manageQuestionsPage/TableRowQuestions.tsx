@@ -43,10 +43,9 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
             <td className={classes.btns}>
               <Button
                 onClick={() =>
-                  history.push({
-                    pathname: `/EditQuestion/${q.id}/`,
-                    search: `?orgId=${organization?.id}`,
-                  })
+                  history.push(
+                    `/EditQuestion/?organizationId=${organization?.id}&questionId=${q.id}`
+                  )
                 }
               >
                 Edit

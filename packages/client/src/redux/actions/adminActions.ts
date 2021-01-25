@@ -30,15 +30,12 @@ export type adminActionTypes =
       isSuccessfull: boolean;
     }
   | {
-      type: "GET_QUESTION";
-      question: Question;
-    }
-  | {
-      type: "UPDATE_TEST";
-      orgId: string;
-      fieldId: string;
-      test: Test;
-    };
+    type: "UPDATE_TEST";
+    orgId: string;
+    fieldId: string;
+    test: Test;
+  };
+
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
@@ -46,16 +43,6 @@ export const getAdmin = (email: string, password: string): AppThunk => async (
   const res = await DataService.getAdmin(email, password);
   if (typeof res === "string") dispatch(setError(res));
   else dispatch(setAdmin(res));
-};
-
-export const getQuestion = (
-  orgId: string,
-  adminId: string,
-  questionId: string
-): AppThunk => async (dispatch) => {
-  const res = await DataService.getQuestion(orgId, adminId, questionId);
-  if (typeof res === "string") dispatch(setError(res));
-  else dispatch(getQuestionFromDb(res));
 };
 
 export const addQuestion = (
@@ -99,11 +86,6 @@ const setAdmin = (admin: Admin): adminActionTypes => ({
 export const setError = (err: string): adminActionTypes => ({
   type: "SET_ERROR",
   err,
-});
-
-const getQuestionFromDb = (question: Question): adminActionTypes => ({
-  type: "GET_QUESTION",
-  question,
 });
 
 export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({
