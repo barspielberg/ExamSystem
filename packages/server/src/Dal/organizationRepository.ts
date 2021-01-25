@@ -59,7 +59,6 @@ class OrganizationRepository {
         field.questionIds.push(question.id);
     });
 
-    console.log(foundOrg?.questions);
     const dbQuestion = foundOrg?.questions.find(q => q.id === question.id);
 
     const stringifiedOrgs = JSON.stringify({ organizations: organizations });

@@ -1,40 +1,35 @@
 import classes from "./EditQUestionPage.module.scss";
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
 import { Answer, QuestionType, Question, Admin } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import {
   addQuestion,
-  getQuestion,
   questionAdded,
   putQuestion,
 } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
+import dataService from "../../../services/dataService";
+import { useParams } from "../../../hooks";
+import { useHistory } from "react-router";
 
 interface IEditQuestionPageProps {
   isSuccessfull: boolean;
   addQuestion: (question: Question, orgId: string, fieldsIds: string[]) => void;
-  getQuestion: (orgId: string, adminId: string, questionId: string) => any;
   putQuestion: (question: Question, orgId: string, fieldsIds: string[]) => any;
   questionAdded: any;
   admin: Admin | null;
-  questionFromDb: Question | null;
 }
 //TODO by Michael
 const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   addQuestion,
-  getQuestion,
   putQuestion,
   isSuccessfull,
   questionAdded,
   admin,
-  questionFromDb,
 }) => {
   const history = useHistory();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const organizationId = params.get("orgId") || "";
+  const { organizationId, questionId } = useParams();
   const fields = admin?.organizations.find((o) => o.id === organizationId)
     ?.fields;
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
@@ -42,12 +37,15 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [question, setQuestion] = useState(newQuestion);
 
   useEffect(() => {
-    const questionId = history.location.pathname.split("/")[2];
     if (questionId) {
-      getQuestion(organizationId, admin?.id || "", questionId);
-      if (questionFromDb) {
-        setQuestion(questionFromDb);
-      }
+      (async function () {
+        const questionFromDb = await dataService.getQuestion(
+          organizationId || "",
+          admin?.id || "",
+          questionId
+        );
+        if (questionFromDb) setQuestion(questionFromDb);
+      })();
     }
   }, []);
 
@@ -110,9 +108,9 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (question.id === "") {
-      addQuestion(question, organizationId, selectedFields);
+      addQuestion(question, organizationId || "-1", selectedFields);
     } else {
-      putQuestion(question, organizationId, selectedFields);
+      putQuestion(question, organizationId || "-1", selectedFields);
     }
   };
 
@@ -271,7 +269,6 @@ const mapState2Props = (state: RootState) => ({
 const mapDispatch2Props = {
   addQuestion,
   questionAdded,
-  getQuestion,
   putQuestion,
 };
 
