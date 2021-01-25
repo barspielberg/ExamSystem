@@ -35,7 +35,7 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
       setQuestions(
         organization.questions.filter((q) => field?.questionIds.includes(q.id))
       );
-  }, [setQuestions, organization]);
+  }, [setQuestions, organization,field?.questionIds]);
 
   return (
     <div className={classes.Page}>

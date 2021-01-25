@@ -20,7 +20,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   admin,
 }) => {
   const history = useHistory();
-  const { organizationId, questionId, fieldId } = useParams();
+  const { organizationId, questionId } = useParams();
   const fields = admin?.organizations.find((o) => o.id === organizationId)
     ?.fields;
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
@@ -30,12 +30,11 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   useEffect(() => {
     if (questionId) {
       (async function () {
-        const questionFromDb = await dataService.getQuestion(
-          organizationId || "",
-          admin?.id || "",
-          questionId
-        );
-        if (typeof questionFromDb !== "string") setQuestion(questionFromDb);
+        const questionFromDb = admin?.organizations
+          .find((o) => o.id === organizationId)
+          ?.questions.find((q) => q.id === questionId);
+        if (typeof questionFromDb !== "string" && questionFromDb)
+          setQuestion(questionFromDb);
       })();
     }
   }, [questionId, organizationId, admin?.organizations]);
