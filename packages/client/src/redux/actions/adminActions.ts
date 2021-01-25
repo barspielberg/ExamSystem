@@ -14,38 +14,38 @@ type AppThunk<ReturnType = void> = ThunkAction<
 
 export type adminActionTypes =
   | {
-    type: "SET_ADMIN";
-    admin: Admin | null;
-  }
+      type: "SET_ADMIN";
+      admin: Admin | null;
+    }
   | {
-    type: "SET_ERROR";
-    err: string;
-  }
+      type: "SET_ERROR";
+      err: string;
+    }
   | {
-    type: "QUESTION_ADDED";
-    isSuccessfull: boolean;
-  }
+      type: "QUESTION_ADDED";
+      isSuccessfull: boolean;
+    }
   | {
-    type: "QUESTION_UPDATED";
-    isSuccessfull: boolean;
-  }
+      type: "QUESTION_UPDATED";
+      isSuccessfull: boolean;
+    }
   | {
-    type: "GET_QUESTION";
-    question: Question
-  }
+      type: "GET_QUESTION";
+      question: Question;
+    }
   | {
-    type: "UPDATE_TEST";
-    orgId: string;
-    fieldId: string;
-    test: Test;
-  };
+      type: "UPDATE_TEST";
+      orgId: string;
+      fieldId: string;
+      test: Test;
+    };
 
 export const getAdmin = (email: string, password: string): AppThunk => async (
   dispatch
 ) => {
-  const admin = await DataService.getAdmin(email, password);
-  if (admin) dispatch(setAdmin(admin));
-  else dispatch(setError("Error occured"));
+  const res = await DataService.getAdmin(email, password);
+  if (typeof res === "string") dispatch(setError(res));
+  else dispatch(setAdmin(res));
 };
 
 export const getQuestion = (
@@ -96,7 +96,7 @@ const setAdmin = (admin: Admin): adminActionTypes => ({
   admin,
 });
 
-const setError = (err: string): adminActionTypes => ({
+export const setError = (err: string): adminActionTypes => ({
   type: "SET_ERROR",
   err,
 });
@@ -110,7 +110,6 @@ export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({
   type: "QUESTION_ADDED",
   isSuccessfull,
 });
-
 
 const updateTest = (
   orgId: string,
