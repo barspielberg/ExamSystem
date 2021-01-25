@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Admin, Question, Test } from "@examsystem/common";
 
 const server = axios.create({ baseURL: "http://localhost:4000/" });
@@ -80,7 +80,10 @@ class DataService {
     test: Test
   ): Promise<Test | string> {
     try {
-      const res = await server.put("tests", { orgId, fieldId, test });
+      const res = await server.put<
+        { orgId: string; fieldId: string; test: Test },
+        AxiosResponse<{ message: string; test: Test }>
+      >("tests", { orgId, fieldId, test });
 
       return res.data.test;
     } catch (error) {
