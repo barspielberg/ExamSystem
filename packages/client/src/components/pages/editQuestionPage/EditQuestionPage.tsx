@@ -1,6 +1,5 @@
 import classes from "./EditQUestionPage.module.scss";
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router";
 import { Answer, QuestionType, Question, Admin } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
@@ -11,6 +10,8 @@ import {
 } from "../../../redux/actions/adminActions";
 import { Button, PopupMessage } from "../../uiElements";
 import dataService from "../../../services/dataService";
+import { useParams } from "../../../hooks";
+import { useHistory } from "react-router";
 
 interface IEditQuestionPageProps {
   isSuccessfull: boolean;
@@ -28,9 +29,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   admin,
 }) => {
   const history = useHistory();
-  const location = useLocation();
-  const params = new URLSearchParams(location.search);
-  const organizationId = params.get("orgId") || "";
+  const { organizationId, questionId } = useParams();
   const fields = admin?.organizations.find((o) => o.id === organizationId)
     ?.fields;
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
@@ -38,15 +37,14 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [question, setQuestion] = useState(newQuestion);
 
   useEffect(() => {
-    const questionId = history.location.pathname.split("/")[2];
     if (questionId) {
       (async function () {
-        const qqq = await dataService.getQuestion(
-          organizationId,
+        const questionFromDb = await dataService.getQuestion(
+          organizationId || "",
           admin?.id || "",
           questionId
         );
-        if (qqq) setQuestion(qqq);
+        if (questionFromDb) setQuestion(questionFromDb);
       })();
     }
   }, []);
@@ -110,9 +108,9 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const submitForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (question.id === "") {
-      addQuestion(question, organizationId, selectedFields);
+      addQuestion(question, organizationId || "-1", selectedFields);
     } else {
-      putQuestion(question, organizationId, selectedFields);
+      putQuestion(question, organizationId || "-1", selectedFields);
     }
   };
 

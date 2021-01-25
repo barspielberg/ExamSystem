@@ -47,15 +47,16 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
         />
       </div>
       <Table titles={titles}>
-        <TableRowsQuestions organization={organization} questions={questions} tests={field?.tests || []} />
+        <TableRowsQuestions
+          organization={organization}
+          questions={questions}
+          tests={field?.tests || []}
+        />
       </Table>
       <div>
         <button
           onClick={() =>
-            history.push({
-              pathname: "/EditQuestion/addNew/",
-              search: `?orgId=${organization?.id}`,
-            })
+            history.push(`/EditQuestion/?organizationId=${organization?.id}`)
           }
         >
           Add Question
