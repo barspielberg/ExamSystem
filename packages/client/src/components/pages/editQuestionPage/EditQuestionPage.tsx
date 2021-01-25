@@ -238,13 +238,11 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
             Save »
           </Button>
         </div>
-        <div>
-          {showId === question.id && (
-            <div key={question.id + 5}>
+     {show && (            
               <div style={{ textAlign: "start" }}>
                 <DisplayQuestion question={question} />
               </div>
-            </div>
+          )}
           )}
         </div>
         <PopupMessage
