@@ -30,10 +30,12 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   useEffect(() => {
     if (questionId) {
       (async function () {
-        const questionFromDb = admin?.organizations
-          .find((o) => o.id === organizationId)
-          ?.questions.find((q) => q.id === questionId);
-        if (questionFromDb) setQuestion(questionFromDb);
+        const questionFromDb = await dataService.getQuestion(
+          organizationId || "",
+          admin?.id || "",
+          questionId
+        );
+        if (typeof questionFromDb !== "string") setQuestion(questionFromDb);
       })();
     }
   }, [questionId, organizationId, admin?.organizations]);
