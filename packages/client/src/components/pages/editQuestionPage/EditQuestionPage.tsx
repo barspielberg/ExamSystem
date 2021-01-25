@@ -241,7 +241,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         <div>
           {showId === question.id && (
             <div key={question.id + 5}>
-              <div style={{ textAlign: "start" }}></div>
+              <div style={{ textAlign: "start" }}>
                 <DisplayQuestion question={question} />
               </div>
             </div>
