@@ -76,7 +76,7 @@ const updateQuestion = (
           questions: o.questions.map(q => q.id === question.id ? question : q),
           fields: o.fields.map(f => fieldsIds.includes(f.id) ? {
             ...f,
-            questionIds: f.questionIds.map(q => q === question.id ? q : question.id)
+questionIds: f.questionIds.includes(question.id) ? f.questionIds : [...f.questionIds,question.id]
           } : {
               ...f,
               questionIds: f.questionIds.filter(q => q !== question.id)
