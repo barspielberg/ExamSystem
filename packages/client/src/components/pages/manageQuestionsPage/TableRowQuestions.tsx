@@ -34,8 +34,17 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
         questions?.map((q) => [
           <tr key={q.id}>
             <td>{q.id}</td>
-            <td>
-              {q.mainTitle} {q.tags}
+            <td style={{ textAlign: "revert" }}>
+              <div>
+                <h4>{q.mainTitle}</h4>
+                <p>
+                  {q.tags.map((t, index) => (
+                    <span key={index} style={{ color: "#3399ff" }}>
+                      {t} {index !== q.tags.length - 1 && "|"}
+                    </span>
+                  ))}
+                </p>
+              </div>
             </td>
             <td>{new Date(q.lastUpdate).toLocaleDateString()}</td>
             <td>{QuestionType[q.type]}</td>

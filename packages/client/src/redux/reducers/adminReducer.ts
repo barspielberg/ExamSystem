@@ -4,13 +4,11 @@ import { adminActionTypes } from "../actions/adminActions";
 type stateType = {
   admin: Admin | null;
   error: string;
-  isSuccessfull: boolean;
 };
 
 const initialState: stateType = {
   admin: null,
   error: "",
-  isSuccessfull: false
 };
 
 const adminReducer = (
@@ -22,10 +20,8 @@ const adminReducer = (
       return { ...state, admin: action.admin };
     case "SET_ERROR":
       return { ...state, error: action.err };
-    case "QUESTION_ADDED":
-      return { ...state, isSuccessfull: action.isSuccessfull };
-    // case "QUESTION_UPDATED":
-    //   return { ...state, isSuccessfull: action.isSuccessfull };
+    case "ADD_QUESTION":
+      return createQuestion(state, action.orgId, action.fieldsIds, action.question);
     case "UPDATE_QUESTION":
       return updateQuestion(state, action.orgId, action.fieldsIds, action.question);
     case "UPDATE_TEST":
@@ -38,6 +34,31 @@ const adminReducer = (
 };
 
 export default adminReducer;
+
+const createQuestion = (
+  state: stateType,
+  orgId: string,
+  fieldsIds: string[],
+  question: Question
+): stateType => {
+  if (state.admin) {
+    return {
+      ...state,
+      admin: {
+        ...state.admin,
+        organizations: state.admin.organizations.map((o) => o.id === orgId ? {
+          ...o,
+          questions: [...o.questions, question],
+          fields: o.fields.map(f => fieldsIds.includes(f.id) ? {
+            ...f,
+            questionIds: [...f.questionIds, question.id]
+          } : f)
+        } : o)
+      }
+    };
+  }
+  return state;
+};
 
 const updateQuestion = (
   state: stateType,
@@ -52,7 +73,14 @@ const updateQuestion = (
         ...state.admin,
         organizations: state.admin.organizations.map((o) => o.id === orgId ? {
           ...o,
-          questions: o.questions.map(q => q.id === question.id ? question : q)
+          questions: o.questions.map(q => q.id === question.id ? question : q),
+          fields: o.fields.map(f => fieldsIds.includes(f.id) ? {
+            ...f,
+            questionIds: f.questionIds.includes(question.id) ? f.questionIds : [...f.questionIds, question.id]
+          } : {
+              ...f,
+              questionIds: f.questionIds.filter(q => q !== question.id)
+            })
         } : o)
       }
     };
@@ -76,18 +104,18 @@ const updateTest = (
         organizations: state.admin.organizations.map((o) =>
           o.id === orgId
             ? {
-                ...o,
-                fields: o.fields.map((f) =>
-                  f.id === fieldId
-                    ? {
-                        ...f,
-                        tests: f.tests.map((t) =>
-                          t.id === test.id ? test : t
-                        ),
-                      }
-                    : f
-                ),
-              }
+              ...o,
+              fields: o.fields.map((f) =>
+                f.id === fieldId
+                  ? {
+                    ...f,
+                    tests: f.tests.map((t) =>
+                      t.id === test.id ? test : t
+                    ),
+                  }
+                  : f
+              ),
+            }
             : o
         ),
       },
@@ -110,16 +138,16 @@ const addTest = (
         organizations: state.admin.organizations.map((o) =>
           o.id === orgId
             ? {
-                ...o,
-                fields: o.fields.map((f) =>
-                  f.id === fieldId
-                    ? {
-                        ...f,
-                        tests: [...f.tests, test],
-                      }
-                    : f
-                ),
-              }
+              ...o,
+              fields: o.fields.map((f) =>
+                f.id === fieldId
+                  ? {
+                    ...f,
+                    tests: [...f.tests, test],
+                  }
+                  : f
+              ),
+            }
             : o
         ),
       },
