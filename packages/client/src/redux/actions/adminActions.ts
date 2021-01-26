@@ -27,17 +27,12 @@ export type adminActionTypes =
     fieldsIds: string[];
     question: Question;
   }
-  // | {
-  //   type: "QUESTION_UPDATED";
-  //   isSuccessfull: boolean;
-  // }
   | {
     type: "UPDATE_QUESTION";
     orgId: string;
     fieldsIds: string[];
     question: Question;
   }
-
   | {
     type: "UPDATE_TEST";
     orgId: string;
@@ -76,7 +71,6 @@ export const putQuestion = (
 ): AppThunk => async (dispatch) => {
   const res = await DataService.updateQuestion(question, orgId, fieldsIds);
   if (typeof res === "string") dispatch(setError(res));
-  // else dispatch(questionAdded(true));
   else dispatch(updateQuestion(orgId, fieldsIds, res));
 };
 
@@ -115,10 +109,6 @@ export const setError = (err: string): adminActionTypes => ({
   err,
 });
 
-// export const questionAdded = (isSuccessfull: boolean): adminActionTypes => ({
-//   type: "QUESTION_ADDED",
-//   isSuccessfull,
-// });
 
 const createQuestion = (
   orgId: string,

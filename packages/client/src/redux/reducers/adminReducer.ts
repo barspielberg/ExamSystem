@@ -4,13 +4,11 @@ import { adminActionTypes } from "../actions/adminActions";
 type stateType = {
   admin: Admin | null;
   error: string;
-  isSuccessfull: boolean;
 };
 
 const initialState: stateType = {
   admin: null,
   error: "",
-  isSuccessfull: false
 };
 
 const adminReducer = (
@@ -22,10 +20,6 @@ const adminReducer = (
       return { ...state, admin: action.admin };
     case "SET_ERROR":
       return { ...state, error: action.err };
-    // case "QUESTION_ADDED":
-    //   return { ...state, isSuccessfull: action.isSuccessfull };
-    // case "QUESTION_UPDATED":
-    //   return { ...state, isSuccessfull: action.isSuccessfull };
     case "ADD_QUESTION":
       return createQuestion(state, action.orgId, action.fieldsIds, action.question);
     case "UPDATE_QUESTION":
@@ -82,7 +76,6 @@ const updateQuestion = (
           questions: o.questions.map(q => q.id === question.id ? question : q),
           fields: o.fields.map(f => fieldsIds.includes(f.id) ? {
             ...f,
-            // questionIds: [...f.questionIds, question.id]
             questionIds: f.questionIds.map(q => q === question.id ? q : question.id)
           } : {
               ...f,
