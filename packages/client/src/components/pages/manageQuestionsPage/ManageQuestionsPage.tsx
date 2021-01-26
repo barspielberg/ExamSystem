@@ -61,6 +61,7 @@ const ManageQuestionsPage: React.FC<IManageQuestionsPageProps> = ({
       </Table>
       <div>
         <Button
+          success
           onClick={() =>
             history.push(`/EditQuestion/?organizationId=${organization?.id}`)
           }

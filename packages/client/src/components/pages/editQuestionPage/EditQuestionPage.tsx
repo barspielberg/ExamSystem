@@ -229,33 +229,30 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         <div className={classes.btns}>
           <Button onClick={() => setShowMsg(true)}>« Back</Button>
           <div className={classes.filler} />
-          <Button
-            onClick={() => setShowId(!show)}
-          >
+          <Button onClick={() => setShow(!show)}>
             {show ? "Shrink" : "Show"}
           </Button>
           <Button success onClick={submitForm}>
             Save »
           </Button>
         </div>
-     {show && (            
-              <div style={{ textAlign: "start" }}>
-                <DisplayQuestion question={question} />
-              </div>
-          )}
-          )}
-        </div>
-        <PopupMessage
-          show={showMsg}
-          clear={() => setShowMsg(false)}
-          warning
-          action={() => history.goBack()}
-          actionTag="« Go Back"
-          clearTag="Stay"
-          title="Warning!"
-          text="Are you sure you want to go back? The changes you have made will not be saved!"
-        />
+        {show && (
+          <div style={{ textAlign: "start" }}>
+            <DisplayQuestion question={question} />
+          </div>
+        )}
       </form>
+
+      <PopupMessage
+        show={showMsg}
+        clear={() => setShowMsg(false)}
+        warning
+        action={() => history.goBack()}
+        actionTag="« Go Back"
+        clearTag="Stay"
+        title="Warning!"
+        text="Are you sure you want to go back? The changes you have made will not be saved!"
+      />
     </div>
   );
 };

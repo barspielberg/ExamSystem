@@ -39,7 +39,7 @@ const TableRowsQuestions: React.FC<ITableRowsQuestionsProps> = ({
                 <h4>{q.mainTitle}</h4>
                 <p>
                   {q.tags.map((t, index) => (
-                    <span style={{ color: "#3399ff" }}>
+                    <span key={index} style={{ color: "#3399ff" }}>
                       {t} {index !== q.tags.length - 1 && "|"}
                     </span>
                   ))}
