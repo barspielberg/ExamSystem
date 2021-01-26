@@ -246,7 +246,7 @@
           "mainTitle": "redux test 1",
           "secondaryTitle": "redux test 1",
           "alignment": 0,
-          "type": 1,
+          "type": 0,
           "possibleAnswers": [
             {
               "id": "0",
@@ -280,9 +280,7 @@
         {
           "id": "356",
           "title": "Development",
-          "questionIds": [
-            "1591-1611653004755"
-          ],
+          "questionIds": [],
           "tests": [
             {
               "id": "6427",
@@ -325,7 +323,9 @@
         {
           "id": "5472",
           "title": "Web Design",
-          "questionIds": [],
+          "questionIds": [
+            "1591-1611653004755"
+          ],
           "tests": [
             {
               "id": "24379",

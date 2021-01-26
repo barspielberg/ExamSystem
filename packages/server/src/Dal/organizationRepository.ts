@@ -55,7 +55,7 @@ class OrganizationRepository {
         field.questionIds.push(question.id);
 
       if (!fieldsIds.includes(field.id)) {
-        field.questionIds.filter(q => q !== question.id);
+        field.questionIds = field.questionIds.filter(q => q !== question.id);
       }
     });
 
