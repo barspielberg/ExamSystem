@@ -53,6 +53,10 @@ class OrganizationRepository {
         !field.questionIds.includes(question.id)
       )
         field.questionIds.push(question.id);
+
+      if (!fieldsIds.includes(field.id)) {
+        field.questionIds.filter(q => q !== question.id);
+      }
     });
 
     const dbQuestion = foundOrg?.questions.find((q) => q.id === question.id);
