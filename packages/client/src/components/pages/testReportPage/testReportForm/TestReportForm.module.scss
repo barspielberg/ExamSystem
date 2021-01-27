@@ -1,10 +1,6 @@
 @import "styles/colors";
 
-.main {
-  max-width: 800px;
-  margin: auto;
-
-  .inputs {
+.inputs {
     padding: 9px;
     display: flex;
     flex-direction: column;
@@ -68,9 +64,8 @@
   .clickable {
     cursor: pointer;
   }
-}
 
-.parent {
+  .parent {
 display: grid;
 grid-template-columns: repeat(4, 1fr);
 grid-template-rows: repeat(5, 1fr);
@@ -85,15 +80,3 @@ grid-template-rows: repeat(5, 1fr);
 .div7 { grid-area: 4 / 2 / 5 / 3; }
 .div8 { grid-area: 5 / 1 / 6 / 2; }
 .div9 { grid-area: 5 / 4 / 6 / 5; }
-
-@keyframes hielght {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}

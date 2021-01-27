@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "../../../hooks";
 import { RootState } from "../../../redux/reducers/mainReducer";
+import TestReportForm from "./testReportForm/TestReportForm";
 
 interface ITestReportPageProps {
   organizations: Organization[] | undefined;
@@ -12,6 +13,9 @@ interface ITestReportPageProps {
 const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
   const [selectedTest, setSelectedTest] = useState<Test>();
+  const [anyDate, setAnyDate] = useState<boolean>(false);
+  const [dateFrom, setDateFrom] = useState<string>();
+  const [dateTo, setDateTo] = useState<string>();
 
   const field = organizations
     ?.find((o) => o.id === organizationId)
@@ -24,27 +28,16 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         Test Report for{" "}
         <span className={classes.fieldTitle}>{field?.title}</span>
       </h1>
-      <section>
-        <form className={classes.inputs}>
-          <div>
-            <label>Select Test: </label>
-            <select
-              className={classes.select}
-              onChange={(e) =>
-                setSelectedTest(tests?.find((t) => t.id === e.target.value))
-              }
-            >
-              {tests?.map((test) => {
-                return (
-                  <option key={test.id} value={test.id}>
-                    {test.title}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </form>
-      </section>
+      <TestReportForm
+        tests={tests}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        anyDate={anyDate}
+        setSelectedTest={setSelectedTest}
+        setDateFrom={setDateFrom}
+        setDateTo={setDateTo}
+        setAnyDate={setAnyDate}
+      />
     </div>
   );
 };
