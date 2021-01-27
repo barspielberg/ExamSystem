@@ -16,20 +16,28 @@ class TakenTestsRepository {
     const testsStr = await fsPromises.readFile(takenTestsPath, "utf8");
     return JSON.parse(testsStr).tests;
   }
-  async getTestById(id: string) {
+
+  async getTest(testId: string, email: string): Promise<TakenTest | undefined> {
     const tests = await this.getAll();
-    return tests.find((t) => t.id === id);
+    return tests.find((t) => t.testId === testId && t.student.email === email);
   }
 
-  async getOrAddNewTest(test: TakenTest): Promise<TakenTest> {
-    const dbTest = await this.getTestById(test.id);
-    if (dbTest) return dbTest;
-
+  async addNewTest(test: TakenTest): Promise<TakenTest> {
     test.id = getNewId();
     const tests = await this.getAll();
     tests.push(test);
 
     const stringifiedTests = JSON.stringify({ tests: tests });
+    await fsPromises.writeFile(takenTestsPath, stringifiedTests, "utf8");
+    return test;
+  }
+
+  async updateTest(test: TakenTest): Promise<TakenTest> {
+    const tests = await this.getAll();
+
+    const stringifiedTests = JSON.stringify({
+      tests: tests.map((t) => (t.id === test.id ? test : t)),
+    });
     await fsPromises.writeFile(takenTestsPath, stringifiedTests, "utf8");
     return test;
   }

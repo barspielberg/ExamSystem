@@ -101,6 +101,12 @@ class OrganizationRepository {
       .reduce((pre, cur) => [...pre, ...cur.tests], Array<Test>())
       .find((t) => t.id === id);
   }
+  async getQuestionsByIds(ids: string[]) {
+    const organizations = await this.getAllOrganizations();
+    return organizations
+      .reduce((pre, cur) => [...pre, ...cur.questions], Array<Question>())
+      .filter((q) => ids.includes(q.id));
+  }
 }
 
 export default new OrganizationRepository();
