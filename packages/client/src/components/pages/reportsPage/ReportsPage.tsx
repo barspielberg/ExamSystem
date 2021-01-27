@@ -7,7 +7,7 @@ import { useParams } from "../../../hooks";
 
 interface IReportsPageProps {}
 
-const ReportsPage: React.FC<IReportsPageProps> = ({}) => {
+const ReportsPage: React.FC<IReportsPageProps> = () => {
   const history = useHistory();
   const { organizationId, fieldId } = useParams();
 

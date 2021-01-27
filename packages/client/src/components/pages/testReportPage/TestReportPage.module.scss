@@ -1,0 +1,38 @@
+@import "styles/colors";
+
+.main {
+  max-width: 800px;
+  margin: auto;
+
+  .fieldTitle{
+    color: $primary;
+  }
+
+  b {
+    display: inline-block;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+    font-size: larger;
+  }
+
+  section {
+    background-color: $dark_row;
+    padding: 1rem 2rem;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+}
+
+@keyframes hielght {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
