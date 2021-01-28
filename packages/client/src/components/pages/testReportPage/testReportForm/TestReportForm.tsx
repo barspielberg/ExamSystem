@@ -1,11 +1,11 @@
 import classes from "./TestReportForm.module.scss";
 import React from "react";
 import { Button } from "../../../uiElements";
-import { Test } from "@examsystem/common";
+import { TakenTest } from "@examsystem/common";
 import { useHistory } from "react-router";
 
 interface ITestReportFormProps {
-  tests: Test[] | undefined;
+  tests: TakenTest[] | undefined;
   dateFrom: string | undefined;
   dateTo: string | undefined;
   anyDate: boolean;
@@ -41,7 +41,7 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
               {tests?.map((test) => {
                 return (
                   <option key={test.id} value={test.id}>
-                    {test.title}
+                    {test.testId}
                   </option>
                 );
               })}
@@ -84,10 +84,9 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
           <div className={classes.div8}>
             <Button onClick={() => history.goBack()}>« Back</Button>{" "}
           </div>
-          {/* {#TODO generate the report} */}
           <div className={classes.div9}>
             <Button
-              onClick={() => console.log("this will generate the report")}
+              onClick={() => console.log("this will call a redux action to fetch report data")}
             >
               Generate Report
             </Button>{" "}

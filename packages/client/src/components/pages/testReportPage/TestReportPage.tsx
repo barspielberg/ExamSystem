@@ -1,10 +1,11 @@
 import classes from "./TestReportPage.module.scss";
-import { Organization, Test } from "@examsystem/common";
+import { Organization, TakenTest } from "@examsystem/common";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "../../../hooks";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import TestReportForm from "./testReportForm/TestReportForm";
+import TestSummary from "./testSummary/TestSummary";
 
 interface ITestReportPageProps {
   organizations: Organization[] | undefined;
@@ -12,15 +13,15 @@ interface ITestReportPageProps {
 
 const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
-  const [selectedTest, setSelectedTest] = useState<Test>();
+  const [selectedTest, setSelectedTest] = useState<TakenTest>();
   const [anyDate, setAnyDate] = useState<boolean>(false);
-  const [dateFrom, setDateFrom] = useState<string>();
-  const [dateTo, setDateTo] = useState<string>();
+  const [dateFrom, setDateFrom] = useState<string>("");
+  const [dateTo, setDateTo] = useState<string>("");
 
   const field = organizations
     ?.find((o) => o.id === organizationId)
     ?.fields.find((f) => f.id === fieldId);
-  const tests = field?.tests;
+  const tests: TakenTest[] = [];
 
   return (
     <div className={classes.main}>
@@ -37,6 +38,12 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         setDateFrom={setDateFrom}
         setDateTo={setDateTo}
         setAnyDate={setAnyDate}
+      />
+      {/* Report */}
+      <TestSummary
+        selectedTest={selectedTest}
+        dateFrom={dateFrom}
+        dateTo={dateTo}
       />
     </div>
   );
