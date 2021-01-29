@@ -5,6 +5,7 @@ export interface TakenTest {
   testId: string;
   student: Student;
   questions: AnsweredQuestion[];
+  dateSubmitted: string;
 }
 
 export interface AnsweredQuestion {

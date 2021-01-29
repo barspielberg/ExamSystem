@@ -1,9 +1,9 @@
 import classes from "./TestSummary.module.scss";
 import React from "react";
-import { TakenTest } from "@examsystem/common";
+import { Test } from "@examsystem/common";
 
 interface ITestSummaryProps {
-  selectedTest: TakenTest | undefined;
+  selectedTest: Test | undefined;
   dateFrom: string;
   dateTo: string;
 }

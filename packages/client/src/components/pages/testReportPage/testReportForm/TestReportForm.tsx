@@ -2,7 +2,6 @@ import classes from "./TestReportForm.module.scss";
 import React from "react";
 import { Button } from "../../../uiElements";
 import { TakenTest } from "@examsystem/common";
-import { useHistory } from "react-router";
 
 interface ITestReportFormProps {
   tests: TakenTest[] | undefined;
@@ -13,6 +12,7 @@ interface ITestReportFormProps {
   setDateFrom: any;
   setDateTo: any;
   setAnyDate: any;
+  goBack: any;
 }
 
 const TestReportForm: React.FC<ITestReportFormProps> = ({
@@ -24,9 +24,8 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
   setDateFrom,
   setDateTo,
   setAnyDate,
+  goBack,
 }) => {
-  const history = useHistory();
-
   return (
     <section>
       <form className={classes.inputs}>
@@ -82,11 +81,15 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
             <label> Any Date In The Past</label>
           </div>
           <div className={classes.div8}>
-            <Button onClick={() => history.goBack()}>« Back</Button>{" "}
+            <Button onClick={goBack}>« Back</Button>{" "}
           </div>
           <div className={classes.div9}>
             <Button
-              onClick={() => console.log("this will call a redux action to fetch report data")}
+              onClick={() =>
+                console.log(
+                  "this will call a redux action to fetch report data"
+                )
+              }
             >
               Generate Report
             </Button>{" "}

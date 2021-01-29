@@ -1,11 +1,15 @@
 import classes from "./TestReportPage.module.scss";
-import { Organization, TakenTest } from "@examsystem/common";
-import React, { useState } from "react";
+import { Organization, TakenTest, Test } from "@examsystem/common";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "../../../hooks";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import TestReportForm from "./testReportForm/TestReportForm";
 import TestSummary from "./testSummary/TestSummary";
+import TestRespondent from "./testRespondent/TestRespondent";
+import QuestionStatistics from "./questionStatistics/QuestionStatistics";
+import { Button } from "../../uiElements";
+import { useHistory } from "react-router";
 
 interface ITestReportPageProps {
   organizations: Organization[] | undefined;
@@ -13,10 +17,16 @@ interface ITestReportPageProps {
 
 const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
-  const [selectedTest, setSelectedTest] = useState<TakenTest>();
+  const [selectedTest, setSelectedTest] = useState<Test>();
+  const [takenTests, setTakenTests] = useState<TakenTest[]>();
   const [anyDate, setAnyDate] = useState<boolean>(false);
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
+  const history = useHistory();
+
+  useEffect(() => {
+    // #TODO fetch taken tests for selected test,use the test ID,need redux action
+  }, [selectedTest]);
 
   const field = organizations
     ?.find((o) => o.id === organizationId)
@@ -38,6 +48,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         setDateFrom={setDateFrom}
         setDateTo={setDateTo}
         setAnyDate={setAnyDate}
+        goBack={history.goBack}
       />
       {/* Report */}
       <TestSummary
@@ -45,6 +56,9 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         dateFrom={dateFrom}
         dateTo={dateTo}
       />
+      <TestRespondent takenTests={takenTests} originalTest={selectedTest} />
+      <QuestionStatistics />
+      <Button onClick={() => history.goBack()}>« Back</Button>
     </div>
   );
 };
