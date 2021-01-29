@@ -1,10 +1,16 @@
 import classes from "./QuestionStatistics.module.scss";
 import React from "react";
 import { SearchFilter, Table } from "../../../uiElements";
+import { AnsweredQuestion } from "@examsystem/common";
+import QuestionStatisticsRow from "./QuestionStatisticsRow";
 
-interface IQuestionStatisticsProps {}
+interface IQuestionStatisticsProps {
+  questions:AnsweredQuestion[];
+}
 
-const QuestionStatistics: React.FC<IQuestionStatisticsProps> = ({}) => {
+const QuestionStatistics: React.FC<IQuestionStatisticsProps> = ({
+  questions
+}) => {
   const titles = [
     "ID",
     "Question",
@@ -18,7 +24,9 @@ const QuestionStatistics: React.FC<IQuestionStatisticsProps> = ({}) => {
       <p>Click a question to see statistics regarding its answers</p>
       <span>Filter by tags or content: </span>
       <SearchFilter />
-      <Table titles={titles}></Table>
+      <Table titles={titles}>
+        <QuestionStatisticsRow questions={questions}/>
+      </Table>
     </div>
   );
 };

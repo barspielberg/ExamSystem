@@ -26,6 +26,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
 
   useEffect(() => {
     // #TODO fetch taken tests for selected test,use the test ID,need redux action
+    // #TODO fetch questions of selected test move to questions statistics
   }, [selectedTest]);
 
   const field = organizations
@@ -57,7 +58,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         dateTo={dateTo}
       />
       <TestRespondent takenTests={takenTests} originalTest={selectedTest} />
-      <QuestionStatistics />
+      <QuestionStatistics questions={[]} />
       <Button onClick={() => history.goBack()}>« Back</Button>
     </div>
   );
