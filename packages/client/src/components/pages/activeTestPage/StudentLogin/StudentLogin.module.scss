@@ -1,0 +1,39 @@
+@import "styles/colors";
+
+.box {
+  max-width: 400px;
+  background-color: $dark_row;
+  margin: 3rem auto;
+  border-radius: 10px;
+  border: 1px solid $grey;
+  overflow: hidden;
+  .inputs {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 0.5rem;
+    gap: 0.5rem;
+
+    label {
+      text-align: end;
+      padding-inline-end: 1rem;
+      user-select: none;
+    }
+    input {
+      font: inherit;
+      max-width: 15rem;
+      border-radius: 5px;
+      border-width: 1px;
+      border-color: $grey;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .btns {
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem;
+      grid-column: span 2;
+    }
+  }
+}
