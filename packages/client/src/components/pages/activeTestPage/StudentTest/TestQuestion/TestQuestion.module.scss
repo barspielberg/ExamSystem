@@ -1,0 +1,9 @@
+.answers {
+  display: flex;
+  & > * {
+    margin: 1rem;
+  }
+  * {
+    cursor: pointer;
+  }
+}

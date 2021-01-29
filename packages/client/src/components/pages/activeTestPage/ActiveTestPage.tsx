@@ -5,6 +5,7 @@ import { match } from "react-router";
 import examService from "../../../services/examService";
 import { PopupMessage } from "../../uiElements";
 import StudentLogin from "./StudentLogin/StudentLogin";
+import StudentTest from "./StudentTest/StudentTest";
 
 interface IActiveTestPageProps {
   match: match<{ testId: string }>;
@@ -23,6 +24,7 @@ const ActiveTestPage: React.FC<IActiveTestPageProps> = ({ match }) => {
   return (
     <div>
       {!test && <StudentLogin onStudentSubmited={submitHandler} />}
+      {test && <StudentTest test={test} />}
       <PopupMessage
         warning
         title="Error"
