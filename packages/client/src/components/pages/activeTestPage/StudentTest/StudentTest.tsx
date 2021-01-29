@@ -1,18 +1,39 @@
 import classes from "./StudentTest.module.scss";
 import React from "react";
 import { TakenTest } from "@examsystem/common";
-import { Header } from "../../../uiElements";
+import { Button, Header } from "../../../uiElements";
 import TestQuestion from "./TestQuestion/TestQuestion";
+import { useState } from "react";
 
 interface IStudentTestProps {
   test: TakenTest;
 }
 
 const StudentTest: React.FC<IStudentTestProps> = ({ test }) => {
+  const [queIndex, setQueIndex] = useState(0);
+  const [selected, setSelected] = useState<string[]>([]);
+
+  const nextQue = (goBack?: boolean) => {
+    console.log("index", queIndex, "selected", selected);
+    if (goBack) setQueIndex((i) => i - 1);
+    else setQueIndex((i) => i + 1);
+  };
   return (
     <div className={classes.page}>
       <Header>{test.title}</Header>
-      <TestQuestion question={test.questions[0]} />
+      <TestQuestion
+        question={test.questions[queIndex]}
+        {...{ selected, setSelected }}
+      />
+      <Button disabled={queIndex <= 0} onClick={() => nextQue(true)}>
+        Pre
+      </Button>
+      <Button
+        disabled={queIndex >= test.questions.length - 1}
+        onClick={() => nextQue()}
+      >
+        Next
+      </Button>
     </div>
   );
 };

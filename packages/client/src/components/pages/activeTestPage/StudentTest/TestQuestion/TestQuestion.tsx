@@ -1,21 +1,33 @@
-import React, { useState } from "react";
-
+import React from "react";
 import { Alignment, AnsweredQuestion, QuestionType } from "@examsystem/common";
 import classes from "./TestQuestion.module.scss";
+import { useMemo } from "react";
+import { useEffect } from "react";
 
 interface ITestQuestionProps {
   question: AnsweredQuestion;
+  selected: string[];
+  setSelected: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const TestQuestion: React.FC<ITestQuestionProps> = ({ question: que }) => {
+const TestQuestion: React.FC<ITestQuestionProps> = ({
+  question: que,
+  selected,
+  setSelected,
+}) => {
   const horizontal = que.alignment === Alignment.horizontal;
   const radio = que.type === QuestionType.singleChoiceQuestion;
 
-  const currentIds = que.possibleAnswers.reduce(
-    (pre, cur) => (cur.correct ? [...pre, cur.id] : pre),
-    Array<string>()
+  const currentIds = useMemo(
+    () =>
+      que.possibleAnswers.reduce(
+        (pre, cur) => (cur.correct ? [...pre, cur.id] : pre),
+        Array<string>()
+      ),
+    [que]
   );
-  const [selected, setSelected] = useState<string[]>(currentIds);
+
+  useEffect(() => setSelected(currentIds), [setSelected, currentIds]);
 
   const changeHandler = (checked: boolean, id: string) => {
     if (radio) setSelected([id]);
