@@ -35,7 +35,7 @@ const TestQuestion: React.FC<ITestQuestionProps> = ({
   };
 
   return (
-    <div>
+    <div className={classes.que}>
       <h3>{que.mainTitle}</h3>
       <h4>{que.secondaryTitle}</h4>
       <div

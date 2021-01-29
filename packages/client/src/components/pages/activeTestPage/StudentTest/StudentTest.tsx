@@ -7,15 +7,15 @@ import { useState } from "react";
 
 interface IStudentTestProps {
   test: TakenTest;
-  testUpdated: (queIndex: number, selected: string[]) => void;
+  testUpdated: (queIndex: number, selected: string[]) => Promise<void>;
 }
 
 const StudentTest: React.FC<IStudentTestProps> = ({ test, testUpdated }) => {
   const [queIndex, setQueIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
 
-  const nextQue = (goBack?: boolean) => {
-    testUpdated(queIndex, selected);
+  const nextQue = async (goBack?: boolean) => {
+    await testUpdated(queIndex, selected);
     if (goBack) setQueIndex((i) => i - 1);
     else setQueIndex((i) => i + 1);
   };
