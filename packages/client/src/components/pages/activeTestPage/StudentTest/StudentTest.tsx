@@ -1,9 +1,10 @@
 import classes from "./StudentTest.module.scss";
 import React from "react";
 import { TakenTest } from "@examsystem/common";
-import { Button, Header } from "../../../uiElements";
+import { Header } from "../../../uiElements";
 import TestQuestion from "./TestQuestion/TestQuestion";
 import { useState } from "react";
+import Stepper from "./Stepper/Stepper";
 
 interface IStudentTestProps {
   test: TakenTest;
@@ -14,10 +15,9 @@ const StudentTest: React.FC<IStudentTestProps> = ({ test, testUpdated }) => {
   const [queIndex, setQueIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
 
-  const nextQue = async (goBack?: boolean) => {
+  const moveTo = async (index: number) => {
     await testUpdated(queIndex, selected);
-    if (goBack) setQueIndex((i) => i - 1);
-    else setQueIndex((i) => i + 1);
+    setQueIndex(index);
   };
   return (
     <div className={classes.page}>
@@ -26,15 +26,11 @@ const StudentTest: React.FC<IStudentTestProps> = ({ test, testUpdated }) => {
         question={test.questions[queIndex]}
         {...{ selected, setSelected }}
       />
-      <Button disabled={queIndex <= 0} onClick={() => nextQue(true)}>
-        Pre
-      </Button>
-      <Button
-        disabled={queIndex >= test.questions.length - 1}
-        onClick={() => nextQue()}
-      >
-        Next
-      </Button>
+      <Stepper
+        current={queIndex}
+        max={test.questions.length - 1}
+        moveTo={moveTo}
+      />
     </div>
   );
 };
