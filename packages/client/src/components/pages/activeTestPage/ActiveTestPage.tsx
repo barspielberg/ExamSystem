@@ -1,5 +1,9 @@
+import { Student, TakenTest } from "@examsystem/common";
 import React from "react";
+import { useState } from "react";
 import { match } from "react-router";
+import examService from "../../../services/examService";
+import { PopupMessage } from "../../uiElements";
 import StudentLogin from "./StudentLogin/StudentLogin";
 
 interface IActiveTestPageProps {
@@ -7,10 +11,25 @@ interface IActiveTestPageProps {
 }
 //TODO by Bar
 const ActiveTestPage: React.FC<IActiveTestPageProps> = ({ match }) => {
+  const { testId } = match.params;
+  const [test, setTest] = useState<TakenTest>();
+  const [err, setErr] = useState("");
+
+  const submitHandler = async (st: Student) => {
+    const res = await examService.postStartNew(testId, st);
+    if (typeof res === "string") setErr(res);
+    else setTest(res);
+  };
   return (
     <div>
-      <StudentLogin onStudentSubmited={(s) => console.log(s)} />
-      ActiveTestPage Worked! id: {match.params.testId}{" "}
+      {!test && <StudentLogin onStudentSubmited={submitHandler} />}
+      <PopupMessage
+        warning
+        title="Error"
+        text={err}
+        show={!!err}
+        clear={() => setErr("")}
+      />
     </div>
   );
 };

@@ -55,7 +55,7 @@ class ActiveTestsController {
         questions: testQues,
       };
 
-      const dbTest = takenTestRepository.addNewTest(testObj);
+      const dbTest = await takenTestRepository.addNewTest(testObj);
 
       return res
         .status(201)
@@ -77,7 +77,7 @@ class ActiveTestsController {
     }
 
     try {
-      const dbTest = takenTestRepository.updateTest(test);
+      const dbTest = await takenTestRepository.updateTest(test);
 
       if (!dbTest)
         return res.status(410).json({ message: "OOPS Test not found" });
