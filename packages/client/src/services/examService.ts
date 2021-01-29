@@ -8,12 +8,25 @@ class ExamService {
     student: Student
   ): Promise<TakenTest | string> {
     try {
-      const res = await server.post<postData, postResponse>("/", {
+      const res = await server.post<postData, response>("/", {
         testId,
         student,
       });
       const { test, message } = res.data;
       if (test) return test;
+      else return message;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
+  async putTest(test: TakenTest): Promise<TakenTest | string> {
+    try {
+      const res = await server.put<putData, response>("/", { test });
+
+      const { test: dbTest, message } = res.data;
+
+      if (dbTest) return dbTest;
       else return message;
     } catch (error) {
       return error.response.data;
@@ -27,7 +40,10 @@ type postData = {
   testId: string;
   student: Student;
 };
-type postResponse = AxiosResponse<{
+type putData = {
+  test: TakenTest;
+};
+type response = AxiosResponse<{
   test?: TakenTest;
   message: string;
   error?: any;

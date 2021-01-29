@@ -16,15 +16,27 @@ const ActiveTestPage: React.FC<IActiveTestPageProps> = ({ match }) => {
   const [test, setTest] = useState<TakenTest>();
   const [err, setErr] = useState("");
 
-  const submitHandler = async (st: Student) => {
+  const loginHandler = async (st: Student) => {
     const res = await examService.postStartNew(testId, st);
     if (typeof res === "string") setErr(res);
     else setTest(res);
   };
+
+  const updateHandler = async (queIndex: number, selected: string[]) => {
+    if (test) {
+      const testCopy: TakenTest = { ...test };
+      testCopy.questions[queIndex].possibleAnswers.forEach((a) =>
+        selected.includes(a.id) ? (a.correct = true) : null
+      );
+      const res = await examService.putTest(testCopy);
+      if (typeof res === "string") setErr(res);
+      else setTest(res);
+    }
+  };
   return (
     <div>
-      {!test && <StudentLogin onStudentSubmited={submitHandler} />}
-      {test && <StudentTest test={test} />}
+      {!test && <StudentLogin onStudentSubmited={loginHandler} />}
+      {test && <StudentTest test={test} testUpdated={updateHandler} />}
       <PopupMessage
         warning
         title="Error"
