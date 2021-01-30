@@ -15,14 +15,7 @@ const ReviewAnswers: React.FC<IReviewAnswersProps> = ({
 }) => {
   const [queIndex, setQueIndex] = useState(0);
   const lastQueIndex = studetTest.questions.length - 1;
-  const reviewdQuestions = getReviewedQuestions(
-    questions,
-    studetTest.questions
-  );
-  const steps = reviewdQuestions.map((r, index) => ({
-    index,
-    ok: !r.possibleAnswers.find((a) => a.correct === false),
-  }));
+  const steps = getSteps(questions, studetTest.questions);
 
   return (
     <div>
@@ -42,32 +35,20 @@ const ReviewAnswers: React.FC<IReviewAnswersProps> = ({
 
 export default ReviewAnswers;
 
-const getReviewedQuestions = (
+const getSteps = (
   questions: Question[],
   studentQuestions: AnsweredQuestion[]
-): AnsweredQuestion[] => {
-  const reviewdQuestions = studentQuestions.map((studetQuestion) => {
-    const question = questions.find(
-      (q) => q.id === studetQuestion.oringinalQuestionId
-    );
+): { index: number; ok: boolean }[] => {
+  return studentQuestions.map((stq, index) => {
+    const question = questions.find((q) => q.id === stq.oringinalQuestionId);
 
-    const reviewdAnswers = studetQuestion.possibleAnswers.map(
-      (studentAnswer) => {
-        const answer = question?.possibleAnswers.find(
-          (a) => a.id === studentAnswer.id
-        );
-        let status;
-        if (answer?.correct && studentAnswer.correct) status = true;
-        else if (
-          (!answer?.correct && studentAnswer.correct) ||
-          (answer?.correct && !studentAnswer.correct)
-        )
-          status = false;
-
-        return { ...studentAnswer, correct: status };
-      }
-    );
-    return { ...studetQuestion, possibleAnswers: reviewdAnswers };
+    const correctIds = question?.possibleAnswers
+      .filter((a) => a.correct)
+      .map((a) => a.id);
+    const studentSelection = stq.possibleAnswers
+      .filter((a) => a.correct)
+      .map((a) => a.id);
+    const ok = correctIds?.every((c) => studentSelection.includes(c)) ?? false;
+    return { ok, index };
   });
-  return reviewdQuestions;
 };
