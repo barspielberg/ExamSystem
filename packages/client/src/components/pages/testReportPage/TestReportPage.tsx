@@ -10,6 +10,8 @@ import TestRespondent from "./testRespondent/TestRespondent";
 import QuestionStatistics from "./questionStatistics/QuestionStatistics";
 import { Button } from "../../uiElements";
 import { useHistory } from "react-router";
+import dataService from "../../../services/dataService";
+import { type } from "os";
 
 interface ITestReportPageProps {
   organizations: Organization[] | undefined;
@@ -17,12 +19,20 @@ interface ITestReportPageProps {
 
 const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
+  const [tests, setTests] = useState<Test[]>();
   const [selectedTest, setSelectedTest] = useState<Test>();
   const [takenTests, setTakenTests] = useState<TakenTest[]>();
   const [anyDate, setAnyDate] = useState<boolean>(false);
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
   const history = useHistory();
+
+  useEffect(() => {
+    (async () => {
+      const fetchedTests = await dataService.getTests(organizationId, fieldId);
+        setTests(fetchedTests);
+    })();
+  }, []);
 
   useEffect(() => {
     // #TODO fetch taken tests for selected test,use the test ID,need redux action
@@ -32,7 +42,6 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const field = organizations
     ?.find((o) => o.id === organizationId)
     ?.fields.find((f) => f.id === fieldId);
-  const tests: TakenTest[] = [];
 
   return (
     <div className={classes.main}>

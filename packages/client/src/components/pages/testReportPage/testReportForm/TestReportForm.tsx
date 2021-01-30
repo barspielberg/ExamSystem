@@ -1,10 +1,10 @@
 import classes from "./TestReportForm.module.scss";
 import React from "react";
 import { Button } from "../../../uiElements";
-import { TakenTest } from "@examsystem/common";
+import { Test } from "@examsystem/common";
 
 interface ITestReportFormProps {
-  tests: TakenTest[] | undefined;
+  tests: Test[] | undefined;
   dateFrom: string | undefined;
   dateTo: string | undefined;
   anyDate: boolean;
@@ -40,7 +40,7 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
               {tests?.map((test) => {
                 return (
                   <option key={test.id} value={test.id}>
-                    {test.testId}
+                    {test.title}
                   </option>
                 );
               })}
