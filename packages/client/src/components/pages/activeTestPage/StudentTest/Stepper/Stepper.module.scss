@@ -1,16 +1,21 @@
 @import "styles/colors";
-
+.btns {
+  display: flex;
+  .filler {
+    flex: 1;
+  }
+}
 .steps {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
-  & > * {
+  border-bottom: 2px solid #8d8d8d44;
+
+  .step {
+    font-weight: 600;
     display: block;
     padding: 0.5rem;
     margin: 0.5rem;
-  }
-  .step {
-    font-weight: 600;
     cursor: pointer;
     transition: all 0.3s;
     font-size: 1.2rem;
@@ -24,7 +29,7 @@
       transform: translateY(-5px);
       text-shadow: 0 5px 3px #8b8b8b75;
       font-size: 1.3rem;
-      background: linear-gradient(0deg, $light_blue, transparent 20%);
+      background: linear-gradient(0deg, $light_blue, transparent 15%);
     }
     &.ok {
       background-color: $light_blue;

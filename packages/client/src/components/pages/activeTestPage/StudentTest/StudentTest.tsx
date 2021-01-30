@@ -27,7 +27,7 @@ const StudentTest: React.FC<IStudentTestProps> = ({ test, testUpdated }) => {
       ),
     [test]
   );
-
+  const done = steps.every((s) => s.ok);
   const moveTo = async (index: number) => {
     await testUpdated(queIndex, selected);
     setQueIndex(index);
@@ -43,6 +43,7 @@ const StudentTest: React.FC<IStudentTestProps> = ({ test, testUpdated }) => {
         current={queIndex}
         steps={steps}
         max={test.questions.length - 1}
+        done={done}
         moveTo={moveTo}
       />
     </div>
