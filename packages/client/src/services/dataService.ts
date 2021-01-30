@@ -55,6 +55,22 @@ class DataService {
     }
   }
 
+  async getTests(orgId: string | null, fieldId: string | null): Promise<Test[] | string> {
+    try {
+      const res = await server.get<{ orgId: string; fieldId: string; }, AxiosResponse<{ message: string; tests: Test[] }>>("tests", {
+        params: {
+          orgId,
+          fieldId
+        }
+      });
+
+      return res.data.tests;
+    } catch (error) {
+      console.log(error);
+      return 'failed';
+    }
+  }
+
   async putTest(
     orgId: string,
     fieldId: string,

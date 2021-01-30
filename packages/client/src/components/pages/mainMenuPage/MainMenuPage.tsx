@@ -79,7 +79,7 @@ const MainMenuPage: React.FC<IMainMenuPageProps> = ({ organizations }) => {
         </p>
         <p
           className={classes.clickable}
-          onClick={() => navigationHandler("/TestReport")}
+          onClick={() => navigationHandler("/Reports")}
         >
           Reports »{" "}
         </p>

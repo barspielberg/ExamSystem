@@ -15,6 +15,7 @@ import TestReportPage from "./pages/testReportPage/TestReportPage";
 import { PopupMessage } from "./uiElements";
 import PrivateRoute from "./utilComponents/PrivateRoute";
 import { setError } from "../redux/actions/adminActions";
+import ReportsPage from "./pages/reportsPage/ReportsPage";
 
 interface IAppProps {
   error: string;
@@ -28,6 +29,7 @@ const App: React.FC<IAppProps> = ({ error, setError }) => {
         <Route path="/ActiveTest/:testId" component={ActiveTestPage} />
         <PrivateRoute path="/TestReport" Component={TestReportPage} />
         <PrivateRoute path="/StudentReport" Component={StudentReportPage} />
+        <PrivateRoute path="/Reports" Component={ReportsPage} />
         <PrivateRoute path="/EditTest" Component={EditTestPage} />
         <PrivateRoute path="/EditQuestion" Component={EditQuestionPage} />
         <PrivateRoute path="/ManageTests" Component={ManageTestsPage} />
