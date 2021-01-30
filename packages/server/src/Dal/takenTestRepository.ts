@@ -17,6 +17,11 @@ class TakenTestsRepository {
     return JSON.parse(testsStr).tests;
   }
 
+  async getTakenTests(testId: string): Promise<TakenTest[]> {
+    const takenTests = (await this.getAll()).filter(tt => tt.testId === testId);
+    return takenTests;
+  }
+
   async getTest(testId: string, email: string): Promise<TakenTest | undefined> {
     const tests = await this.getAll();
     return tests.find((t) => t.testId === testId && t.student.email === email);

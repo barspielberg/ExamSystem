@@ -1,5 +1,5 @@
 import classes from "./TestReportPage.module.scss";
-import { Organization, TakenTest, Test } from "@examsystem/common";
+import { Organization, Question, TakenTest, Test } from "@examsystem/common";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "../../../hooks";
@@ -20,10 +20,15 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
   const [tests, setTests] = useState<Test[]>();
   const [selectedTest, setSelectedTest] = useState<Test>();
+  const [selectedTestQuestions, setselectedTestQuestions] = useState<
+    Question[] | undefined
+  >([]);
   const [takenTests, setTakenTests] = useState<TakenTest[]>();
   const [anyDate, setAnyDate] = useState<boolean>(false);
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
+  const [numofSub, setNumofSub] = useState(0);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -36,8 +41,24 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
 
   useEffect(() => {
     // #TODO fetch taken tests for selected test,use the test ID,need redux action
+    (async () => {
+      if (selectedTest) {
+        const fetchedTakenTests = await dataService.getTakenTests(
+          selectedTest?.id
+        );
+        if (typeof fetchedTakenTests !== "string") {
+          setTakenTests(fetchedTakenTests);
+          setNumofSub(fetchedTakenTests.length);
+        }
+
+        setselectedTestQuestions(
+          organizations
+            ?.find((o) => o.id === organizationId)
+            ?.questions.filter((q) => !selectedTest.questionIds.includes(q.id))
+        );
+      }
+    })();
     // #TODO fetch questions of selected test move to questions statistics
-    console.log("selected test changed");
   }, [selectedTest]);
 
   const field = organizations
@@ -65,8 +86,11 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       {/* Report */}
       <TestSummary
         selectedTest={selectedTest}
+        takenTests={takenTests}
         dateFrom={dateFrom}
         dateTo={dateTo}
+        numofSub={numofSub}
+        selectedTestQuestions={selectedTestQuestions}
       />
       <TestRespondent takenTests={takenTests} originalTest={selectedTest} />
       <QuestionStatistics questions={[]} />

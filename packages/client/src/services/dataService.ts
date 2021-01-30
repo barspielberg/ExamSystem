@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { Admin, Question, Test } from "@examsystem/common";
+import { Admin, Question, TakenTest, Test } from "@examsystem/common";
 
 const server = axios.create({ baseURL: "http://localhost:4000/" });
 
@@ -65,6 +65,21 @@ class DataService {
       });
 
       return res.data.tests;
+    } catch (error) {
+      console.log(error);
+      return 'failed';
+    }
+  }
+
+  async getTakenTests(testId: string | undefined): Promise<TakenTest[] | string> {
+    try {
+      const res = await server.get<{ testId: string; }, AxiosResponse<{ message: string; takenTests: TakenTest[] }>>("tests/takentests", {
+        params: {
+          testId,
+        }
+      });
+
+      return res.data.takenTests;
     } catch (error) {
       console.log(error);
       return 'failed';

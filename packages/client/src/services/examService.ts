@@ -1,4 +1,4 @@
-import { Student, TakenTest } from "@examsystem/common";
+import { Question, QuestionType, Student, TakenTest } from "@examsystem/common";
 import axios, { AxiosResponse } from "axios";
 
 const server = axios.create({ baseURL: "http://localhost:4000/activetests" });
@@ -32,7 +32,45 @@ class ExamService {
       return error.response.data;
     }
   }
+
+  
 }
+
+export const calcGrade = (studentTest: TakenTest, questions: Question[]) => {
+  const numOfCurrect = getNumOfCorrectQuestions(studentTest, questions);
+  const grade = (numOfCurrect / questions.length) * 100;
+  return { grade, numOfCurrect };
+};
+
+const getNumOfCorrectQuestions = (
+  studentTest: TakenTest,
+  questions: Question[]
+) => {
+  return questions.reduce((pre, cur) => {
+    const answersId = studentTest.questions
+      .find((q) => q.oringinalQuestionId === cur.id)
+      ?.possibleAnswers.filter((a) => a.correct)
+      .map((a) => a.id);
+    if (!answersId) return pre;
+
+    const currectsId = cur.possibleAnswers
+      .filter((a) => a.correct)
+      .map((a) => a.id);
+    // console.log("answersId", answersId, "currectsId", currectsId);
+
+    if (cur.type === QuestionType.singleChoiceQuestion) {
+      return answersId.includes(currectsId[0]) ? pre + 1 : pre;
+    } else {
+      const currectOfAnswered =
+        answersId.filter((a) => currectsId.includes(a)).length /
+        answersId.length;
+      const answeredOfCurrect =
+        currectsId.filter((a) => answersId.includes(a)).length /
+        currectsId.length;
+      return pre + currectOfAnswered * answeredOfCurrect;
+    }
+  }, 0);
+};
 
 export default new ExamService();
 
