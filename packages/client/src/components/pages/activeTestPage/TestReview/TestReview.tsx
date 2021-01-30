@@ -17,22 +17,27 @@ const TestReview: React.FC<ITestReviewProps> = ({
 }) => {
   const { grade, numOfCurrect } = calcGrade(stu, ques);
   const passed = grade >= orig.passingGrade;
+
   return (
     <div className={classes.page}>
       <Header>{orig.title}</Header>
       <h2>{orig.title} - Results</h2>
       <div className={classes.report}>
         <label>Your Grade: </label>
-        <span>{grade}</span>
+        <b className={passed ? classes.pass : classes.fail}>{grade}</b>
         <label>Status: </label>
-        <span>{passed ? "Passed" : "Fail"}</span>
+        <b className={passed ? classes.pass : classes.fail}>
+          {passed ? "Passed" : "Fail"}
+        </b>
         <label>Summary: </label>
         <span>
-          You answerd {numOfCurrect} question currectly out of {ques.length}{" "}
-          questions in total.
+          You answerd <b>{numOfCurrect}</b> question currectly out of{" "}
+          <b>{ques.length}</b> questions in total.
         </span>
         <label>Passing Grade: </label>
-        <span>The minimum grade to pass this test is {orig.passingGrade}</span>
+        <span>
+          The minimum grade to pass this test is <b>{orig.passingGrade}</b>
+        </span>
       </div>
     </div>
   );
