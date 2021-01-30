@@ -32,8 +32,11 @@ class TakenTestsRepository {
     return test;
   }
 
-  async updateTest(test: TakenTest): Promise<TakenTest> {
+  async updateTest(test: TakenTest): Promise<TakenTest | undefined> {
     const tests = await this.getAll();
+
+    const dbTest = tests.find((t) => t.id === test.id && !t.submited);
+    if (!dbTest) return undefined;
 
     const stringifiedTests = JSON.stringify({
       tests: tests.map((t) => (t.id === test.id ? test : t)),

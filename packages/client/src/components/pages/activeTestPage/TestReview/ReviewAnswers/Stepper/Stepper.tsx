@@ -1,24 +1,15 @@
 import classes from "./Stepper.module.scss";
 import React from "react";
-import { Button } from "../../../../uiElements";
+import { Button } from "../../../../../uiElements";
 
 interface IStepperProps {
   current: number;
   max: number;
   steps: step[];
-  done: boolean;
   moveTo: (index: number) => void;
-  submit: () => void;
 }
 
-const Stepper: React.FC<IStepperProps> = ({
-  moveTo,
-  current,
-  max,
-  steps,
-  done,
-  submit,
-}) => {
+const Stepper: React.FC<IStepperProps> = ({ current, max, moveTo, steps }) => {
   return (
     <div>
       <div className={classes.btns}>
@@ -28,12 +19,6 @@ const Stepper: React.FC<IStepperProps> = ({
         <Button disabled={current >= max} onClick={() => moveTo(current + 1)}>
           Next »
         </Button>
-        <div className={classes.filler} />
-        {done && (
-          <Button success onClick={submit}>
-            Submit the Test ⚑
-          </Button>
-        )}
       </div>
       <div className={classes.steps}>
         {steps.map((s) => (
@@ -56,7 +41,7 @@ const Stepper: React.FC<IStepperProps> = ({
 
 export default Stepper;
 
-export type step = {
+type step = {
   index: number;
   ok: boolean;
 };
