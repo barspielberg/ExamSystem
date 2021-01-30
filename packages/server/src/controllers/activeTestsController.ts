@@ -53,6 +53,7 @@ class ActiveTestsController {
         introduction: test.introduction,
         lang: test.lang,
         questions: testQues,
+        dateSubmitted: new Date().toDateString(),
       };
 
       const dbTest = await takenTestRepository.addNewTest(testObj);
