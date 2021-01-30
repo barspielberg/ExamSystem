@@ -1,5 +1,7 @@
 import { AnsweredQuestion, Question, TakenTest } from "@examsystem/common";
 import React from "react";
+import { useEffect } from "react";
+import { CSSProperties } from "react";
 import { useState } from "react";
 import ReviewdQuestion from "./ReviewdQuestion/ReviewdQuestion";
 import Stepper from "./Stepper/Stepper";
@@ -14,11 +16,19 @@ const ReviewAnswers: React.FC<IReviewAnswersProps> = ({
   questions,
 }) => {
   const [queIndex, setQueIndex] = useState(0);
+  const [hight, setHight] = useState("0px");
   const lastQueIndex = studetTest.questions.length - 1;
   const steps = getSteps(questions, studetTest.questions);
 
+  const style: CSSProperties = {
+    maxHeight: hight,
+    transition: "all 0.6s",
+    overflow: "hidden",
+  };
+  useEffect(() => setHight("800px"), [setHight]);
+
   return (
-    <div>
+    <div style={style}>
       <ReviewdQuestion
         question={questions[queIndex]}
         studentAnswers={studetTest.questions[queIndex]}

@@ -4,6 +4,7 @@ import React from "react";
 import { Button, Header } from "../../../uiElements";
 import { calcGrade } from "../../../../services/examService";
 import ReviewAnswers from "./ReviewAnswers/ReviewAnswers";
+import { useState } from "react";
 
 interface ITestReviewProps {
   studentTest: TakenTest;
@@ -16,6 +17,7 @@ const TestReview: React.FC<ITestReviewProps> = ({
   studentTest: stu,
   questions: ques,
 }) => {
+  const [review, setReview] = useState(false);
   const { grade, numOfCurrect } = calcGrade(stu, ques);
   const passed = grade >= orig.passingGrade;
 
@@ -40,8 +42,10 @@ const TestReview: React.FC<ITestReviewProps> = ({
           The minimum grade to pass this test is <b>{orig.passingGrade}</b>
         </span>
       </div>
-      <Button>Review Your Answers</Button>
-      <ReviewAnswers studetTest={stu} questions={ques} />
+      {!review && (
+        <Button onClick={() => setReview(true)}>Review Your Answers</Button>
+      )}
+      {review && <ReviewAnswers studetTest={stu} questions={ques} />}
     </div>
   );
 };
