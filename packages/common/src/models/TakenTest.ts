@@ -10,6 +10,7 @@ export interface TakenTest {
   student: Student;
   questions: AnsweredQuestion[];
   dateSubmitted: string;
+  submited?: boolean;
 }
 
 export interface AnsweredQuestion {
