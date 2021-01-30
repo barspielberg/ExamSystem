@@ -1,8 +1,9 @@
 import classes from "./TestReview.module.scss";
 import { Question, TakenTest, Test } from "@examsystem/common";
 import React from "react";
-import { Header } from "../../../uiElements";
+import { Button, Header } from "../../../uiElements";
 import { calcGrade } from "../../../../services/examService";
+import ReviewAnswers from "./ReviewAnswers/ReviewAnswers";
 
 interface ITestReviewProps {
   studentTest: TakenTest;
@@ -39,6 +40,8 @@ const TestReview: React.FC<ITestReviewProps> = ({
           The minimum grade to pass this test is <b>{orig.passingGrade}</b>
         </span>
       </div>
+      <Button>Review Your Answers</Button>
+      <ReviewAnswers studetTest={stu} questions={ques} />
     </div>
   );
 };
