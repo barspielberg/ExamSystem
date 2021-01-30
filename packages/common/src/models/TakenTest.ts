@@ -9,6 +9,7 @@ export interface TakenTest {
   introduction: string;
   student: Student;
   questions: AnsweredQuestion[];
+  dateSubmitted: string;
 }
 
 export interface AnsweredQuestion {
