@@ -1,6 +1,7 @@
 import { AnsweredQuestion, Question, TakenTest } from "@examsystem/common";
 import React from "react";
 import { useState } from "react";
+import ReviewdQuestion from "./ReviewdQuestion/ReviewdQuestion";
 import Stepper from "./Stepper/Stepper";
 
 interface IReviewAnswersProps {
@@ -25,7 +26,10 @@ const ReviewAnswers: React.FC<IReviewAnswersProps> = ({
 
   return (
     <div>
-      ReviewAnswers Worked!
+      <ReviewdQuestion
+        question={questions[queIndex]}
+        studentAnswers={studetTest.questions[queIndex]}
+      />
       <Stepper
         current={queIndex}
         moveTo={setQueIndex}
