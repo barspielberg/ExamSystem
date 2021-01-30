@@ -4,7 +4,7 @@ import { Answer, QuestionType, Question, Admin } from "@examsystem/common";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import { connect } from "react-redux";
 import { addQuestion, putQuestion } from "../../../redux/actions/adminActions";
-import { Button, PopupMessage } from "../../uiElements";
+import { Button, DisplayQuestion, PopupMessage } from "../../uiElements";
 import { useParams } from "../../../hooks";
 import { useHistory } from "react-router";
 
@@ -26,6 +26,7 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
   const [selectedFields, setSelectedFields] = useState<string[] | any[]>([]);
   const [showMsg, setShowMsg] = useState(false);
   const [question, setQuestion] = useState(newQuestion);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (questionId) {
@@ -228,22 +229,30 @@ const EditQuestionPage: React.FC<IEditQuestionPageProps> = ({
         <div className={classes.btns}>
           <Button onClick={() => setShowMsg(true)}>« Back</Button>
           <div className={classes.filler} />
-          <Button>Show</Button>
+          <Button onClick={() => setShow(!show)}>
+            {show ? "Shrink" : "Show"}
+          </Button>
           <Button success onClick={submitForm}>
             Save »
           </Button>
         </div>
-        <PopupMessage
-          show={showMsg}
-          clear={() => setShowMsg(false)}
-          warning
-          action={() => history.goBack()}
-          actionTag="« Go Back"
-          clearTag="Stay"
-          title="Warning!"
-          text="Are you sure you want to go back? The changes you have made will not be saved!"
-        />
+        {show && (
+          <div style={{ textAlign: "start" }}>
+            <DisplayQuestion question={question} />
+          </div>
+        )}
       </form>
+
+      <PopupMessage
+        show={showMsg}
+        clear={() => setShowMsg(false)}
+        warning
+        action={() => history.goBack()}
+        actionTag="« Go Back"
+        clearTag="Stay"
+        title="Warning!"
+        text="Are you sure you want to go back? The changes you have made will not be saved!"
+      />
     </div>
   );
 };
