@@ -11,7 +11,6 @@ import QuestionStatistics from "./questionStatistics/QuestionStatistics";
 import { Button } from "../../uiElements";
 import { useHistory } from "react-router";
 import dataService from "../../../services/dataService";
-import { type } from "os";
 
 interface ITestReportPageProps {
   organizations: Organization[] | undefined;
@@ -30,7 +29,8 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   useEffect(() => {
     (async () => {
       const fetchedTests = await dataService.getTests(organizationId, fieldId);
-        setTests(fetchedTests);
+      if (typeof fetchedTests !== "string") setTests(fetchedTests);
+      else console.log(fetchedTests);
     })();
   }, []);
 
@@ -38,6 +38,10 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
     // #TODO fetch taken tests for selected test,use the test ID,need redux action
     // #TODO fetch questions of selected test move to questions statistics
   }, [selectedTest]);
+
+  const generateReport = (selectedTest: Test,dateFrom: any,dateTo: any) => {
+
+  }
 
   const field = organizations
     ?.find((o) => o.id === organizationId)
