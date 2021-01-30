@@ -111,14 +111,18 @@ class ActiveTestsController {
       test.submited = true;
       const dbStTest = await takenTestRepository.updateTest(test);
       const dbOrigTest = await organizationRepository.getTest(test.testId);
+      const dbTestQuestions = dbOrigTest
+        ? await organizationRepository.getQuestionsByIds(dbOrigTest.questionIds)
+        : undefined;
 
-      if (!dbStTest)
-        return res.status(410).json({ message: "OOPS Test not found" });
+      if (!dbStTest || !dbOrigTest || !dbTestQuestions)
+        return res.status(410).json({ message: "Not found" });
 
       return res.status(201).json({
         message: "Test submited successfully",
         studentTest: dbStTest,
         originalTest: dbOrigTest,
+        questions: dbTestQuestions,
       });
     } catch (error) {
       return res

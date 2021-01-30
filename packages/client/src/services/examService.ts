@@ -1,4 +1,4 @@
-import { Student, TakenTest, Test } from "@examsystem/common";
+import { Question, Student, TakenTest, Test } from "@examsystem/common";
 import axios, { AxiosResponse } from "axios";
 
 const server = axios.create({ baseURL: "http://localhost:4000/activetests" });
@@ -40,9 +40,10 @@ class ExamService {
         test,
       });
 
-      const { originalTest, studentTest, message } = res.data;
+      const { originalTest, studentTest, questions, message } = res.data;
 
-      if (originalTest && studentTest) return { originalTest, studentTest };
+      if (originalTest && studentTest && questions)
+        return { originalTest, studentTest, questions };
       else return message;
     } catch (error) {
       return error.response?.data || "The server is down";
@@ -68,11 +69,13 @@ type response = AxiosResponse<{
 type testReview = {
   studentTest: TakenTest;
   originalTest: Test;
+  questions: Question[];
 };
 
 type submitResponse = AxiosResponse<{
   studentTest?: TakenTest;
   originalTest?: Test;
+  questions?: Question[];
   message: string;
   error?: any;
 }>;
