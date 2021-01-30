@@ -4,7 +4,8 @@ import { TakenTest } from "@examsystem/common";
 import { Header } from "../../../uiElements";
 import TestQuestion from "./TestQuestion/TestQuestion";
 import { useState } from "react";
-import Stepper from "./Stepper/Stepper";
+import Stepper, { step } from "./Stepper/Stepper";
+import { useMemo } from "react";
 
 interface IStudentTestProps {
   test: TakenTest;
@@ -14,6 +15,18 @@ interface IStudentTestProps {
 const StudentTest: React.FC<IStudentTestProps> = ({ test, testUpdated }) => {
   const [queIndex, setQueIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
+
+  const steps: step[] = useMemo(
+    () =>
+      test.questions.reduce(
+        (pre, cur, i) => [
+          ...pre,
+          { index: i, ok: cur.possibleAnswers.some((a) => a.correct) },
+        ],
+        Array<step>()
+      ),
+    [test]
+  );
 
   const moveTo = async (index: number) => {
     await testUpdated(queIndex, selected);
@@ -28,6 +41,7 @@ const StudentTest: React.FC<IStudentTestProps> = ({ test, testUpdated }) => {
       />
       <Stepper
         current={queIndex}
+        steps={steps}
         max={test.questions.length - 1}
         moveTo={moveTo}
       />
