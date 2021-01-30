@@ -9,15 +9,14 @@ import { useMemo } from "react";
 
 interface IStudentTestProps {
   test: TakenTest;
-  testUpdated: (queIndex: number, selected: string[]) => Promise<void>;
-  submited: () => void;
+  saveTest: (
+    queIndex: number,
+    selected: string[],
+    submit?: boolean
+  ) => Promise<void>;
 }
 
-const StudentTest: React.FC<IStudentTestProps> = ({
-  test,
-  testUpdated,
-  submited,
-}) => {
+const StudentTest: React.FC<IStudentTestProps> = ({ test, saveTest }) => {
   const [queIndex, setQueIndex] = useState(0);
   const [selected, setSelected] = useState<string[]>([]);
 
@@ -37,12 +36,11 @@ const StudentTest: React.FC<IStudentTestProps> = ({
   );
 
   const moveTo = async (index: number) => {
-    await testUpdated(queIndex, selected);
+    await saveTest(queIndex, selected);
     setQueIndex(index);
   };
   const submitHandler = async () => {
-    await testUpdated(queIndex, selected);
-    submited();
+    await saveTest(queIndex, selected, true);
   };
   return (
     <div className={classes.page}>
