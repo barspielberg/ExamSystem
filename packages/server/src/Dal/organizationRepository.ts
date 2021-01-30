@@ -1,4 +1,4 @@
-import { Organization, Question, Test } from "@examsystem/common";
+import { FieldOfStudy, Organization, Question, Test } from "@examsystem/common";
 import { promises as fsPromises } from "fs";
 import { resolve as pathResolve } from "path";
 import { getNewId } from "../services/idService";
@@ -22,7 +22,6 @@ class OrganizationRepository {
     const organizations: Organization[] = JSON.parse(orgStr).organizations;
     return organizations;
   }
-
 
   async addQuestion(orgId: string, question: Question, fieldsIds: string[]) {
     if (question.id === "") question.id = getNewId();
@@ -98,6 +97,19 @@ class OrganizationRepository {
     const stringifiedOrgs = JSON.stringify({ organizations: organizations });
     await fsPromises.writeFile(organizationPath, stringifiedOrgs, "utf8");
     return dbTest;
+  }
+  async getTest(id: string) {
+    const organizations = await this.getAllOrganizations();
+    return organizations
+      .reduce((pre, cur) => [...pre, ...cur.fields], Array<FieldOfStudy>())
+      .reduce((pre, cur) => [...pre, ...cur.tests], Array<Test>())
+      .find((t) => t.id === id);
+  }
+  async getQuestionsByIds(ids: string[]) {
+    const organizations = await this.getAllOrganizations();
+    return organizations
+      .reduce((pre, cur) => [...pre, ...cur.questions], Array<Question>())
+      .filter((q) => ids.includes(q.id));
   }
 }
 
