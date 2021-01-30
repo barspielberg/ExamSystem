@@ -16,7 +16,7 @@ class ExamService {
       if (test) return test;
       else return message;
     } catch (error) {
-      return error.response.data;
+      return error.response?.data || "The server is down";
     }
   }
 
@@ -29,7 +29,7 @@ class ExamService {
       if (dbTest) return dbTest;
       else return message;
     } catch (error) {
-      return error.response.data;
+      return error.response?.data || "The server is down";
     }
   }
 }
