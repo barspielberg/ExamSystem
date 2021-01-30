@@ -1,0 +1,34 @@
+@import "styles/colors";
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  & > * {
+    display: block;
+    padding: 0.5rem;
+    margin: 0.5rem;
+  }
+  .step {
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+    color: grey;
+    $light_blue: lighten(
+      $color: $secondary,
+      $amount: 55%,
+    );
+    border-radius: 5px;
+    &.current {
+      transform: translateY(-5px);
+      text-shadow: 0 5px 3px #8b8b8b75;
+      font-size: 1.3rem;
+      background: linear-gradient(0deg, $light_blue, transparent 20%);
+    }
+    &.ok {
+      background-color: $light_blue;
+      color: $secondary;
+    }
+  }
+}

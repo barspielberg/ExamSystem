@@ -1,0 +1,13 @@
+.que {
+  min-height: 60vh;
+}
+
+.answers {
+  display: flex;
+  & > * {
+    margin: 1rem;
+  }
+  * {
+    cursor: pointer;
+  }
+}
