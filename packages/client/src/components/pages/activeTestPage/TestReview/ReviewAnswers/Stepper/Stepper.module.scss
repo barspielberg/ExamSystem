@@ -1,0 +1,33 @@
+@import "styles/colors";
+.btns {
+  display: flex;
+}
+.steps {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  border-bottom: 2px solid #8d8d8d44;
+
+  .step {
+    font-weight: 600;
+    display: block;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1.2rem;
+    color: red;
+    background-color: rgba(165, 0, 0, 0.308);
+
+    border-radius: 5px;
+    &.current {
+      transform: translateY(-5px);
+      text-shadow: 0 5px 3px #8b8b8b75;
+      font-size: 1.3rem;
+    }
+    &.ok {
+      background-color: #0080005b;
+      color: green;
+    }
+  }
+}
