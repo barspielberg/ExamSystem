@@ -11,7 +11,7 @@ interface ITestSummaryProps {
 const TestSummary: React.FC<ITestSummaryProps> = ({
   selectedTest,
   dateFrom,
-  dateTo
+  dateTo,
 }) => {
   return (
     <div className={classes.main}>
@@ -23,42 +23,37 @@ const TestSummary: React.FC<ITestSummaryProps> = ({
         <h2>Summary</h2>
         <div className={classes.parent}>
           <div className={classes.div1}>
-            Test Name: <strong>Test Name</strong>
+            Test Name: <strong>{selectedTest?.title}</strong>
           </div>
           <div className={classes.div2}>
-            Test Code: <strong>666</strong>
+            Test ID: <strong>{selectedTest?.id}</strong>
           </div>
           <div className={classes.div3}>
-            Test ID: <strong>Test ID</strong>
+            Number of Questions:{" "}
+            <strong>{selectedTest?.questionIds.length}</strong>
           </div>
           <div className={classes.div4}>
-            Test Type: <strong>Some kind of typr</strong>
+            Passing Grade: <strong>{selectedTest?.passingGrade}</strong>
           </div>
           <div className={classes.div5}>
-            Number of Questions: <strong>17</strong>
-          </div>
-          <div className={classes.div6}>
-            Passing Grade: <strong>77</strong>
-          </div>
-          <div className={classes.div7}>
             Date Range:{" "}
             <strong>
               {dateFrom} - {dateTo}
             </strong>
           </div>
-          <div className={classes.div8}>
+          <div className={classes.div6}>
             Number of Submissions: <strong>27</strong>
           </div>
-          <div className={classes.div9}>
+          <div className={classes.div7}>
             Number of Respondents Passed: <strong>7</strong>
           </div>
-          <div className={classes.div10}>
+          <div className={classes.div8}>
             Passing Percentage: <strong>17%</strong>
           </div>
-          <div className={classes.div11}>
+          <div className={classes.div9}>
             Average Grade: <strong>77</strong>
           </div>
-          <div className={classes.div12}>
+          <div className={classes.div10}>
             Median Grade: <strong>71</strong>
           </div>
         </div>

@@ -37,11 +37,8 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   useEffect(() => {
     // #TODO fetch taken tests for selected test,use the test ID,need redux action
     // #TODO fetch questions of selected test move to questions statistics
+    console.log("selected test changed");
   }, [selectedTest]);
-
-  const generateReport = (selectedTest: Test,dateFrom: any,dateTo: any) => {
-
-  }
 
   const field = organizations
     ?.find((o) => o.id === organizationId)
@@ -58,6 +55,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         dateFrom={dateFrom}
         dateTo={dateTo}
         anyDate={anyDate}
+        selectedTest={selectedTest}
         setSelectedTest={setSelectedTest}
         setDateFrom={setDateFrom}
         setDateTo={setDateTo}

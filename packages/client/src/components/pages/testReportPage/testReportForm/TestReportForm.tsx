@@ -8,6 +8,7 @@ interface ITestReportFormProps {
   dateFrom: string | undefined;
   dateTo: string | undefined;
   anyDate: boolean;
+  selectedTest: Test | undefined;
   setSelectedTest: any;
   setDateFrom: any;
   setDateTo: any;
@@ -20,15 +21,21 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
   dateFrom,
   dateTo,
   anyDate,
+  selectedTest,
   setSelectedTest,
   setDateFrom,
   setDateTo,
   setAnyDate,
   goBack,
 }) => {
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    
+  };
+
   return (
     <section>
-      <form className={classes.inputs}>
+      <form className={classes.inputs} onSubmit={handleSubmit}>
         <div className={classes.parent}>
           <div className={classes.div1}>
             <select
@@ -37,6 +44,7 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
                 setSelectedTest(tests?.find((t) => t.id === e.target.value))
               }
             >
+              <option>Select a test please</option>
               {tests?.map((test) => {
                 return (
                   <option key={test.id} value={test.id}>
@@ -84,15 +92,7 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
             <Button onClick={goBack}>« Back</Button>{" "}
           </div>
           <div className={classes.div9}>
-            <Button
-              onClick={() =>
-                console.log(
-                  "this will call a redux action to fetch report data"
-                )
-              }
-            >
-              Generate Report
-            </Button>{" "}
+            <Button submit>Generate Report</Button>{" "}
           </div>
         </div>
       </form>
