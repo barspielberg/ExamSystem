@@ -8,6 +8,7 @@ interface IStepperProps {
   steps: step[];
   done: boolean;
   moveTo: (index: number) => void;
+  submit: () => void;
 }
 
 const Stepper: React.FC<IStepperProps> = ({
@@ -16,6 +17,7 @@ const Stepper: React.FC<IStepperProps> = ({
   max,
   steps,
   done,
+  submit,
 }) => {
   return (
     <div>
@@ -27,7 +29,11 @@ const Stepper: React.FC<IStepperProps> = ({
           Next »
         </Button>
         <div className={classes.filler} />
-        {done && <Button success> Submit the Test ⚑</Button>}
+        {done && (
+          <Button success onClick={submit}>
+            Submit the Test ⚑
+          </Button>
+        )}
       </div>
       <div className={classes.steps}>
         {steps.map((s) => (
