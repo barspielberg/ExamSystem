@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import examService from "../../../services/examService";
 import StudentTable from "./StudentTable/StudentTable";
 import { useMemo } from "react";
+import TestsTable from "./TestsTable/TestsTable";
 
 interface IStudentReportPageProps {
   organizations?: Organization[];
@@ -31,6 +32,11 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
       return undefined;
     }
   }, [allTests, selected]);
+  const fieldQuestions = useMemo(
+    () =>
+      organization?.questions.filter((q) => field?.questionIds.includes(q.id)),
+    [organization, field]
+  );
   useEffect(() => {
     examService.getAll().then((res) => {
       if (isString(res)) setErr(res);
@@ -62,6 +68,13 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
             {selectedStudent.firstName} {selectedStudent.lastName}
           </span>
         </h2>
+      )}
+      {selected && field && fieldQuestions && (
+        <TestsTable
+          studentTests={allTests[selected]}
+          fieldTests={field.tests}
+          questions={fieldQuestions}
+        />
       )}
       <PopupMessage
         warning
