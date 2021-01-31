@@ -31,8 +31,17 @@ const TestsTable: React.FC<ITestsTableProps> = ({
     [questions, fieldTests]
   );
 
+  const avg =
+    studentTests.map(getTestGrade).reduce((pre, cur) => pre + cur, 0) /
+    studentTests.length;
+
   return (
-    <div className={classes.table}>
+    <div className={classes.table + " " + classes.spread}>
+      <div className={classes.split}>
+        <span>Click a test to show its results</span>
+        <b>Average grade for a test: {avg}</b>
+      </div>
+
       <Table titles={titles}>
         {studentTests.map((t) => (
           <tr
