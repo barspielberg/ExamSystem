@@ -65,14 +65,6 @@ class OrganizationRepository {
     return dbQuestion;
   }
 
-  async getTests(orgId: string, fieldId: string) {
-    const organizations = await this.getAllOrganizations();
-    const organization = organizations.find(o => o.id === orgId);
-    const field = organization?.fields.find(f => f.id === fieldId);
-    const tests = field?.tests ? field.tests : null;
-    return tests;
-  }
-
   async putTest(orgId: string, fieldId: string, test: Test) {
     const organizations = await this.getAllOrganizations();
 

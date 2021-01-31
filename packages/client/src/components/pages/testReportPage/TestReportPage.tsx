@@ -2,7 +2,7 @@ import classes from "./TestReportPage.module.scss";
 import { Organization, Question, TakenTest, Test } from "@examsystem/common";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useParams } from "../../../hooks";
+import { useParams, useParamsFull } from "../../../hooks";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import TestReportForm from "./testReportForm/TestReportForm";
 import TestSummary from "./testSummary/TestSummary";
@@ -18,6 +18,7 @@ interface ITestReportPageProps {
 
 const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
+  const { field } = useParamsFull(organizations);
   const [tests, setTests] = useState<Test[]>();
   const [selectedTest, setSelectedTest] = useState<Test>();
   const [selectedTestQuestions, setselectedTestQuestions] = useState<
@@ -30,17 +31,12 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const [numofSub, setNumofSub] = useState(0);
 
   const history = useHistory();
+  useEffect(() => {
+      const fetchedTests = field?.tests;
+      setTests(fetchedTests);
+  }, [organizationId, fieldId,field]);
 
   useEffect(() => {
-    (async () => {
-      const fetchedTests = await dataService.getTests(organizationId, fieldId);
-      if (typeof fetchedTests !== "string") setTests(fetchedTests);
-      else console.log(fetchedTests);
-    })();
-  }, [organizationId, fieldId]);
-
-  useEffect(() => {
-    // #TODO fetch taken tests for selected test,use the test ID,need redux action
     (async () => {
       if (selectedTest) {
         const fetchedTakenTests = await dataService.getTakenTests(
@@ -59,11 +55,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       }
     })();
     // #TODO fetch questions of selected test move to questions statistics
-  }, [selectedTest, organizationId,organizations ,setTakenTests, setNumofSub]);
-
-  const field = organizations
-    ?.find((o) => o.id === organizationId)
-    ?.fields.find((f) => f.id === fieldId);
+  }, [selectedTest, organizationId, organizations, setTakenTests, setNumofSub]);
 
   return (
     <div className={classes.main}>
