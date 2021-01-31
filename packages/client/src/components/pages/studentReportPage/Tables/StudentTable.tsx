@@ -1,4 +1,4 @@
-import classes from "./StudentTable.module.scss";
+import classes from "./Table.module.scss";
 import { Student } from "@examsystem/common";
 import React from "react";
 import { Table } from "../../../uiElements";

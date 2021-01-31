@@ -1,5 +1,6 @@
-import { Question, TakenTest, Test } from "@examsystem/common";
 import React from "react";
+import classes from "./Table.module.scss";
+import { Question, TakenTest, Test } from "@examsystem/common";
 import { useCallback } from "react";
 import { calcGrade } from "../../../../services/examService";
 import { Table } from "../../../uiElements";
@@ -8,12 +9,16 @@ interface ITestsTableProps {
   studentTests: TakenTest[];
   questions: Question[];
   fieldTests: Test[];
+  selected: string;
+  setSelected: (id: string) => void;
 }
 const titles = ["Test ID", "Test Name", "Grade", "Date Submited"];
 const TestsTable: React.FC<ITestsTableProps> = ({
   studentTests,
   fieldTests,
   questions,
+  selected,
+  setSelected,
 }) => {
   const getTestGrade = useCallback(
     (studentTest: TakenTest) => {
@@ -27,10 +32,14 @@ const TestsTable: React.FC<ITestsTableProps> = ({
   );
 
   return (
-    <div>
+    <div className={classes.table}>
       <Table titles={titles}>
         {studentTests.map((t) => (
-          <tr key={t.id}>
+          <tr
+            key={t.id}
+            onClick={() => setSelected(t.id)}
+            aria-selected={t.id === selected}
+          >
             <td>{t.id}</td>
             <td>{t.title}</td>
             <td>{getTestGrade(t)}</td>

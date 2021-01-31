@@ -8,9 +8,9 @@ import { Header, PopupMessage, SearchFilter } from "../../uiElements";
 import { useState } from "react";
 import { useEffect } from "react";
 import examService from "../../../services/examService";
-import StudentTable from "./StudentTable/StudentTable";
+import StudentTable from "./Tables/StudentTable";
 import { useMemo } from "react";
-import TestsTable from "./TestsTable/TestsTable";
+import TestsTable from "./Tables/TestsTable";
 
 interface IStudentReportPageProps {
   organizations?: Organization[];
@@ -21,17 +21,18 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
 }) => {
   const { organization, field } = useParamsFull(organizations);
   const [err, setErr] = useState("");
-  const [selected, setSelected] = useState("");
+  const [selectedEmail, setSelectedEmail] = useState("");
+  const [selectedTest, setSelectedTest] = useState("");
   const [allTests, setAllTests] = useState<testsByEmail>({});
   const [allStudents, setAllStudents] = useState<Student[]>([]);
 
   const selectedStudent = useMemo(() => {
     try {
-      return allTests[selected][0].student;
+      return allTests[selectedEmail][0].student;
     } catch (error) {
       return undefined;
     }
-  }, [allTests, selected]);
+  }, [allTests, selectedEmail]);
   const fieldQuestions = useMemo(
     () =>
       organization?.questions.filter((q) => field?.questionIds.includes(q.id)),
@@ -60,7 +61,11 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
       <br />
       <h3>Find rspondent:</h3>
       Respondent name: <SearchFilter />
-      <StudentTable students={allStudents} {...{ selected, setSelected }} />
+      <StudentTable
+        students={allStudents}
+        selected={selectedEmail}
+        setSelected={setSelectedEmail}
+      />
       {selectedStudent && (
         <h2>
           Activity Report for:{" "}
@@ -69,11 +74,13 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
           </span>
         </h2>
       )}
-      {selected && field && fieldQuestions && (
+      {selectedEmail && field && fieldQuestions && (
         <TestsTable
-          studentTests={allTests[selected]}
+          studentTests={allTests[selectedEmail]}
           fieldTests={field.tests}
           questions={fieldQuestions}
+          selected={selectedTest}
+          setSelected={setSelectedTest}
         />
       )}
       <PopupMessage
