@@ -1,0 +1,30 @@
+.page {
+  max-width: 900px;
+  margin: auto;
+  & > :first-child {
+    font-size: 2rem;
+  }
+
+  .report {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    background-color: #8080805b;
+    grid-row-gap: 1px;
+    & > * {
+      background-color: white;
+      padding: 0.5rem;
+    }
+
+    label {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
+
+  .pass {
+    color: green;
+  }
+  .fail {
+    color: red;
+  }
+}

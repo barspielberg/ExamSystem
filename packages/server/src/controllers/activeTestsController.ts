@@ -22,10 +22,15 @@ class ActiveTestsController {
       );
 
       if (takenTest)
-        return res.status(200).json({
-          message: "Looks like you're already in the middle of a test",
-          test: takenTest,
-        });
+        if (!takenTest.submited)
+          return res.status(200).json({
+            message: "Looks like you're already in the middle of a test",
+            test: takenTest,
+          });
+        else
+          return res.status(401).json({
+            message: "Looks like you're already submited the test",
+          });
 
       const test = await organizationRepository.getTest(testId);
       if (!test)
@@ -86,6 +91,39 @@ class ActiveTestsController {
       return res
         .status(201)
         .json({ message: "Test updated successfully", test: dbTest });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "OOPS somwthing went wrong", error: error });
+    }
+  }
+
+  async putSubmitTest(req: Request, res: Response, next: NextFunction) {
+    const { test: t } = req.body;
+    const test = t as TakenTest;
+    if (!test) {
+      return res
+        .status(400)
+        .json({ message: "OOPS it seems like you are missing some inputs" });
+    }
+
+    try {
+      test.submited = true;
+      const dbStTest = await takenTestRepository.updateTest(test);
+      const dbOrigTest = await organizationRepository.getTest(test.testId);
+      const dbTestQuestions = dbOrigTest
+        ? await organizationRepository.getQuestionsByIds(dbOrigTest.questionIds)
+        : undefined;
+
+      if (!dbStTest || !dbOrigTest || !dbTestQuestions)
+        return res.status(410).json({ message: "Not found" });
+
+      return res.status(201).json({
+        message: "Test submited successfully",
+        studentTest: dbStTest,
+        originalTest: dbOrigTest,
+        questions: dbTestQuestions,
+      });
     } catch (error) {
       return res
         .status(500)

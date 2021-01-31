@@ -17,7 +17,7 @@ class DataService {
       );
       return res.data.admin;
     } catch (error) {
-      return error.response.data;
+      return error.response?.data || "The server is down";
     }
   }
 
@@ -34,7 +34,7 @@ class DataService {
       });
       return res.data.question;
     } catch (error) {
-      return error.response.data;
+      return error.response?.data || "The server is down";
     }
   }
 
@@ -51,7 +51,7 @@ class DataService {
       });
       return res.data.question;
     } catch (error) {
-      return error.response.data;
+      return error.response?.data || "The server is down";
     }
   }
 
@@ -99,7 +99,7 @@ class DataService {
 
       return res.data.test;
     } catch (error) {
-      return error.response.data;
+      return error.response?.data || "The server is down";
     }
   }
   async postTest(
@@ -115,7 +115,7 @@ class DataService {
 
       return res.data.test;
     } catch (error) {
-      return error.response.data;
+      return error.response?.data || "The server is down";
     }
   }
 }
