@@ -30,11 +30,10 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
 }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    
   };
 
   return (
-    <section>
+    <section className={classes.section}>
       <form className={classes.inputs} onSubmit={handleSubmit}>
         <div className={classes.parent}>
           <div className={classes.div1}>
