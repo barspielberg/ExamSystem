@@ -1,4 +1,4 @@
-import { AnsweredQuestion, TakenTest, Test } from "@examsystem/common";
+import {  TakenTest, Test } from "@examsystem/common";
 import React from "react";
 
 interface ITableRowRespondentProps {
@@ -10,11 +10,11 @@ const TableRowRespondent: React.FC<ITableRowRespondentProps> = ({
   takenTests,
   originalTest,
 }) => {
-  const notEmpty = !!takenTests && takenTests.length > 0;
+  // const notEmpty = !!takenTests && takenTests.length > 0;
 
-  const calculateGrade = (questinsAnswered: AnsweredQuestion[]) => {
-    return 8;
-  };
+  // const calculateGrade = (questinsAnswered: AnsweredQuestion[]) => {
+  //   return 8;
+  // };
 
   return (
     <React.Fragment>

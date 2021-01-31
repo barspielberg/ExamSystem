@@ -1,7 +1,7 @@
 import classes from "./TestSummary.module.scss";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { Question, TakenTest, Test } from "@examsystem/common";
-import { calcGrade } from "../../../../services/examService";
+// import { calcGrade } from "../../../../services/examService";
 
 interface ITestSummaryProps {
   selectedTest: Test | undefined;
@@ -20,20 +20,25 @@ const TestSummary: React.FC<ITestSummaryProps> = ({
   dateTo,
   numofSub,
 }) => {
-  const [numofPassed, setNumofPassed] = useState(0);
-  const [avgGrade, setAvgGrade] = useState(0);
+  const [numofPassed, 
+    // setNumofPassed
+  ] = useState(0);
+  const [avgGrade,
+    //  setAvgGrade
+    ] = useState(0);
 
-  useEffect(() => {
-    let sumofgrades = 0;
-    if (selectedTestQuestions && selectedTest)
-      takenTests?.map((tt) => {
-        const { grade } = calcGrade(tt, selectedTestQuestions);
-        sumofgrades += grade;
-        if (grade >= selectedTest?.passingGrade)
-          setNumofPassed(numofPassed + 1);
-      });
-    setAvgGrade(sumofgrades / numofSub);
-  }, [selectedTest]);
+  // useEffect(() => {
+  //   let sumofgrades = 0;
+  //   if (selectedTestQuestions && selectedTest)
+  //     takenTests?.map((tt) => {
+  //       const { grade } = calcGrade(tt, selectedTestQuestions);
+  //       sumofgrades += grade;
+  //       if (grade >= selectedTest?.passingGrade)
+  //         console.log('mich');
+  //         setNumofPassed((n) => n + 1);
+  //     });
+  //   setAvgGrade(sumofgrades / numofSub);
+  // }, [selectedTest]);
 
   return (
     <div className={classes.main}>

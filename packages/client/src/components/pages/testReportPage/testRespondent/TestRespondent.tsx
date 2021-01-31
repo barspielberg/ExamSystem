@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./TestRespondent.module.scss";
-import { Button, Table } from "../../../uiElements";
+import { Table } from "../../../uiElements";
 import { TakenTest, Test } from "@examsystem/common";
 import TableRowRespondent from "./TableRowRespondent";
 

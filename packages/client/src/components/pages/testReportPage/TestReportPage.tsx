@@ -37,7 +37,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       if (typeof fetchedTests !== "string") setTests(fetchedTests);
       else console.log(fetchedTests);
     })();
-  }, []);
+  }, [organizationId, fieldId]);
 
   useEffect(() => {
     // #TODO fetch taken tests for selected test,use the test ID,need redux action
@@ -59,7 +59,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       }
     })();
     // #TODO fetch questions of selected test move to questions statistics
-  }, [selectedTest]);
+  }, [selectedTest, organizationId,organizations ,setTakenTests, setNumofSub]);
 
   const field = organizations
     ?.find((o) => o.id === organizationId)

@@ -8,7 +8,7 @@ interface IQuestionStatisticsRowProps {
 const QuestionStatisticsRow: React.FC<IQuestionStatisticsRowProps> = ({
   questions,
 }) => {
-  const notEmpty = !!questions && questions.length > 0;
+  // const notEmpty = !!questions && questions.length > 0;
 
   return (
     <React.Fragment>

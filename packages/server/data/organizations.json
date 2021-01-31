@@ -200,7 +200,7 @@
               "introduction": "wooooow! ye!!",
               "testerEmail": "bar@bar.com",
               "failMessage": "Fail!!",
-              "passingGrade": 66,
+              "passingGrade": 20,
               "reviewAnswers": false,
               "successMessage": "Success!!",
               "questionIds": [
