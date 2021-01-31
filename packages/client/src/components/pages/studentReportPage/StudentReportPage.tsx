@@ -8,6 +8,8 @@ import { Header, PopupMessage, SearchFilter } from "../../uiElements";
 import { useState } from "react";
 import { useEffect } from "react";
 import examService from "../../../services/examService";
+import StudentTable from "./StudentTable/StudentTable";
+import { useMemo } from "react";
 
 interface IStudentReportPageProps {
   organizations?: Organization[];
@@ -18,8 +20,17 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
 }) => {
   const { organization, field } = useParamsFull(organizations);
   const [err, setErr] = useState("");
+  const [selected, setSelected] = useState("");
   const [allTests, setAllTests] = useState<testsByEmail>({});
   const [allStudents, setAllStudents] = useState<Student[]>([]);
+
+  const selectedStudent = useMemo(() => {
+    try {
+      return allTests[selected][0].student;
+    } catch (error) {
+      return undefined;
+    }
+  }, [allTests, selected]);
   useEffect(() => {
     examService.getAll().then((res) => {
       if (isString(res)) setErr(res);
@@ -33,8 +44,6 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
     setAllStudents(students);
   }, [allTests, setAllStudents]);
 
-  useEffect(() => console.log(allStudents), [allStudents]);
-
   return (
     <div className={classes.page}>
       <Header>
@@ -45,6 +54,15 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
       <br />
       <h3>Find rspondent:</h3>
       Respondent name: <SearchFilter />
+      <StudentTable students={allStudents} {...{ selected, setSelected }} />
+      {selectedStudent && (
+        <h2>
+          Activity Report for:{" "}
+          <span className={classes.name}>
+            {selectedStudent.firstName} {selectedStudent.lastName}
+          </span>
+        </h2>
+      )}
       <PopupMessage
         warning
         title="Error"

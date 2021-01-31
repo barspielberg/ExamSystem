@@ -1,0 +1,9 @@
+.table {
+  margin: 1rem 2rem;
+  [aria-selected="true"] {
+    background-color: rgba(2, 173, 2, 0.356) !important;
+  }
+  tr {
+    cursor: pointer;
+  }
+}
