@@ -57,7 +57,16 @@ class ExamService {
     }
   }
 
-
+  async getAll(): Promise<TakenTest[] | string> {
+    try {
+      const res = await server.get<null, getAllResponse>("/");
+      const { message, tests } = res.data;
+      if (tests) return tests;
+      else return message;
+    } catch (error) {
+      return error.response?.data || "The server is down";
+    }
+  }
 }
 
 export default new ExamService();
@@ -71,6 +80,12 @@ type putData = {
 };
 type response = AxiosResponse<{
   test?: TakenTest;
+  message: string;
+  error?: any;
+}>;
+
+type getAllResponse = AxiosResponse<{
+  tests?: TakenTest[];
   message: string;
   error?: any;
 }>;

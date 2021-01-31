@@ -130,6 +130,17 @@ class ActiveTestsController {
         .json({ message: "OOPS somwthing went wrong", error: error });
     }
   }
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const tests = await takenTestRepository.getAll();
+      if (tests) return res.status(200).json({ message: "OK", tests });
+      else return res.status(410).json({ message: "Not found" });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "OOPS somwthing went wrong", error: error });
+    }
+  }
 }
 
 export default new ActiveTestsController();
