@@ -1,5 +1,5 @@
 import classes from "./TestReportPage.module.scss";
-import { Organization, TakenTest, Test } from "@examsystem/common";
+import { Organization, Question, TakenTest, Test } from "@examsystem/common";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useParams } from "../../../hooks";
@@ -20,10 +20,15 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
   const [tests, setTests] = useState<Test[]>();
   const [selectedTest, setSelectedTest] = useState<Test>();
+  const [selectedTestQuestions, setselectedTestQuestions] = useState<
+    Question[] | undefined
+  >([]);
   const [takenTests, setTakenTests] = useState<TakenTest[]>();
   const [anyDate, setAnyDate] = useState<boolean>(false);
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
+  const [numofSub, setNumofSub] = useState(0);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -32,16 +37,29 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       if (typeof fetchedTests !== "string") setTests(fetchedTests);
       else console.log(fetchedTests);
     })();
-  }, []);
+  }, [organizationId, fieldId]);
 
   useEffect(() => {
     // #TODO fetch taken tests for selected test,use the test ID,need redux action
+    (async () => {
+      if (selectedTest) {
+        const fetchedTakenTests = await dataService.getTakenTests(
+          selectedTest?.id
+        );
+        if (typeof fetchedTakenTests !== "string") {
+          setTakenTests(fetchedTakenTests);
+          setNumofSub(fetchedTakenTests.length);
+        }
+
+        setselectedTestQuestions(
+          organizations
+            ?.find((o) => o.id === organizationId)
+            ?.questions.filter((q) => !selectedTest.questionIds.includes(q.id))
+        );
+      }
+    })();
     // #TODO fetch questions of selected test move to questions statistics
-  }, [selectedTest]);
-
-  const generateReport = (selectedTest: Test,dateFrom: any,dateTo: any) => {
-
-  }
+  }, [selectedTest, organizationId,organizations ,setTakenTests, setNumofSub]);
 
   const field = organizations
     ?.find((o) => o.id === organizationId)
@@ -58,6 +76,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         dateFrom={dateFrom}
         dateTo={dateTo}
         anyDate={anyDate}
+        selectedTest={selectedTest}
         setSelectedTest={setSelectedTest}
         setDateFrom={setDateFrom}
         setDateTo={setDateTo}
@@ -67,8 +86,11 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       {/* Report */}
       <TestSummary
         selectedTest={selectedTest}
+        takenTests={takenTests}
         dateFrom={dateFrom}
         dateTo={dateTo}
+        numofSub={numofSub}
+        selectedTestQuestions={selectedTestQuestions}
       />
       <TestRespondent takenTests={takenTests} originalTest={selectedTest} />
       <QuestionStatistics questions={[]} />

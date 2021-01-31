@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import organizationRepository from "../Dal/organizationRepository";
+import takenTestRepository from "../Dal/takenTestRepository";
 
 class TestsController {
   async getTests(req: Request, res: Response, next: NextFunction) {
@@ -22,6 +23,29 @@ class TestsController {
       return res
         .status(500)
         .json({ message: "OOPS somwthing went wrong while fetching tests", error });
+    }
+  }
+
+  async getTakenTests(req: Request, res: Response, next: NextFunction) {
+    const { testId } = req.query;
+
+    const testIdSt = testId?.toString();
+    if (!testIdSt)
+      return res
+        .status(400)
+        .json({ message: "OOPS fetching taken tests failed" });
+
+    try {
+      const takenTests = await takenTestRepository.getTakenTests(testIdSt);
+      if (takenTests)
+        return res
+          .status(200)
+          .json({ message: "Taken Test fetched successfully", takenTests });
+      else res.status(410).json({ message: "Taken Tests not found" });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: "OOPS somwthing went wrong while fetching taken tests", error });
     }
   }
 
