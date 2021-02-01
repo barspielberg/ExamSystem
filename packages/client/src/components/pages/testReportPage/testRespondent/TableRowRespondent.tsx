@@ -1,4 +1,4 @@
-import { Question, TakenTest, Test } from "@examsystem/common";
+import { Question, TakenTest } from "@examsystem/common";
 import React, { useEffect, useState } from "react";
 import { calcGrade } from "../../../../services/examService";
 

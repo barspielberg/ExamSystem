@@ -1,19 +1,21 @@
-import { AnsweredQuestion } from "@examsystem/common";
+import { Question, TakenTest } from "@examsystem/common";
 import React from "react";
 
 interface IQuestionStatisticsRowProps {
-  questions: AnsweredQuestion[];
+  questions: Question[] | undefined;
+  takenTests: TakenTest[] | undefined;
 }
 
 const QuestionStatisticsRow: React.FC<IQuestionStatisticsRowProps> = ({
   questions,
+  takenTests,
 }) => {
   // const notEmpty = !!questions && questions.length > 0;
 
   return (
     <React.Fragment>
       {/* {notEmpty &&
-        questions?.map((question) => {
+        questions?.map((question) => [
           <tr>
             <td>{question.id}</td>
             <td>
@@ -22,7 +24,7 @@ const QuestionStatisticsRow: React.FC<IQuestionStatisticsRowProps> = ({
             <td>{#TODO get number of question submitions}</td>
             <td>{#TODO Aswered correctly %}</td>
           </tr>;
-        })} */}
+        ])} */}
       {/* test purpose only  */}
       <tr>
         <td>7</td>

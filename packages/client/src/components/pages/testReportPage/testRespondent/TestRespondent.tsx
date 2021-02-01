@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import classes from "./TestRespondent.module.scss";
 import { Table } from "../../../uiElements";
-import { Question, TakenTest, Test } from "@examsystem/common";
+import { Question, TakenTest } from "@examsystem/common";
 import TableRowRespondent from "./TableRowRespondent";
 
 interface ITestRespondentProps {

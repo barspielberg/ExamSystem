@@ -95,7 +95,6 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         setAnyDate={setAnyDate}
         goBack={history.goBack}
       />
-      {/* Report */}
       <TestSummary
         selectedTest={selectedTest}
         takenTests={takenTests}
@@ -107,7 +106,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         setTakenTests={setTakenTests}
       />
       <TestRespondent takenTests={takenTests} selectedTestQuestions={selectedTestQuestions}/>
-      <QuestionStatistics questions={[]} />
+      <QuestionStatistics questions={selectedTestQuestions} takenTests={takenTests} />
       <Button onClick={() => history.goBack()}>« Back</Button>
     </div>
   );

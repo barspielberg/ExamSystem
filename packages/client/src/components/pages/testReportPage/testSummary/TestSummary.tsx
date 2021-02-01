@@ -127,7 +127,7 @@ const calcMedian = (arr: number[]): number => {
   const arrSort = arr.sort();
   const mid = Math.ceil(arrSort.length / 2);
 
-  return arrSort.length % 2 == 0
+  return arrSort.length % 2 === 0
     ? (arrSort[mid] + arrSort[mid - 1]) / 2
     : arrSort[mid - 1];
 };
