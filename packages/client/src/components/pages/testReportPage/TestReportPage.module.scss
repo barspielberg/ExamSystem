@@ -4,6 +4,11 @@
   max-width: 800px;
   margin: auto;
 
+  
+  .fieldTitle{
+    color: $primary;
+  }
+
   section {
     background-color: $dark_row;
     padding: 1rem 2rem;
