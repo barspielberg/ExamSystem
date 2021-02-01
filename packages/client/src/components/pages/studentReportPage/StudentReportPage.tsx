@@ -61,7 +61,7 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
       <h3>Organization: {organization?.name}</h3>
       <h3>Field Of Study: {field?.title}</h3>
       <br />
-      <h3>Find rspondent:</h3>
+      <h3>Find respondent:</h3>
       Respondent name:{" "}
       <SearchFilter
         originalStudents={allStudents}
