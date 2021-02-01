@@ -9,7 +9,9 @@ interface ITestSummaryProps {
   takenTests: TakenTest[] | undefined;
   dateFrom: string;
   dateTo: string;
+  anyDate: boolean;
   numofSub: number;
+  setTakenTests: any;
 }
 
 const TestSummary: React.FC<ITestSummaryProps> = ({
@@ -18,37 +20,42 @@ const TestSummary: React.FC<ITestSummaryProps> = ({
   takenTests,
   dateFrom,
   dateTo,
+  anyDate,
   numofSub,
+  setTakenTests,
 }) => {
   const [numofPassed, setNumofPassed] = useState(0);
   const [avgGrade, setAvgGrade] = useState(0);
   const [medianGrade, setMedianGrade] = useState(0);
 
+  // useEffect(() => {
+  //   if (takenTests && dateFrom && dateTo && !anyDate) {
+  //     setTakenTests(
+  //       takenTests?.map(
+  //         (tt) =>
+  //           new Date(tt.dateSubmitted) > new Date(dateFrom) &&
+  //           new Date(tt.dateSubmitted) < new Date(dateFrom) &&
+  //           tt
+  //       )
+  //     );
+  //   } else {
+  //     setTakenTests(takenTests);
+  //   }
+  // }, [dateTo, dateFrom, anyDate, takenTests,selectedTest]);
+
   useEffect(() => {
-    //   let sumofgrades = 0;
-    //   if (selectedTestQuestions && selectedTest)
-    //     takenTests?.map((tt) => {
-    //       const { grade } = calcGrade(tt, selectedTestQuestions);
-    //       sumofgrades += grade;
-    //       if (grade >= selectedTest?.passingGrade)
-    //         console.log('mich');
-    //         setNumofPassed((n) => n + 1);
-    //     });
-    //   setAvgGrade(sumofgrades / numofSub);
     if (
       selectedTest &&
       takenTests &&
       takenTests.length > 0 &&
-      selectedTestQuestions
+      selectedTestQuestions &&
+      selectedTestQuestions?.length > 0
     ) {
       const { numofPassed, average, median } = calulateStatistics(
         takenTests,
         selectedTest,
         selectedTestQuestions
       );
-      // console.log(numofPassed);
-      // console.log(average);
-      // console.log(median);
       setNumofPassed(numofPassed);
       setAvgGrade(average);
       setMedianGrade(median);
@@ -61,7 +68,6 @@ const TestSummary: React.FC<ITestSummaryProps> = ({
 
   return (
     <div className={classes.main}>
-      {/* #TODO change to test.title after bar merges*/}
       <h1>
         Test Report:{" "}
         <span className={classes.fieldTitle}>{selectedTest?.title}</span>
@@ -96,9 +102,7 @@ const TestSummary: React.FC<ITestSummaryProps> = ({
           </div>
           <div className={classes.div8}>
             Passing Percentage:{" "}
-            <strong>
-              {numofPassed && (numofPassed / numofSub) * 100}
-            </strong>
+            <strong>{numofPassed && (numofPassed / numofSub) * 100}</strong>
           </div>
           <div className={classes.div9}>
             Average Grade: <strong>{avgGrade}</strong>
@@ -129,8 +133,6 @@ const calulateStatistics = (
 
     return prev;
   }, takenTests);
-  // console.log(passed);
-  // console.log(grades);
   const avg = grades.reduce((sum, val) => (sum += val)) / takenTests.length;
   const median = calcMedian(grades);
   return { numofPassed: passed, average: avg, median: median };

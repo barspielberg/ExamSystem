@@ -14,23 +14,7 @@
       margin: 0.5rem 0;
     }
 
-    label {
-      text-align: end;
-      padding-inline-end: 1rem;
-      user-select: none;
-    }
     
-    input {
-      font: inherit;
-      max-width: 15rem;
-      border-radius: 5px;
-      border-width: 1px;
-      border-color: $grey;
-      &:focus {
-        outline: none;
-      }
-    }
-
     .select {
   $grey: #cecece;
   border: 1px solid $grey;
@@ -42,30 +26,14 @@
     outline-style: none;
   }
 }
-  }
+}
 
-  .btns {
-    display: flex;
-    margin-top: 0.5rem;
-    .filler {
-      flex: 1;
-    }
-  }
-
-  .fieldTitle{
-    color: $primary;
-  }
-
-  section {
+.section {
     background-color: $dark_row;
     padding: 1rem 2rem;
-  }
+}
 
-  .clickable {
-    cursor: pointer;
-  }
-
-  .parent {
+.parent {
 display: grid;
 grid-template-columns: repeat(4, 1fr);
 grid-template-rows: repeat(5, 1fr);

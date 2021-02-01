@@ -30,11 +30,18 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
 }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    
   };
 
+  // const handleSelectTest = (e: { target: { value: string; }; }) => {
+  //   if (dateFrom && dateTo && !anyDate) {
+  //     setSelectedTest(tests?.find((t) => t.id === e.target.value));
+  //   } else if (anyDate) {
+  //     setSelectedTest(tests?.find((t) => t.id === e.target.value));
+  //   }
+  // };
+
   return (
-    <section>
+    <section className={classes.section}>
       <form className={classes.inputs} onSubmit={handleSubmit}>
         <div className={classes.parent}>
           <div className={classes.div1}>

@@ -81,8 +81,10 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         takenTests={takenTests}
         dateFrom={dateFrom}
         dateTo={dateTo}
+        anyDate={anyDate}
         numofSub={numofSub}
         selectedTestQuestions={selectedTestQuestions}
+        setTakenTests={setTakenTests}
       />
       <TestRespondent takenTests={takenTests} originalTest={selectedTest} />
       <QuestionStatistics questions={[]} />
