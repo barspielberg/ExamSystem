@@ -25,16 +25,16 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
     Question[] | undefined
   >([]);
   const [takenTests, setTakenTests] = useState<TakenTest[]>();
-  const [anyDate, setAnyDate] = useState<boolean>(false);
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
+  const [anyDate, setAnyDate] = useState<boolean>(!(dateFrom && dateTo));
   const [numofSub, setNumofSub] = useState(0);
 
   const history = useHistory();
   useEffect(() => {
-      const fetchedTests = field?.tests;
-      setTests(fetchedTests);
-  }, [organizationId, fieldId,field]);
+    const fetchedTests = field?.tests;
+    setTests(fetchedTests);
+  }, [organizationId, fieldId, field]);
 
   useEffect(() => {
     (async () => {
@@ -43,7 +43,17 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
           selectedTest?.id
         );
         if (typeof fetchedTakenTests !== "string") {
-          setTakenTests(fetchedTakenTests);
+          if (anyDate) setTakenTests(fetchedTakenTests);
+          else if (dateFrom && dateTo && !anyDate) {
+            //#TODO fix date filtering
+            const filteredByDateTakenTests = fetchedTakenTests.filter(
+              (tt) =>
+                new Date(tt.dateSubmitted) >= new Date(dateFrom) &&
+                new Date(tt.dateSubmitted) <= new Date(dateTo)
+            );
+            console.log(filteredByDateTakenTests);
+            setTakenTests(filteredByDateTakenTests);
+          }
           setNumofSub(fetchedTakenTests.length);
         }
 
@@ -55,7 +65,17 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       }
     })();
     // #TODO fetch questions of selected test move to questions statistics
-  }, [selectedTest, organizationId, organizations, setTakenTests, setNumofSub]);
+  }, [
+    selectedTest,
+    organizationId,
+    organizations,
+    setTakenTests,
+    setNumofSub,
+    setselectedTestQuestions,
+    dateFrom,
+    dateTo,
+    anyDate,
+  ]);
 
   return (
     <div className={classes.main}>
@@ -86,7 +106,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         selectedTestQuestions={selectedTestQuestions}
         setTakenTests={setTakenTests}
       />
-      <TestRespondent takenTests={takenTests} originalTest={selectedTest} />
+      <TestRespondent takenTests={takenTests} selectedTestQuestions={selectedTestQuestions}/>
       <QuestionStatistics questions={[]} />
       <Button onClick={() => history.goBack()}>« Back</Button>
     </div>

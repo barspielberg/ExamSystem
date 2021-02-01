@@ -28,21 +28,6 @@ const TestSummary: React.FC<ITestSummaryProps> = ({
   const [avgGrade, setAvgGrade] = useState(0);
   const [medianGrade, setMedianGrade] = useState(0);
 
-  // useEffect(() => {
-  //   if (takenTests && dateFrom && dateTo && !anyDate) {
-  //     setTakenTests(
-  //       takenTests?.map(
-  //         (tt) =>
-  //           new Date(tt.dateSubmitted) > new Date(dateFrom) &&
-  //           new Date(tt.dateSubmitted) < new Date(dateFrom) &&
-  //           tt
-  //       )
-  //     );
-  //   } else {
-  //     setTakenTests(takenTests);
-  //   }
-  // }, [dateTo, dateFrom, anyDate, takenTests,selectedTest]);
-
   useEffect(() => {
     if (
       selectedTest &&
@@ -102,7 +87,7 @@ const TestSummary: React.FC<ITestSummaryProps> = ({
           </div>
           <div className={classes.div8}>
             Passing Percentage:{" "}
-            <strong>{numofPassed && (numofPassed / numofSub) * 100}</strong>
+            <strong>{numofPassed && (numofPassed / numofSub) * 100}%</strong>
           </div>
           <div className={classes.div9}>
             Average Grade: <strong>{avgGrade}</strong>
