@@ -2,6 +2,7 @@ import classes from "./TestResults.module.scss";
 import { Question, TakenTest } from "@examsystem/common";
 import React from "react";
 import { calcGrade } from "../../../../services/examService";
+import Details from "./Details/Details";
 
 interface ITestResultsProps {
   test: TakenTest;
@@ -57,12 +58,12 @@ const TestResults: React.FC<ITestResultsProps> = ({
         <div>
           Final Grade: <b>{grade}</b>
         </div>
-
         <div>
           Status: <b>{grade >= passingGrade ? "Passed" : "Fail"}</b>
         </div>
       </div>
-      <h3>Details</h3>
+      <br />
+      <Details test={test} answers={answers} />
     </div>
   );
 };

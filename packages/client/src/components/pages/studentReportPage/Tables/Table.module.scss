@@ -6,8 +6,10 @@
   [aria-selected="true"] {
     background-color: rgba(2, 173, 2, 0.356) !important;
   }
-  tr {
-    cursor: pointer;
+  tbody {
+    tr {
+      cursor: pointer;
+    }
   }
 }
 .split {
