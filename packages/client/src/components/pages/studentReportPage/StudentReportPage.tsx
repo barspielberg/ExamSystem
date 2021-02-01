@@ -26,6 +26,7 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
   const [selectedTest, setSelectedTest] = useState<TakenTest>();
   const [allTests, setAllTests] = useState<testsByEmail>({});
   const [allStudents, setAllStudents] = useState<Student[]>([]);
+  const [filterdStudents, setFilterdStudents] = useState<Student[]>([]);
 
   const fieldQuestions = useMemo(
     () =>
@@ -61,9 +62,13 @@ const StudentReportPage: React.FC<IStudentReportPageProps> = ({
       <h3>Field Of Study: {field?.title}</h3>
       <br />
       <h3>Find rspondent:</h3>
-      Respondent name: <SearchFilter />
+      Respondent name:{" "}
+      <SearchFilter
+        originalStudents={allStudents}
+        onStudentsChange={setFilterdStudents}
+      />
       <StudentTable
-        students={allStudents}
+        students={filterdStudents}
         selected={selectedStudent}
         setSelected={setSelectedStudent}
       />
