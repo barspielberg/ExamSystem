@@ -57,7 +57,16 @@ class ExamService {
     }
   }
 
-
+  async getAll(): Promise<TakenTest[] | string> {
+    try {
+      const res = await server.get<null, getAllResponse>("/");
+      const { message, tests } = res.data;
+      if (tests) return tests;
+      else return message;
+    } catch (error) {
+      return error.response?.data || "The server is down";
+    }
+  }
 }
 
 export default new ExamService();
@@ -71,6 +80,12 @@ type putData = {
 };
 type response = AxiosResponse<{
   test?: TakenTest;
+  message: string;
+  error?: any;
+}>;
+
+type getAllResponse = AxiosResponse<{
+  tests?: TakenTest[];
   message: string;
   error?: any;
 }>;
@@ -89,17 +104,17 @@ type submitResponse = AxiosResponse<{
   error?: any;
 }>;
 
-export const calcGrade = (studentTest: TakenTest, questions: Question[]) => {
-  const numOfCurrect = getNumOfCorrectQuestions(studentTest, questions);
-  const grade = (numOfCurrect / questions.length) * 100;
+export const calcGrade = (studentTest: TakenTest, answers: Question[]) => {
+  const numOfCurrect = getNumOfCorrectAnswers(studentTest, answers);
+  const grade = (numOfCurrect / answers.length) * 100;
   return { grade, numOfCurrect };
 };
 
-const getNumOfCorrectQuestions = (
+const getNumOfCorrectAnswers = (
   studentTest: TakenTest,
-  questions: Question[]
+  answers: Question[]
 ) => {
-  return questions.reduce((pre, cur) => {
+  return answers.reduce((pre, cur) => {
     const answersId = studentTest.questions
       .find((q) => q.oringinalQuestionId === cur.id)
       ?.possibleAnswers.filter((a) => a.correct)
