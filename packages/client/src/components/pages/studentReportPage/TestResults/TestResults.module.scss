@@ -1,0 +1,10 @@
+@import "styles/colors";
+
+.orenge {
+  color: $primary;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem;
+}

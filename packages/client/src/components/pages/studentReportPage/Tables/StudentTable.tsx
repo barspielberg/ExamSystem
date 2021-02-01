@@ -5,8 +5,8 @@ import { Table } from "../../../uiElements";
 
 interface IStudentTableProps {
   students: Student[];
-  setSelected: (email: string) => void;
-  selected: string;
+  setSelected: (student: Student) => void;
+  selected?: Student;
 }
 const titles = ["First Name", "Last Name", "Email"];
 const StudentTable: React.FC<IStudentTableProps> = ({
@@ -20,8 +20,8 @@ const StudentTable: React.FC<IStudentTableProps> = ({
         {students.map((s) => (
           <tr
             key={s.email}
-            onClick={() => setSelected(s.email)}
-            aria-selected={s.email === selected}
+            onClick={() => setSelected(s)}
+            aria-selected={s.email === selected?.email}
           >
             <td>{s.firstName}</td>
             <td>{s.lastName}</td>
