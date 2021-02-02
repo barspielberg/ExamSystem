@@ -2,7 +2,7 @@ import classes from "./TestReportPage.module.scss";
 import { Organization, Question, TakenTest, Test } from "@examsystem/common";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useParams } from "../../../hooks";
+import { useParams, useParamsFull } from "../../../hooks";
 import { RootState } from "../../../redux/reducers/mainReducer";
 import TestReportForm from "./testReportForm/TestReportForm";
 import TestSummary from "./testSummary/TestSummary";
@@ -18,36 +18,42 @@ interface ITestReportPageProps {
 
 const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   const { organizationId, fieldId } = useParams();
+  const { field } = useParamsFull(organizations);
   const [tests, setTests] = useState<Test[]>();
   const [selectedTest, setSelectedTest] = useState<Test>();
   const [selectedTestQuestions, setselectedTestQuestions] = useState<
     Question[] | undefined
   >([]);
   const [takenTests, setTakenTests] = useState<TakenTest[]>();
-  const [anyDate, setAnyDate] = useState<boolean>(false);
   const [dateFrom, setDateFrom] = useState<string>("");
   const [dateTo, setDateTo] = useState<string>("");
+  const [anyDate, setAnyDate] = useState<boolean>(!(dateFrom && dateTo));
   const [numofSub, setNumofSub] = useState(0);
 
   const history = useHistory();
+  useEffect(() => {
+    const fetchedTests = field?.tests;
+    setTests(fetchedTests);
+  }, [organizationId, fieldId, field]);
 
   useEffect(() => {
-    (async () => {
-      const fetchedTests = await dataService.getTests(organizationId, fieldId);
-      if (typeof fetchedTests !== "string") setTests(fetchedTests);
-      else console.log(fetchedTests);
-    })();
-  }, [organizationId, fieldId]);
-
-  useEffect(() => {
-    // #TODO fetch taken tests for selected test,use the test ID,need redux action
     (async () => {
       if (selectedTest) {
         const fetchedTakenTests = await dataService.getTakenTests(
           selectedTest?.id
         );
         if (typeof fetchedTakenTests !== "string") {
-          setTakenTests(fetchedTakenTests);
+          if (anyDate) setTakenTests(fetchedTakenTests);
+          else if (dateFrom && dateTo && !anyDate) {
+            //#TODO fix date filtering
+            const filteredByDateTakenTests = fetchedTakenTests.filter(
+              (tt) =>
+                new Date(tt.dateSubmitted) >= new Date(dateFrom) &&
+                new Date(tt.dateSubmitted) <= new Date(dateTo)
+            );
+            console.log(filteredByDateTakenTests);
+            setTakenTests(filteredByDateTakenTests);
+          }
           setNumofSub(fetchedTakenTests.length);
         }
 
@@ -59,11 +65,17 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
       }
     })();
     // #TODO fetch questions of selected test move to questions statistics
-  }, [selectedTest, organizationId,organizations ,setTakenTests, setNumofSub]);
-
-  const field = organizations
-    ?.find((o) => o.id === organizationId)
-    ?.fields.find((f) => f.id === fieldId);
+  }, [
+    selectedTest,
+    organizationId,
+    organizations,
+    setTakenTests,
+    setNumofSub,
+    setselectedTestQuestions,
+    dateFrom,
+    dateTo,
+    anyDate,
+  ]);
 
   return (
     <div className={classes.main}>
@@ -83,17 +95,18 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         setAnyDate={setAnyDate}
         goBack={history.goBack}
       />
-      {/* Report */}
       <TestSummary
         selectedTest={selectedTest}
         takenTests={takenTests}
         dateFrom={dateFrom}
         dateTo={dateTo}
+        anyDate={anyDate}
         numofSub={numofSub}
         selectedTestQuestions={selectedTestQuestions}
+        setTakenTests={setTakenTests}
       />
-      <TestRespondent takenTests={takenTests} originalTest={selectedTest} />
-      <QuestionStatistics questions={[]} />
+      <TestRespondent takenTests={takenTests} selectedTestQuestions={selectedTestQuestions}/>
+      <QuestionStatistics questions={selectedTestQuestions} takenTests={takenTests} />
       <Button onClick={() => history.goBack()}>« Back</Button>
     </div>
   );

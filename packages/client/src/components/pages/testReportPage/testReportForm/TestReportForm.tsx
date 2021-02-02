@@ -87,12 +87,6 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
             />
             <label> Any Date In The Past</label>
           </div>
-          <div className={classes.div8}>
-            <Button onClick={goBack}>« Back</Button>{" "}
-          </div>
-          <div className={classes.div9}>
-            <Button submit>Generate Report</Button>{" "}
-          </div>
         </div>
       </form>
     </section>

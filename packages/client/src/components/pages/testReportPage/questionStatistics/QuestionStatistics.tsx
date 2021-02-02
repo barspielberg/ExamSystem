@@ -1,20 +1,21 @@
 import classes from "./QuestionStatistics.module.scss";
 import React from "react";
 import { SearchFilter, Table } from "../../../uiElements";
-import { AnsweredQuestion } from "@examsystem/common";
+import { Question, TakenTest } from "@examsystem/common";
 import QuestionStatisticsRow from "./QuestionStatisticsRow";
 
 interface IQuestionStatisticsProps {
-  questions:AnsweredQuestion[];
+  questions:Question[] | undefined;
+  takenTests: TakenTest[] | undefined;
 }
 
 const QuestionStatistics: React.FC<IQuestionStatisticsProps> = ({
-  questions
+  questions,
+  takenTests
 }) => {
   const titles = [
     "ID",
     "Question",
-    "Number of Submissions",
     "% Answered Correctly",
   ];
 
@@ -25,7 +26,7 @@ const QuestionStatistics: React.FC<IQuestionStatisticsProps> = ({
       <span>Filter by tags or content: </span>
       <SearchFilter />
       <Table titles={titles}>
-        <QuestionStatisticsRow questions={questions}/>
+        <QuestionStatisticsRow questions={questions} takenTests={takenTests}/>
       </Table>
     </div>
   );

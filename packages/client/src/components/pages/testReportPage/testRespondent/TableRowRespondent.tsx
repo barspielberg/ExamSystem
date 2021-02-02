@@ -1,47 +1,59 @@
-import {  TakenTest, Test } from "@examsystem/common";
-import React from "react";
+import { Question, TakenTest } from "@examsystem/common";
+import React, { useEffect, useState } from "react";
+import { calcGrade } from "../../../../services/examService";
 
 interface ITableRowRespondentProps {
   takenTests: TakenTest[] | undefined;
-  originalTest: Test | undefined;
+  selectedTestQuestions: Question[] | undefined;
 }
 
 const TableRowRespondent: React.FC<ITableRowRespondentProps> = ({
   takenTests,
-  originalTest,
+  selectedTestQuestions,
 }) => {
-  // const notEmpty = !!takenTests && takenTests.length > 0;
+  const [notEmpty, setNotEmpty] = useState(false);
+  const [respondents, setRespondents] = useState<Respondent[]>();
 
-  // const calculateGrade = (questinsAnswered: AnsweredQuestion[]) => {
-  //   return 8;
-  // };
+  useEffect(() => {
+    setNotEmpty(!!takenTests && takenTests.length > 0);
+    if (takenTests && selectedTestQuestions) {
+      setRespondents(
+        takenTests?.map<Respondent>((tt) => {
+          const { numOfCurrect, grade } = calcGrade(tt, selectedTestQuestions);
+          return {
+            email: tt.student.email,
+            name: `${tt.student.firstName} ${tt.student.lastName}`,
+            dateSubmitted: tt.dateSubmitted,
+            numofAns: numOfCurrect,
+            grade: grade,
+          };
+        })
+      );
+    }
+  }, [takenTests, selectedTestQuestions]);
 
   return (
     <React.Fragment>
-      {/* {notEmpty &&
-        takenTests?.map((test) => {
-          <tr>
-            <td>{test.student.email}</td>
-            <td>
-              {test.student.firstName} {test.student.lastName}
-            </td>
-            <td>{test.dateSubmitted}</td>
-            <td>{test.questions.length}</td>
-            <td>{calculateGrade(test.questions)}</td>
-          </tr>;
-        })} */}
-        {/* test purpose only  */}
-        <tr>
-            <td>teest@test.com</td>
-            <td>
-              michael tolchinsky
-            </td>
-            <td>27/01/1999</td>
-            <td>13</td>
-            <td>77</td>
-          </tr>
+      {notEmpty &&
+        respondents?.map((re) => [
+          <tr key={re.email}>
+            <td>{re.email}</td>
+            <td>{re.name}</td>
+            <td>{re.dateSubmitted}</td>
+            <td>{re.numofAns}</td>
+            <td>{re.grade.toString()}</td>
+          </tr>,
+        ])}
     </React.Fragment>
   );
 };
 
 export default TableRowRespondent;
+
+interface Respondent {
+  email: string;
+  name: string;
+  dateSubmitted: string;
+  numofAns: number;
+  grade: number;
+}

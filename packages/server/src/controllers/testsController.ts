@@ -3,29 +3,6 @@ import organizationRepository from "../Dal/organizationRepository";
 import takenTestRepository from "../Dal/takenTestRepository";
 
 class TestsController {
-  async getTests(req: Request, res: Response, next: NextFunction) {
-    const { orgId, fieldId } = req.query;
-    const orgIdSt = orgId?.toString();
-    const fieldIdSt = fieldId?.toString();
-    if (!orgIdSt || !fieldIdSt)
-      return res
-        .status(400)
-        .json({ message: "OOPS fetching tests failed" });
-
-    try {
-      const tests = await organizationRepository.getTests(orgIdSt, fieldIdSt);
-      if (tests)
-        return res
-          .status(200)
-          .json({ message: "Test fetched successfully", tests });
-      else res.status(410).json({ message: "Tests not found" });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ message: "OOPS somwthing went wrong while fetching tests", error });
-    }
-  }
-
   async getTakenTests(req: Request, res: Response, next: NextFunction) {
     const { testId } = req.query;
 

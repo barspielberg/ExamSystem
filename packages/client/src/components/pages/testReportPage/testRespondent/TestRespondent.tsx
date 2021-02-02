@@ -1,17 +1,17 @@
 import React from "react";
 import classes from "./TestRespondent.module.scss";
 import { Table } from "../../../uiElements";
-import { TakenTest, Test } from "@examsystem/common";
+import { Question, TakenTest } from "@examsystem/common";
 import TableRowRespondent from "./TableRowRespondent";
 
 interface ITestRespondentProps {
   takenTests: TakenTest[] | undefined;
-  originalTest: Test | undefined;
+  selectedTestQuestions: Question[] | undefined;
 }
 
 const TestRespondent: React.FC<ITestRespondentProps> = ({
   takenTests,
-  originalTest,
+  selectedTestQuestions
 }) => {
   const titles = [
     "Email",
@@ -28,7 +28,7 @@ const TestRespondent: React.FC<ITestRespondentProps> = ({
       <Table titles={titles}>
         <TableRowRespondent
           takenTests={takenTests}
-          originalTest={originalTest}
+          selectedTestQuestions={selectedTestQuestions}
         />
       </Table>
     </div>
