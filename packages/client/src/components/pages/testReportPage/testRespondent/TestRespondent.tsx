@@ -6,12 +6,12 @@ import TableRowRespondent from "./TableRowRespondent";
 
 interface ITestRespondentProps {
   takenTests: TakenTest[] | undefined;
-  selectedTestQuestions: Question[] | undefined;
+  answers: Question[] | undefined;
 }
 
 const TestRespondent: React.FC<ITestRespondentProps> = ({
   takenTests,
-  selectedTestQuestions
+  answers,
 }) => {
   const titles = [
     "Email",
@@ -26,10 +26,7 @@ const TestRespondent: React.FC<ITestRespondentProps> = ({
       <h2>Respondent Grade and Answers</h2>
       <p>click a name from the list to see respondent's test</p>
       <Table titles={titles}>
-        <TableRowRespondent
-          takenTests={takenTests}
-          selectedTestQuestions={selectedTestQuestions}
-        />
+        <TableRowRespondent takenTests={takenTests} answers={answers} />
       </Table>
     </div>
   );

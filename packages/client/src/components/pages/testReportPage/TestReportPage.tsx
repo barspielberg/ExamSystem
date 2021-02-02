@@ -60,7 +60,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         setselectedTestQuestions(
           organizations
             ?.find((o) => o.id === organizationId)
-            ?.questions.filter((q) => !selectedTest.questionIds.includes(q.id))
+            ?.questions.filter((q) => selectedTest.questionIds.includes(q.id))
         );
       }
     })();
@@ -105,8 +105,11 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         selectedTestQuestions={selectedTestQuestions}
         setTakenTests={setTakenTests}
       />
-      <TestRespondent takenTests={takenTests} selectedTestQuestions={selectedTestQuestions}/>
-      <QuestionStatistics questions={selectedTestQuestions} takenTests={takenTests} />
+      <TestRespondent takenTests={takenTests} answers={selectedTestQuestions} />
+      <QuestionStatistics
+        questions={selectedTestQuestions}
+        takenTests={takenTests}
+      />
       <Button onClick={() => history.goBack()}>« Back</Button>
     </div>
   );
