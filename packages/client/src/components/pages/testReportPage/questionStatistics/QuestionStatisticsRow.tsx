@@ -1,4 +1,4 @@
-import { Question, TakenTest } from "@examsystem/common";
+import { AnsweredQuestion, Question, TakenTest } from "@examsystem/common";
 import React, { useEffect, useState } from "react";
 
 interface IQuestionStatisticsRowProps {
@@ -11,47 +11,9 @@ const QuestionStatisticsRow: React.FC<IQuestionStatisticsRowProps> = ({
   takenTests,
 }) => {
   const [notEmpty, setNotEmpty] = useState(false);
-  const [questionStats, setQuestionStats] = useState<
-    {
-      id: string;
-      mainTitle: string;
-      tags: string[];
-      numofSub: number;
-      answeredCorrectly: number;
-    }[]
-  >([]);
 
   useEffect(() => {
     setNotEmpty(!!questions && questions.length > 0);
-    const data = questions?.map<{
-      id: string;
-      mainTitle: string;
-      tags: string[];
-      numofSub: number;
-      answeredCorrectly: number;
-    }>((ques) => {
-      const numofSub = takenTests?.filter((tt) =>
-        tt.questions.filter((q) => q.oringinalQuestionId === ques.id)
-      )?.length;
-
-      const correct = takenTests?.filter((tt) =>
-        tt.questions.filter(
-          (q) =>
-            q.oringinalQuestionId === ques.id &&
-            q.possibleAnswers === ques.possibleAnswers
-        )
-      )?.length;
-
-      return {
-        id: ques.id,
-        mainTitle: ques.mainTitle,
-        tags: ques.tags,
-        numofSub: numofSub || 0,
-        answeredCorrectly: correct || 0,
-      };
-    });
-
-    console.log(data);
   }, [questions, takenTests]);
 
   return (
@@ -72,8 +34,7 @@ const QuestionStatisticsRow: React.FC<IQuestionStatisticsRowProps> = ({
                 </p>
               </div>
             </td>
-            <td>{0}</td>
-            <td>{0}</td>
+            <td>{takenTests && getPercentages(question, takenTests)}%</td>
           </tr>,
         ])}
     </React.Fragment>
@@ -81,3 +42,38 @@ const QuestionStatisticsRow: React.FC<IQuestionStatisticsRowProps> = ({
 };
 
 export default QuestionStatisticsRow;
+
+const getPercentages = (question: Question, takenTests: TakenTest[]) => {
+  return (getNumberOfCorrect(question, takenTests) / takenTests.length) * 100;
+};
+
+const getNumberOfCorrect = (question: Question, takenTests: TakenTest[]) => {
+  return takenTests.reduce((pre, cur) => {
+    if (
+      isCorrect(
+        question,
+        cur.questions.find((q) => q.oringinalQuestionId === question.id)
+      )
+    )
+      return pre + 1;
+    return pre;
+  }, 0);
+};
+
+const isCorrect = (
+  correctAnswer: Question,
+  studentAnswer?: AnsweredQuestion
+): boolean => {
+  const studentAnswers = studentAnswer?.possibleAnswers
+    .filter((p) => p.correct)
+    .map((p) => p.id);
+  const corrects = correctAnswer.possibleAnswers
+    .filter((p) => p.correct)
+    .map((p) => p.id);
+
+  return (
+    (corrects.every((c) => studentAnswers?.includes(c)) &&
+      studentAnswers?.every((c) => corrects.includes(c))) ||
+    false
+  );
+};

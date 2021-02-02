@@ -32,14 +32,6 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
     e.preventDefault();
   };
 
-  // const handleSelectTest = (e: { target: { value: string; }; }) => {
-  //   if (dateFrom && dateTo && !anyDate) {
-  //     setSelectedTest(tests?.find((t) => t.id === e.target.value));
-  //   } else if (anyDate) {
-  //     setSelectedTest(tests?.find((t) => t.id === e.target.value));
-  //   }
-  // };
-
   return (
     <section className={classes.section}>
       <form className={classes.inputs} onSubmit={handleSubmit}>
@@ -94,12 +86,6 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
               onChange={() => setAnyDate(!anyDate)}
             />
             <label> Any Date In The Past</label>
-          </div>
-          <div className={classes.div8}>
-            <Button onClick={goBack}>« Back</Button>{" "}
-          </div>
-          <div className={classes.div9}>
-            <Button submit>Generate Report</Button>{" "}
           </div>
         </div>
       </form>

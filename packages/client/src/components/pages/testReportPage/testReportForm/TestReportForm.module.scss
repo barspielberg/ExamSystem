@@ -36,7 +36,7 @@
 .parent {
 display: grid;
 grid-template-columns: repeat(4, 1fr);
-grid-template-rows: repeat(5, 1fr);
+grid-template-rows: repeat(4, 1fr);
 }
 
 .div1 { grid-area: 1 / 2 / 2 / 4; }
@@ -46,5 +46,3 @@ grid-template-rows: repeat(5, 1fr);
 .div5 { grid-area: 2 / 3 / 3 / 4; }
 .div6 { grid-area: 3 / 2 / 4 / 3; }
 .div7 { grid-area: 4 / 2 / 5 / 3; }
-.div8 { grid-area: 5 / 1 / 6 / 2; }
-.div9 { grid-area: 5 / 4 / 6 / 5; }

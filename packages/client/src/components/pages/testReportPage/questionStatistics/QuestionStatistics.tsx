@@ -16,7 +16,6 @@ const QuestionStatistics: React.FC<IQuestionStatisticsProps> = ({
   const titles = [
     "ID",
     "Question",
-    "Number of Submissions",
     "% Answered Correctly",
   ];
 
