@@ -1,0 +1,19 @@
+.table {
+  margin: 1rem 2rem;
+  &.spread table {
+    width: 100%;
+  }
+  [aria-selected="true"] {
+    background-color: rgba(2, 173, 2, 0.356) !important;
+  }
+  tbody {
+    tr {
+      cursor: pointer;
+    }
+  }
+}
+.split {
+  display: flex;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+}

@@ -1,0 +1,52 @@
+.details {
+  margin-bottom: 5rem;
+
+  table {
+    width: 100%;
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+    }
+  }
+  .full {
+    text-align: left;
+    padding: 1rem;
+
+    h5 {
+      margin-top: 0;
+    }
+
+    .correct,
+    .wrong,
+    .success {
+      font-weight: 600;
+      width: fit-content;
+      border-radius: 3px;
+    }
+    .success,
+    .correct {
+      color: rgb(2, 179, 2);
+    }
+    .success,
+    .wrong {
+      background-color: #ef9e2f29;
+    }
+    .correct {
+      &:after {
+        content: " 🠘";
+      }
+    }
+    .wrong {
+      color: red;
+      &:after {
+        content: " 🗙";
+      }
+    }
+    .success {
+      &:after {
+        content: " ✔";
+      }
+    }
+  }
+}

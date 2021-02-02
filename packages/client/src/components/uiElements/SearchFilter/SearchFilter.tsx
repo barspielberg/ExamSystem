@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./SearchFilter.module.scss";
-import { Question, Test } from "@examsystem/common";
+import { Question, Student, Test } from "@examsystem/common";
 import { useState } from "react";
 import { useEffect } from "react";
 
@@ -11,6 +11,9 @@ interface ISearchFilterProps {
   originalQuestions?: Question[];
   onQuestionsChange?: (items: Question[]) => void;
 
+  originalStudents?: Student[];
+  onStudentsChange?: (items: Student[]) => void;
+
   placeholder?: string;
 }
 
@@ -20,6 +23,8 @@ export const SearchFilter: React.FC<ISearchFilterProps> = ({
   originalQuestions,
   onQuestionsChange,
   placeholder,
+  onStudentsChange,
+  originalStudents,
 }) => {
   const [text, setText] = useState("");
   useEffect(() => {
@@ -40,12 +45,25 @@ export const SearchFilter: React.FC<ISearchFilterProps> = ({
           )
         );
       else onQuestionsChange(originalQuestions);
+    else if (originalStudents && onStudentsChange)
+      if (text)
+        onStudentsChange(
+          originalStudents.filter(
+            (s) =>
+              s.firstName.toLowerCase().includes(text) ||
+              s.lastName.toLowerCase().includes(text) ||
+              s.email.toLowerCase().includes(text)
+          )
+        );
+      else onStudentsChange(originalStudents);
   }, [
     text,
     originalTests,
     onTestsChange,
     originalQuestions,
     onQuestionsChange,
+    originalStudents,
+    onStudentsChange,
   ]);
 
   return (
