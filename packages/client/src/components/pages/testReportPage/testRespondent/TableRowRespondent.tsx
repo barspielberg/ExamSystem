@@ -5,11 +5,13 @@ import { calcGrade } from "../../../../services/examService";
 interface ITableRowRespondentProps {
   takenTests: TakenTest[] | undefined;
   answers: Question[] | undefined;
+  setSelectedRespondent:any;
 }
 
 const TableRowRespondent: React.FC<ITableRowRespondentProps> = ({
   takenTests,
   answers,
+  setSelectedRespondent
 }) => {
   const [notEmpty, setNotEmpty] = useState(false);
   const [respondents, setRespondents] = useState<Respondent[]>();
@@ -20,7 +22,6 @@ const TableRowRespondent: React.FC<ITableRowRespondentProps> = ({
       setRespondents(
         takenTests?.map<Respondent>((tt) => {
           const { numOfCurrect, grade } = calcGrade(tt, answers);
-          console.log(tt, answers);
 
           return {
             email: tt.student.email,
@@ -38,7 +39,7 @@ const TableRowRespondent: React.FC<ITableRowRespondentProps> = ({
     <React.Fragment>
       {notEmpty &&
         respondents?.map((re) => [
-          <tr key={re.email}>
+          <tr key={re.email} style={{cursor:"pointer"}} onClick={() => setSelectedRespondent(re)}>
             <td>{re.email}</td>
             <td>{re.name}</td>
             <td>{re.dateSubmitted}</td>
@@ -52,7 +53,7 @@ const TableRowRespondent: React.FC<ITableRowRespondentProps> = ({
 
 export default TableRowRespondent;
 
-interface Respondent {
+export interface Respondent {
   email: string;
   name: string;
   dateSubmitted: string;
