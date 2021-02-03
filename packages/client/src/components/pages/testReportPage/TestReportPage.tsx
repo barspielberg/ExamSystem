@@ -37,6 +37,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   }, [organizationId, fieldId, field]);
 
   useEffect(() => {
+    if (dateFrom || dateTo) setAnyDate(false);
     (async () => {
       if (selectedTest) {
         const fetchedTakenTests = await dataService.getTakenTests(
@@ -45,13 +46,11 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         if (typeof fetchedTakenTests !== "string") {
           if (anyDate) setTakenTests(fetchedTakenTests);
           else if (dateFrom && dateTo && !anyDate) {
-            //#TODO fix date filtering
             const filteredByDateTakenTests = fetchedTakenTests.filter(
               (tt) =>
                 new Date(tt.dateSubmitted) >= new Date(dateFrom) &&
                 new Date(tt.dateSubmitted) <= new Date(dateTo)
             );
-            console.log(filteredByDateTakenTests);
             setTakenTests(filteredByDateTakenTests);
           }
           setNumofSub(fetchedTakenTests.length);
@@ -64,7 +63,6 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         );
       }
     })();
-    // #TODO fetch questions of selected test move to questions statistics
   }, [
     selectedTest,
     organizationId,

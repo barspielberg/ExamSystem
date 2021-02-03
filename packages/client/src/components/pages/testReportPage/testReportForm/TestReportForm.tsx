@@ -82,7 +82,13 @@ const TestReportForm: React.FC<ITestReportFormProps> = ({
               type="checkbox"
               name="anyDate"
               checked={anyDate}
-              onChange={() => setAnyDate(!anyDate)}
+              onChange={() =>{
+                 if(dateFrom || dateTo) {
+                   setDateFrom('');
+                   setDateTo('');
+                 }
+                 setAnyDate(!anyDate)
+              }}
             />
             <label> Any Date In The Past</label>
           </div>
