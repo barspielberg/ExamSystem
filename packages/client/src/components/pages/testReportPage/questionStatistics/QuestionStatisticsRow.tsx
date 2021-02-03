@@ -20,7 +20,7 @@ const QuestionStatisticsRow: React.FC<IQuestionStatisticsRowProps> = ({
     <React.Fragment>
       {notEmpty &&
         questions?.map((question) => [
-          <tr key={question.id}>
+          <tr key={question.id} style={{ cursor: "pointer" }}>
             <td>{question.id}</td>
             <td style={{ textAlign: "revert" }}>
               <div>
