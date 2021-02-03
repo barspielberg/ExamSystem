@@ -4,6 +4,10 @@
   max-width: 800px;
   margin: auto;
 
+.fieldTitle {
+  color: $primary;
+}
+
 .parent {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -37,6 +41,7 @@
 .div9 {
   grid-area: 5 / 4 / 6 / 5;
 }
+
 }
 @keyframes hielght {
   0% {
