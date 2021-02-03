@@ -37,6 +37,7 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
   }, [organizationId, fieldId, field]);
 
   useEffect(() => {
+    if (dateFrom || dateTo) setAnyDate(false);
     (async () => {
       if (selectedTest) {
         const fetchedTakenTests = await dataService.getTakenTests(
@@ -45,13 +46,11 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         if (typeof fetchedTakenTests !== "string") {
           if (anyDate) setTakenTests(fetchedTakenTests);
           else if (dateFrom && dateTo && !anyDate) {
-            //#TODO fix date filtering
             const filteredByDateTakenTests = fetchedTakenTests.filter(
               (tt) =>
                 new Date(tt.dateSubmitted) >= new Date(dateFrom) &&
                 new Date(tt.dateSubmitted) <= new Date(dateTo)
             );
-            console.log(filteredByDateTakenTests);
             setTakenTests(filteredByDateTakenTests);
           }
           setNumofSub(fetchedTakenTests.length);
@@ -60,11 +59,10 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         setselectedTestQuestions(
           organizations
             ?.find((o) => o.id === organizationId)
-            ?.questions.filter((q) => !selectedTest.questionIds.includes(q.id))
+            ?.questions.filter((q) => selectedTest.questionIds.includes(q.id))
         );
       }
     })();
-    // #TODO fetch questions of selected test move to questions statistics
   }, [
     selectedTest,
     organizationId,
@@ -105,8 +103,11 @@ const TestReportPage: React.FC<ITestReportPageProps> = ({ organizations }) => {
         selectedTestQuestions={selectedTestQuestions}
         setTakenTests={setTakenTests}
       />
-      <TestRespondent takenTests={takenTests} selectedTestQuestions={selectedTestQuestions}/>
-      <QuestionStatistics questions={selectedTestQuestions} takenTests={takenTests} />
+      <TestRespondent takenTests={takenTests} answers={selectedTestQuestions} />
+      <QuestionStatistics
+        questions={selectedTestQuestions}
+        takenTests={takenTests}
+      />
       <Button onClick={() => history.goBack()}>« Back</Button>
     </div>
   );

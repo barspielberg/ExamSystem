@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./TestRespondent.module.scss";
 import { Table } from "../../../uiElements";
 import { Question, TakenTest } from "@examsystem/common";
-import TableRowRespondent from "./TableRowRespondent";
+import TableRowRespondent, { Respondent } from "./TableRowRespondent";
+import Details from "../../studentReportPage/TestResults/Details/Details";
 
 interface ITestRespondentProps {
   takenTests: TakenTest[] | undefined;
-  selectedTestQuestions: Question[] | undefined;
+  answers: Question[] | undefined;
 }
 
 const TestRespondent: React.FC<ITestRespondentProps> = ({
   takenTests,
-  selectedTestQuestions
+  answers,
 }) => {
+  const [selectedRespondent, setSelectedRespondent] = useState<Respondent>();
+
   const titles = [
     "Email",
     "Respondent",
@@ -28,9 +31,20 @@ const TestRespondent: React.FC<ITestRespondentProps> = ({
       <Table titles={titles}>
         <TableRowRespondent
           takenTests={takenTests}
-          selectedTestQuestions={selectedTestQuestions}
+          answers={answers}
+          setSelectedRespondent={setSelectedRespondent}
         />
       </Table>
+      {selectedRespondent && answers && (
+        <Details
+          answers={answers}
+          test={
+            takenTests?.find(
+              (tt) => tt.student.email === selectedRespondent.email
+            )!
+          }
+        />
+      )}
     </div>
   );
 };

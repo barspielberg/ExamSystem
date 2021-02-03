@@ -298,5 +298,5 @@ const newQuestion: Question = {
   type: 0,
   possibleAnswers: defaultAnswers,
   tags: [],
-  lastUpdate: new Date().toLocaleDateString(),
+  lastUpdate: new Date().toString(),
 };
